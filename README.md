@@ -82,7 +82,7 @@ Para compartilhar, entre na conta e abra **Compartilhar uma versão do projeto**
 
 O identificador do link tem 192 bits aleatórios. Qualquer pessoa com o link pode ler o código; não é uma área privada. A página não divulga nome nem e-mail do autor, pede para não ser indexada e exibe código escapado, sem editor ou executor. Somente a sessão do dono pode consultar o gerenciamento, publicar, atualizar ou retirar seu link; ações de abas com identidade antiga são recusadas. A migração `006_projetos_compartilhados.sql` cria essa persistência. No ambiente local, o link só abre na máquina onde o projeto está rodando; para acesso externo, publique o aplicativo em um domínio acessível.
 
-Os testes verificam os quatro programas integrados, o isolamento entre contas, a separação entre rascunho e publicação, a revogação dos links e o escape de código potencialmente malicioso. `pnpm test:conta` também verifica rascunhos de projeto em outro dispositivo e o ciclo de compartilhamento no servidor local com uma conta fictícia.
+Os testes verificam os quatro programas integrados, o isolamento entre contas, a separação entre rascunho e publicação, a revogação dos links e o escape de código potencialmente malicioso. `pnpm test:conta` também verifica rascunhos de projeto em outro dispositivo, bloqueio de publicação gratuita e retirada após cancelamento. Para testar a publicação, usa uma fixture Pro somente na conta fictícia descartável e exige banco, aplicação e SMTP locais; não cria pagamento nem chama o Stripe.
 
 ## Tutor adaptativo e atalhos da lição
 

@@ -20,12 +20,12 @@ Essas verificações locais não substituem testes no endereço publicado. Os te
 
 ### P01 — Guardar uma versão recuperável do projeto
 
-**Situação:** a primeira versão foi enviada à branch `main` de [Franklimello/mundoJS](https://github.com/Franklimello/mundoJS). O workflow `.github/workflows/verificar.yml` executa auditoria, migrações, tipagem, lint, testes com Postgres e build em pushes e pull requests. A primeira execução remota ainda precisa ser confirmada nesta entrega.
+**Situação:** a primeira versão foi enviada à branch `main` de [Franklimello/mundoJS](https://github.com/Franklimello/mundoJS). O workflow `.github/workflows/verificar.yml` executa auditoria, migrações, tipagem, lint, testes com Postgres e build em pushes e pull requests. A [primeira execução remota](https://github.com/Franklimello/mundoJS/actions/runs/41676338548) passou em todas as etapas.
 
 - [x] Criar a primeira versão no Git e configurar o repositório remoto escolhido.
 - [x] Confirmar que os segredos locais e `.env.local` ficam fora do envio; revisar os arquivos antes do primeiro commit.
 - [x] Automatizar tipagem, lint, testes e build. Rodar os testes de integração com um Postgres exclusivo de teste.
-- [ ] Confirmar a primeira execução do workflow no GitHub.
+- [x] Confirmar a primeira execução do workflow no GitHub.
 - [ ] Exigir o resultado aprovado desse check na proteção da `main` e no processo de publicação. A existência do workflow sozinha não impede um envio direto ou uma publicação externa.
 
 **Concluído quando:** conseguimos recuperar o código em outro ambiente e uma alteração com falha não passa pela verificação de publicação.
@@ -39,7 +39,7 @@ Essas verificações locais não substituem testes no endereço publicado. Os te
 - [x] Atualizar Next.js e dependências relacionadas para versões corrigidas e compatíveis, após conferir os avisos atuais dos fornecedores.
 - [x] Auditar dependências e corrigir os alertas críticos/altos encontrados, incluindo dependências indiretas.
 - [x] Repetir os 940 testes com Postgres, tipagem, lint e build após a atualização.
-- [ ] Conferir login, editor e planos na aplicação atualizada.
+- [x] Conferir telas de conta, editor e planos no navegador e repetir o teste HTTP local de cadastro, e-mail, recuperação, revogação e saída. O teste de compartilhamento usa uma fixture Pro somente para a conta descartável, em banco local, sem chamar o Stripe; também verifica bloqueio gratuito e retirada do link após cancelamento.
 - [ ] Tratar o alerta moderado de minimatch em uma atualização compatível das ferramentas de lint. A versão antiga é consumida como função pelo ESLint/plugins; substituir diretamente pela major 11 quebra essa API. Não foi aplicado override incompatível nem removido o alerta da auditoria.
 
 O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendência moderada está nas dependências de desenvolvimento e não aparece em `pnpm audit --prod`. O ambiente de CI é descartável, sem chaves reais e com limite de tempo. Isso não substitui a manutenção dessa pendência nem uma revisão completa de segurança.

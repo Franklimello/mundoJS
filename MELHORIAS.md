@@ -23,7 +23,8 @@ Para preparar o lançamento, acompanhar a lista priorizada com critérios de con
 - [ ] Preparar versões da marca para cabeçalho e símbolo pequeno.
 - [x] Atualizar Next.js para 16.4.4, remover o aviso anterior de vulnerabilidade e validar testes/build; auditoria de produção sem alertas conhecidos.
 - [x] Preparar verificações automáticas no GitHub com auditoria, migrações, tipagem, lint, testes com Postgres e build.
-- [ ] Confirmar execução remota e exigir aprovação do check na proteção da main/publicação.
+- [x] Confirmar execução remota do workflow no GitHub, com todas as etapas aprovadas.
+- [ ] Exigir aprovação do check na proteção da main/publicação.
 - [ ] Atualizar as ferramentas de lint para eliminar o alerta moderado transitivo de minimatch.
 - [ ] Antes da publicação, configurar SMTP real.
 

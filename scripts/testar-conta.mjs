@@ -7,6 +7,8 @@ const origem = process.env.BETTER_AUTH_URL;
 if (!origem || !/^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origem))
   throw new Error('Este teste é exclusivo do ambiente local.');
 if (process.env.AUTH_SMTP_URL !== 'smtp://127.0.0.1:1025') throw new Error('Use o Mailpit local para este teste.');
+if (!['localhost', '127.0.0.1', '[::1]'].includes(new URL(process.env.DATABASE_URL || '').hostname))
+  throw new Error('Use somente um banco local para este teste.');
 const email = `mundojs-teste-${randomBytes(12).toString('hex')}@example.invalid`;
 const senha = randomBytes(24).toString('base64url');
 const novaSenha = randomBytes(24).toString('base64url');
@@ -151,12 +153,22 @@ try {
     retomado.rascunhos['projeto/listas-e-objetos'] === '// projeto privado do teste local',
     'Não recuperou o projeto no segundo dispositivo.',
   );
-  resposta = await segundo.pedir('/api/projetos/compartilhar', {
+  const versaoDoProjeto = {
     acao: 'publicar',
     trilha: 'listas-e-objetos',
     codigo: '// MUNDOJS_COMPARTILHAMENTO_TESTE\nconsole.log("Projeto de teste");',
     identidadeEsperada: `conta:${usuarioId}`,
-  });
+  };
+  resposta = await segundo.pedir('/api/projetos/compartilhar', versaoDoProjeto);
+  conferir(resposta.status === 403, 'Uma conta gratuita conseguiu publicar um projeto Pro.');
+  // Fixture exclusiva da conta descartável neste banco local. Não cria pagamento
+  // nem chama o Stripe; a integração financeira é validada separadamente.
+  await db.query(
+    `INSERT INTO cobranca_contas(usuario_id,cliente_chave,status,inicio,fim)
+     VALUES ($1,$2,'active',now()-interval '1 minute',now()+interval '1 hour')`,
+    [usuarioId, `smoke-local-${randomBytes(12).toString('hex')}`],
+  );
+  resposta = await segundo.pedir('/api/projetos/compartilhar', versaoDoProjeto);
   conferir(resposta.ok, 'Não criou o link de leitura do projeto.');
   const publicado = (await resposta.json()).publicacao;
   const leitor = navegador();
@@ -173,6 +185,7 @@ try {
     identidadeEsperada: `conta:${usuarioId}`,
   });
   conferir(resposta.status === 401, 'Um visitante conseguiu retirar um link de outra conta.');
+  await db.query("UPDATE cobranca_contas SET status='gratuito', fim=now() WHERE usuario_id=$1", [usuarioId]);
   resposta = await segundo.pedir('/api/projetos/compartilhar', {
     acao: 'retirar',
     trilha: 'listas-e-objetos',
@@ -210,7 +223,7 @@ try {
     'Mostrou dados da conta após sair.',
   );
   console.log(
-    'Conta verificada: cadastro, confirmação, vínculo de progresso e projetos, segundo dispositivo, compartilhamento somente leitura, retirada do link, recuperação de senha, revogação e saída.',
+    'Conta verificada: cadastro, confirmação, vínculo de progresso e projetos, segundo dispositivo, bloqueio gratuito, compartilhamento com fixture Pro local, retirada após cancelamento, recuperação de senha, revogação e saída. Nenhuma cobrança Stripe foi criada.',
   );
 } catch (erro) {
   console.error(erro.message || 'O teste local de contas falhou.');
