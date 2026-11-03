@@ -3,8 +3,14 @@ import { readFile, readdir } from 'node:fs/promises';
 import { betterAuth } from 'better-auth';
 import { createLocalJWKSet, exportJWK, generateKeyPair, SignJWT, type JWTPayload } from 'jose';
 import { Pool } from 'pg';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { criarProvedorGoogleFirebase, firebaseGoogle, verificarGoogleFirebase } from './firebase-google';
+import { configuracaoSessao } from './configuracao-sessao';
+import { sessaoAtual } from './sessao';
+
+const leituraServidor = vi.hoisted(() => ({ getSession: vi.fn(), headers: new Headers() }));
+vi.mock('./auth', () => ({ auth: { api: { getSession: leituraServidor.getSession } } }));
+vi.mock('next/headers', () => ({ headers: async () => leituraServidor.headers }));
 
 const projeto = 'mundojs-teste';
 const par = await generateKeyPair('RS256');
@@ -70,14 +76,15 @@ describe.skipIf(!url)('sessão Google no Postgres real', () => {
   const esquema = `google_teste_${randomBytes(8).toString('hex')}`;
   const admin = new Pool({ connectionString: url });
   const db = new Pool({ connectionString: url, options: `-c search_path=${esquema}`, max: 3 });
+  const segredo = randomBytes(32).toString('hex');
   function criarAuth() {
     return betterAuth({
       baseURL: 'http://localhost:3001',
-      secret: randomBytes(32).toString('hex'),
+      secret: segredo,
       database: db,
       user: { modelName: 'auth_usuario' },
       account: { modelName: 'auth_credencial', accountLinking: { enabled: true, requireLocalEmailVerified: true } },
-      session: { modelName: 'auth_sessao', cookieCache: { enabled: false } },
+      session: configuracaoSessao,
       verification: { modelName: 'auth_verificacao' },
       plugins: [firebaseGoogle(projeto, chaves)],
       logger: { disabled: true },
@@ -124,6 +131,68 @@ describe.skipIf(!url)('sessão Google no Postgres real', () => {
       }),
     );
     expect((await sessao.json()).user.id).toBe(usuario.id);
+  });
+  it('mantém o login após nova visita e renova banco e cookie juntos depois de um dia', async () => {
+    const resposta = await entrar(await token({ sub: 'google-persistencia', email: 'persistencia@example.invalid' }));
+    expect(resposta.status).toBe(200);
+    const cookie = resposta.headers.getSetCookie().find((linha) => linha.includes('.session_token='))!;
+    expect(cookie).toMatch(/Max-Age=2592000/i);
+    expect(cookie).toMatch(/HttpOnly/i);
+    expect(cookie).toMatch(/SameSite=Lax/i);
+    const cabecalhos = new Headers({ cookie: cookie.split(';')[0]!, origin: 'http://localhost:3001' });
+    const usuario = (await resposta.json()).user;
+
+    // Uma nova instância não depende de memória do Firebase ou do servidor anterior.
+    const novaVisita = criarAuth();
+    const consulta = () =>
+      novaVisita.handler(
+        new Request('http://localhost:3001/api/auth/get-session', {
+          headers: cabecalhos,
+        }),
+      );
+    expect((await (await consulta()).json()).user.id).toBe(usuario.id);
+
+    const vencimentoAnterior = new Date(Date.now() + 28 * 24 * 60 * 60 * 1000);
+    await db.query('UPDATE auth_sessao SET "expiresAt" = $1 WHERE "userId" = $2', [vencimentoAnterior, usuario.id]);
+    leituraServidor.headers = cabecalhos;
+    leituraServidor.getSession.mockImplementation((opcoes) => novaVisita.api.getSession(opcoes));
+    expect((await sessaoAtual())?.user.id).toBe(usuario.id);
+    const antes = await db.query('SELECT "expiresAt" FROM auth_sessao WHERE "userId" = $1', [usuario.id]);
+    expect(antes.rows[0].expiresAt.getTime()).toBe(vencimentoAnterior.getTime());
+
+    const renovacao = await consulta();
+    expect((await renovacao.json()).user.id).toBe(usuario.id);
+    expect(renovacao.headers.getSetCookie().find((linha) => linha.includes('.session_token='))).toMatch(
+      /Max-Age=2592000/i,
+    );
+    const depois = await db.query('SELECT "expiresAt" FROM auth_sessao WHERE "userId" = $1', [usuario.id]);
+    expect(depois.rows[0].expiresAt.getTime()).toBeGreaterThan(vencimentoAnterior.getTime());
+
+    const saida = await novaVisita.handler(
+      new Request('http://localhost:3001/api/auth/sign-out', {
+        method: 'POST',
+        headers: cabecalhos,
+      }),
+    );
+    expect(saida.status).toBe(200);
+    expect(saida.headers.get('set-cookie')).toMatch(/Max-Age=0/i);
+    expect(await (await consulta()).json()).toBeNull();
+  });
+  it('exige novo login quando os 30 dias de sessão expiraram', async () => {
+    const resposta = await entrar(await token({ sub: 'google-expiracao', email: 'expiracao@example.invalid' }));
+    const usuario = (await resposta.json()).user;
+    await db.query('UPDATE auth_sessao SET "expiresAt" = $1 WHERE "userId" = $2', [new Date(0), usuario.id]);
+    const sessao = await auth.handler(
+      new Request('http://localhost:3001/api/auth/get-session', {
+        headers: {
+          cookie: resposta.headers
+            .getSetCookie()
+            .find((linha) => linha.includes('.session_token='))!
+            .split(';')[0]!,
+        },
+      }),
+    );
+    expect(await sessao.json()).toBeNull();
   });
   it('reutiliza uma conta local com o mesmo e-mail já confirmado', async () => {
     await db.query('INSERT INTO auth_usuario (id, name, email, "emailVerified") VALUES ($1,$1,$2,true)', [
