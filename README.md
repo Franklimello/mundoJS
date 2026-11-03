@@ -254,7 +254,9 @@ Os testes usam Stripe simulado e assinaturas de webhook geradas localmente; com 
 
 O workflow [verificar.yml](.github/workflows/verificar.yml) roda em pushes e pull requests: instala o lockfile sem alterar versões, audita dependências, aplica migrações em um Postgres 17 descartável, gera os tipos do Next.js e executa tipagem, lint, todos os testes e build. Ele usa Node.js 22 atualizado e pnpm na versão de `packageManager`. As ações estão fixadas por commit, têm permissão de leitura e não mantêm credenciais no checkout. Não utiliza segredos reais de autenticação, Stripe, Gemini ou banco de produção.
 
-Para impedir a integração de uma alteração com falha, configure o check **Tipagem, testes, seguranca e build** como obrigatório nas regras da `main` e no fluxo de publicação da hospedagem. O workflow não publica a aplicação. A auditoria completa bloqueia alertas altos/críticos; atualmente resta um alerta moderado de minimatch nas ferramentas de lint, registrado em [PRODUCAO.md](PRODUCAO.md#p02--resolver-o-aviso-de-segurança). A auditoria de dependências de produção não aponta alertas conhecidos após esta atualização.
+A `main` está protegida no GitHub: alterações entram por pull request com branch atualizada e o check **Tipagem, testes, seguranca e build** aprovado pelo GitHub Actions. A regra também se aplica aos administradores, bloqueia envio forçado e exclusão e exige resolução das conversas de revisão. Não exige aprovação de outro revisor. Trabalhe em uma branch, envie ao GitHub, abra o pull request e aguarde as verificações para integrar.
+
+O workflow não publica a aplicação; a hospedagem ainda precisa ser configurada para publicar somente versões aprovadas. A auditoria completa bloqueia alertas altos/críticos; atualmente resta um alerta moderado de minimatch nas ferramentas de lint, registrado em [PRODUCAO.md](PRODUCAO.md#p02--resolver-o-aviso-de-segurança). A auditoria de dependências de produção não aponta alertas conhecidos após esta atualização.
 
 ### Publicação
 
