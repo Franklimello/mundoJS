@@ -3,7 +3,7 @@ import { FiBookOpen, FiChevronDown, FiCheckCircle, FiLock } from 'react-icons/fi
 import type { Trilha } from '@/conteudo/tipos';
 import { todasAsLicoes } from '@/conteudo';
 import { trilhaGratuita } from '@/conta/planos';
-import { ContagemDaTrilha } from './Progresso';
+import { ContagemDaTrilha, CertificadoDaTrilha } from './Progresso';
 import { ResultadoTrilha } from './ResultadoTrilha';
 import { Sumario } from './Sumario';
 
@@ -47,6 +47,10 @@ export function TrilhaRecolhivel({ trilha, pro }: { trilha: Trilha; pro: boolean
         </Link>
         <ResultadoTrilha trilha={trilha.slug} />
         <Sumario trilha={trilha} pro={pro} />
+        <CertificadoDaTrilha
+          trilha={trilha.slug}
+          licoes={todasAsLicoes(trilha).map((licao) => ({ slug: licao.slug, total: licao.exercicios.length }))}
+        />
       </div>
     </details>
   );

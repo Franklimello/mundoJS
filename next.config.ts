@@ -3,6 +3,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  outputFileTracingIncludes: {
+    '/api/conta/certificados/*/pdf': ['./public/fontes-certificado/*'],
+  },
   async headers() {
     return [
       {
