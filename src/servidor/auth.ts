@@ -5,6 +5,7 @@ import { enviarEmailConta } from './email';
 import { firebaseGoogle } from './firebase-google';
 import { APIError } from 'better-auth/api';
 import { emailSenhaHabilitados } from './configuracao-conta';
+import { configuracaoSessao } from './configuracao-sessao';
 
 const emailHabilitado = emailSenhaHabilitados();
 
@@ -33,12 +34,7 @@ export const auth = betterAuth({
   account: { modelName: 'auth_credencial', accountLinking: { enabled: true, requireLocalEmailVerified: true } },
   plugins: [firebaseGoogle(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'mundojs-8787c')],
   verification: { modelName: 'auth_verificacao' },
-  session: {
-    modelName: 'auth_sessao',
-    expiresIn: 60 * 60 * 24 * 30,
-    updateAge: 60 * 60 * 24,
-    cookieCache: { enabled: false },
-  },
+  session: configuracaoSessao,
   advanced: { cookiePrefix: 'mundojs' },
   rateLimit: {
     enabled: true,
