@@ -29,8 +29,8 @@ export async function POST(request: Request) {
       partes.push(value);
     }
     evento = api.webhooks.constructEvent(Buffer.concat(partes), assinatura, process.env.STRIPE_WEBHOOK_SECRET!);
-    if (evento.livemode !== process.env.STRIPE_SECRET_KEY!.startsWith('sk_live_'))
-      throw new Error('Ambiente incorreto');
+    const ambiente = process.env.STRIPE_SECRET_KEY?.trim().match(/^(?:sk|rk)_(live|test)_/)?.[1];
+    if (!ambiente || evento.livemode !== (ambiente === 'live')) throw new Error('Ambiente incorreto');
   } catch {
     return NextResponse.json({ erro: 'Evento inválido.' }, { status: 400 });
   }

@@ -144,7 +144,7 @@ O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendên
 
 ### P09 — Configurar Stripe e validar uma assinatura completa em teste
 
-**Situação:** a conta separada MundoJS foi aprovada para pagamentos e repasses. Produto de R$ 9,99/mês, portal e webhook foram configurados em produção; preço e segredo do webhook foram salvos na Vercel. A chave de API aguarda a verificação de identidade exigida pelo Stripe. Na área restrita, pagamento/recusa, renovação, cancelamento e liberação de Pro por webhook real no servidor local passaram. DNS foi salvo, mas resolução pública, HTTPS e validação online permanecem pendentes. Detalhes em [STRIPE.md](STRIPE.md).
+**Situação:** a conta separada MundoJS foi aprovada para pagamentos e repasses. Produto de R$ 9,99/mês, portal e webhook foram configurados em produção; preço e segredo do webhook foram salvos na Vercel. O titular concluiu a verificação e emitiu a chave restrita; preço e portal foram validados com ela. O webhook foi ajustado para reconhecer chaves restritas mantendo a separação teste/produção. Na área restrita, pagamento/recusa, renovação, cancelamento e liberação de Pro por webhook real no servidor local passaram. DNS foi salvo, mas resolução pública, HTTPS e validação online permanecem pendentes. Detalhes em [STRIPE.md](STRIPE.md).
 
 - [x] Conferir a configuração da conta Stripe e criar o produto Pro com preço recorrente mensal de **R$ 9,99 em BRL**, quantidade 1.
 - [ ] Configurar as três variáveis no ambiente de teste e depois as correspondentes de produção.
