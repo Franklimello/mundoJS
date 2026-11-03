@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { banco } from '@/servidor/banco';
+import { bancoCobranca } from '@/servidor/banco';
 import { stripe, processarEvento } from '@/servidor/cobranca';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ erro: 'Evento inválido.' }, { status: 400 });
   }
   try {
-    await processarEvento(banco(), evento, api);
+    await processarEvento(bancoCobranca(), evento, api);
     return NextResponse.json({ recebido: true });
   } catch {
     // Resposta não-2xx solicita reentrega. Não registra dados pessoais da cobrança.

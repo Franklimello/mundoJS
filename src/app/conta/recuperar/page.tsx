@@ -2,9 +2,12 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { RecuperarSenha } from '@/components/RecuperarSenha';
 import { AvisoEmailLocal } from '@/components/AvisoEmailLocal';
+import { emailSenhaHabilitados } from '@/servidor/configuracao-conta';
+import { AcessoGoogleTemporario } from '@/components/AcessoGoogleTemporario';
 
 export const metadata: Metadata = { title: 'Recuperar acesso' };
 export default function Recuperar() {
+  if (!emailSenhaHabilitados()) return <AcessoGoogleTemporario />;
   return (
     <div className="pagina secao conta-pagina">
       <h1 className="titulo-de-pagina">Recupere seu acesso.</h1>

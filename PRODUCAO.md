@@ -54,9 +54,10 @@ O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendên
 
 ### P03 — Definir hospedagem, domínio e ambientes
 
-**Situação:** a URL de autenticação local ainda aponta para localhost; o destino de produção não foi validado nesta revisão.
+**Situação:** escolhidos Vercel Hobby e Neon Free para a primeira prévia. O projeto Vercel foi criado, o endereço `mundojs-theta.vercel.app` foi reservado e as variáveis online foram configuradas separadamente das locais. Publicação, domínio e login ainda precisam de verificação no deployment. Procedimento em [DEPLOY.md](DEPLOY.md).
 
-- [ ] Escolher a hospedagem e o domínio, configurar HTTPS e o endereço público definitivo.
+- [x] Escolher Vercel e Neon gratuitos e reservar o endereço inicial da prévia.
+- [ ] Confirmar HTTPS e endereço funcionando após o deployment; domínio próprio pode ser configurado depois.
 - [ ] Criar um ambiente de homologação separado da produção, com bancos e credenciais próprios.
 - [ ] Configurar segredos no serviço de hospedagem, sem copiar senhas locais para produção.
 - [ ] Ajustar `BETTER_AUTH_URL`, variáveis Firebase e URLs usadas nos retornos de pagamento.
@@ -69,10 +70,10 @@ O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendên
 
 ### P04 — Preparar banco de produção e recuperação
 
-**Situação:** a conexão configurada é com o Postgres Docker local. O volume local persistente não representa uma estratégia de backup validada.
+**Situação:** o Docker local foi preservado. Um novo Postgres 17 foi criado no Neon Free, com branches `main` e `homologacao`, ambas com as sete migrações e conexões verificadas. A aplicação usa pool compartilhado para consultas comuns e pool direto para bloqueios de sessão da cobrança. Backup/restauração continuam pendentes.
 
-- [ ] Provisionar Postgres de produção com credenciais próprias, conexão protegida e acesso restrito.
-- [ ] Aplicar as migrações por um procedimento controlado, testado antes em homologação.
+- [x] Provisionar Postgres separado com credenciais próprias e conexões TLS verificadas.
+- [x] Aplicar as migrações por um procedimento controlado, testado antes em homologação.
 - [ ] Ajustar conexões e pool para a hospedagem escolhida; cada instância da aplicação pode abrir seu próprio pool.
 - [ ] Habilitar backups, definir retenção e testar uma restauração em outro banco.
 - [ ] Definir quais dados locais precisam ser migrados, evitando levar contas de teste para produção.
@@ -83,7 +84,7 @@ O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendên
 
 ### P05 — Fazer autenticação e e-mails funcionarem no domínio real
 
-**Situação:** o envio atual usa Mailpit local. A configuração do domínio público no Firebase ainda precisa ser conferida.
+**Situação:** o local continua com Mailpit. Para a prévia online, foi escolhido login Google com e-mail/senha desativados por `AUTH_EMAIL_ENABLED=false`. SMTP real e a configuração do novo domínio no Firebase ainda precisam ser concluídos.
 
 - [ ] Configurar um serviço real de e-mail em `AUTH_SMTP_URL` e um remetente do domínio em `AUTH_EMAIL_FROM`.
 - [ ] Configurar os registros de autenticação do domínio solicitados pelo provedor de e-mail e verificar entrega.

@@ -1,0 +1,10 @@
+.git
+.github
+.vercel
+.neon
+.env
+.env.*
+node_modules
+.next
+coverage
+*.tsbuildinfo

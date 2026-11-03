@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({ sessao: vi.fn(), checkout: vi.fn(), portal: vi.fn() }));
 vi.mock('./sessao', () => ({ sessaoAtual: mocks.sessao }));
-vi.mock('./banco', () => ({ banco: () => ({}) }));
+vi.mock('./banco', () => ({ banco: () => ({}), bancoCobranca: () => ({}) }));
 vi.mock('./cobranca', async (original) => ({
   ...(await original<typeof import('./cobranca')>()),
   criarCheckout: mocks.checkout,

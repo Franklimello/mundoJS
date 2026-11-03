@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Conta } from '@/components/Conta';
 import { AvisoEmailLocal } from '@/components/AvisoEmailLocal';
+import { emailSenhaHabilitados } from '@/servidor/configuracao-conta';
 
 export const metadata: Metadata = {
   title: 'Sua conta',
@@ -15,7 +16,7 @@ export default function PaginaConta() {
         dispositivo.
       </p>
       <AvisoEmailLocal />
-      <Conta key="entrar" />
+      <Conta key="entrar" emailHabilitado={emailSenhaHabilitados()} />
     </div>
   );
 }

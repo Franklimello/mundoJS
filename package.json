@@ -5,7 +5,7 @@
   "description": "MundoJS — aprenda JavaScript escrevendo e rodando código no navegador.",
   "packageManager": "pnpm@11.20.0",
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev --port 3001",
@@ -32,6 +32,7 @@
     "@codemirror/view": "^6.43.14",
     "@lezer/highlight": "^1.2.5",
     "@next/env": "^16.4.4",
+    "@vercel/functions": "^3.10.5",
     "acorn": "^8.19.0",
     "better-auth": "^1.7.15",
     "firebase": "^13.1.0",

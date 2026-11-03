@@ -26,7 +26,9 @@ pnpm dev            # http://localhost:3001
 | `pnpm build`          | Build de produção                                                            |
 | `pnpm format[:check]` | Prettier                                                                     |
 
-Pede Node 22+ e pnpm 11.
+Pede Node 22.x e pnpm 11.
+
+A configuração online na Vercel e no Neon está documentada em [DEPLOY.md](DEPLOY.md). A prévia online usa apenas login Google enquanto o SMTP real não estiver configurado.
 
 O desenvolvimento local também usa Docker Desktop. Os dados ficam em um volume persistente: `pnpm db:down` para o banco sem apagar os dados; `pnpm db:up` inicia novamente. A senha em `.env.example` é exclusiva do ambiente local.
 
