@@ -46,6 +46,22 @@ describe('webhook Stripe', () => {
     expect((await POST(pedido({ live: true }))).status).toBe(400);
     expect(mocks.processar).not.toHaveBeenCalled();
   });
+  it.each([
+    ['sk_live_local', true],
+    ['rk_live_local', true],
+    ['sk_test_local', false],
+    ['rk_test_local', false],
+  ])('aceita o ambiente correto e rejeita o oposto para %s', async (chave, live) => {
+    vi.stubEnv('STRIPE_SECRET_KEY', chave);
+    expect((await POST(pedido({ live }))).status).toBe(200);
+    expect((await POST(pedido({ live: !live }))).status).toBe(400);
+    expect(mocks.processar).toHaveBeenCalledOnce();
+  });
+  it.each(['', 'chave_invalida', 'pk_live_local'])('rejeita chave de servidor não reconhecida: %s', async (chave) => {
+    vi.stubEnv('STRIPE_SECRET_KEY', chave);
+    expect((await POST(pedido())).status).toBe(400);
+    expect(mocks.processar).not.toHaveBeenCalled();
+  });
   it('solicita reentrega em falha do banco', async () => {
     mocks.processar.mockRejectedValue(new Error('Banco indisponível'));
     const log = vi.spyOn(console, 'error').mockImplementation(() => {});

@@ -18,11 +18,12 @@ As credenciais de teste ficam no arquivo ignorado `.vercel/stripe-teste.env`. N�
 - Preço: `price_1UXmReLV72qO6IRGymxMA72N`, **BRL 9,99 por mês**.
 - Portal padrão: `bpc_1UXmWWLV72qO6IRGethwwxmR`, com faturas, atualização de cartão e cancelamento ao fim do ciclo. Troca de plano/quantidade e alterações cadastrais desabilitadas.
 - Webhook ativo: `we_1UXmfULV72qO6IRG4pZEzNk8`, em `https://mundojavascript.com.br/api/stripe/webhook`, com os sete eventos da integração, payload snapshot e API `2026-10-28.endive`, conferida no SDK instalado.
-- `STRIPE_PRICE_PRO_MENSAL` e `STRIPE_WEBHOOK_SECRET` foram salvas em produção na Vercel. O segredo também está em arquivo ignorado, `.vercel/stripe-producao.env`.
-- A emissão de `STRIPE_SECRET_KEY` ainda aguarda a verificação de identidade exigida pelo Stripe. O titular autorizou uma chave exclusiva do servidor: escrita em Customers, Checkout Sessions e Customer Portal; leitura em Products, Prices, Invoices e Subscriptions. Esses acessos foram revisados no resumo do formulário.
+- `STRIPE_PRICE_PRO_MENSAL`, `STRIPE_WEBHOOK_SECRET` e `STRIPE_SECRET_KEY` foram salvas em produção na Vercel; os segredos estão marcados como sensíveis. A cópia local fica no arquivo ignorado `.vercel/stripe-producao.env`.
+- O titular concluiu a verificação e emitiu a chave restrita exclusiva do servidor (`rk_live_`): escrita em Customers, Checkout Sessions e Customer Portal; leitura em Products, Prices, Invoices e Subscriptions. A consulta do preço real confirmou BRL 999/mês e o portal ativo com cancelamento ao fim. A chave foi guardada em arquivo ignorado, sem alterar `.env.local`.
+- O webhook reconhece tanto chaves padrão quanto restritas (`sk_` e `rk_`), exige que teste/produção coincidam com o evento assinado e rejeita prefixos desconhecidos. Os testes cobrem os quatro prefixos e a rejeição do ambiente oposto.
 - Os registros A do domínio e de `www` foram salvos no Registro.br apontando para `76.76.21.21`, conforme instrução da Vercel. A resolução pública e o HTTPS ainda estavam pendentes na última conferência.
 
-Não houve cobrança real nem criação de cliente de produção. A API do site continua com pagamentos indisponíveis enquanto faltar a chave. Antes de divulgar assinaturas, concluir a chave, publicar e validar domínio, Google e entrega do webhook em produção.
+Não houve cobrança real nem criação de cliente de produção. Antes de divulgar assinaturas, confirmar as três variáveis na publicação, validar domínio, Google e entrega do webhook em produção.
 
 ## Validação com o serviço Stripe
 
@@ -43,7 +44,7 @@ Esses testes locais com a área restrita não comprovam funcionamento das chaves
 
 ## Antes de habilitar pagamentos reais
 
-1. O titular conclui a verificação de identidade exigida para emitir a chave autorizada. Guardar a chave somente no servidor e na variável protegida de produção da Vercel, preservando a separação da área restrita.
+1. Guardar a chave restrita somente no servidor e na variável protegida de produção da Vercel, preservando a separação da área restrita.
 2. Confirmar propagação DNS/HTTPS e login Google no domínio definitivo.
 3. Fazer novo deploy com as três variáveis Stripe de produção e conferir a resposta da API e do webhook. Não usar IDs da área restrita em produção.
 4. Conferir sincronização, cancelamento e acesso no ambiente publicado. O retorno do Checkout não concede Pro; a concessão depende da confirmação do webhook.
