@@ -1,10 +1,6 @@
-/**
- * Marcas de caneta, desenhadas em SVG.
- *
- * Os traços usam `pathLength="1"` para a animação de "riscar" (ver `.traco` em
- * `globals.css`) valer para qualquer tamanho. Sem animação para quem pediu
- * menos movimento: o CSS respeita `prefers-reduced-motion`.
- */
+import { FiCheck, FiPlay, FiX } from 'react-icons/fi';
+
+/** Ícones funcionais do React Icons e o sublinhado decorativo da marca. */
 
 interface MarcaProps {
   tamanho?: number;
@@ -13,35 +9,12 @@ interface MarcaProps {
 
 /** O visto verde do professor. */
 export function Tique({ tamanho = 22, className }: MarcaProps) {
-  return (
-    <svg width={tamanho} height={tamanho} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
-      <path
-        className="traco"
-        pathLength={1}
-        d="M3.8 12.6 9.4 18.4 20.4 5.2"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <FiCheck size={tamanho} strokeWidth={3} aria-hidden="true" focusable="false" className={className} />;
 }
 
 /** O xis vermelho: "ainda não". */
 export function Xis({ tamanho = 22, className }: MarcaProps) {
-  return (
-    <svg width={tamanho} height={tamanho} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
-      <path
-        className="traco"
-        pathLength={1}
-        d="M5.6 5.4 18.2 18.6M18.4 5.6 5.8 18.4"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+  return <FiX size={tamanho} strokeWidth={3} aria-hidden="true" focusable="false" className={className} />;
 }
 
 /** O sublinhado ondulado, como um rabisco de caneta. */
@@ -69,9 +42,5 @@ export function Ondulado({ className }: { className?: string }) {
 
 /** Triângulo de "rodar". */
 export function Rodar({ tamanho = 16 }: { tamanho?: number }) {
-  return (
-    <svg width={tamanho} height={tamanho} viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-      <path d="M4 2.6v10.8a.6.6 0 0 0 .92.5l8.4-5.4a.6.6 0 0 0 0-1L4.92 2.1A.6.6 0 0 0 4 2.6Z" fill="currentColor" />
-    </svg>
-  );
+  return <FiPlay size={tamanho} fill="currentColor" aria-hidden="true" focusable="false" />;
 }

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { FiUser } from 'react-icons/fi';
 import { contaCliente } from '@/conta/cliente';
 import { incorporarProgresso } from '@/conta/vincular';
 
@@ -28,6 +29,7 @@ export function ContaNavegacao() {
   }, [usuario, isPending, error, caminho]);
   return (
     <Link href="/conta" aria-current={caminho.startsWith('/conta') ? 'page' : undefined}>
+      <FiUser size={17} aria-hidden="true" focusable="false" />
       {data ? 'Minha conta' : 'Entrar'}
     </Link>
   );
