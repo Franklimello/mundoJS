@@ -46,7 +46,8 @@ O limite global da prévia não muda as franquias por plano: 1 pergunta sem cont
 
 - [ ] Confirmar deployment concluído e domínio apontando para a versão esperada.
 - [x] Adicionar `mundojavascript.com.br` aos domínios autorizados do Firebase Authentication.
-- [ ] Configurar os registros A do domínio e de `www` para `76.76.21.21`, conforme orientação da Vercel, e validar DNS/HTTPS. Em 03/11/2026, o Registro.br ainda bloqueava a edição durante a transição inicial do domínio; nenhum registro foi salvo.
+- [x] Configurar os registros A do domínio e de `www` para `76.76.21.21`, conforme orientação da Vercel. O Registro.br confirmou a zona salva em 03/11/2026, após liberar a edição.
+- [ ] Confirmar a propagação pública dos registros e o HTTPS no domínio definitivo.
 - [ ] Conferir páginas, persistência de visitante, Google, troca de dispositivo e conteúdo Pro bloqueado.
 - [ ] Confirmar que cadastro/recuperação por e-mail não são oferecidos nesta prévia.
 - [ ] Confirmar que o pagamento segue indisponível sem as três variáveis Stripe.

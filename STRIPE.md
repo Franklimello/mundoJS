@@ -4,13 +4,25 @@ Configuração realizada em 03/11/2026, na conta separada **MundoJS**.
 
 ## Ambientes
 
-- Conta de produção: `acct_1UXlzeLV72qO6IRG`. A ativação Payments ainda exige os dados do responsável, tipo de empresa/CPF ou CNPJ, conta bancária e envio pelo titular.
+- Conta de produção: `acct_1UXlzeLV72qO6IRG`. O titular concluiu a ativação Payments. A API confirmou `charges_enabled=true`, `payouts_enabled=true`, `details_submitted=true` e nenhuma pendência de verificação.
 - Área restrita: `acct_1UXlzoPvZSqQH4hp`, sem movimentação financeira real.
 - Produto de teste: `mundojs_pro_mensal`, **MundoJS Pro**.
 - Preço de teste: `price_1UXm2CPvZSqQH4hp3hDcnMGe`, BRL 999 centavos, mensal, quantidade fixa 1.
 - Portal de teste padrão: `bpc_1UXm2WPvZSqQH4hpNytot2P5`, com faturas, atualização de cartão e cancelamento ao fim do ciclo. Troca de preço/quantidade, pausa e login público do portal desabilitados.
 
 As credenciais de teste ficam no arquivo ignorado `.vercel/stripe-teste.env`. Não foram adicionadas ao ambiente de produção da Vercel. O arquivo `.env.local` foi preservado. Não publique segredos nem compartilhe sessões do portal/Checkout.
+
+## Configuração de produção preparada
+
+- Produto: `prod_VYuGQmJi0Bjacm`, **MundoJS Pro**.
+- Preço: `price_1UXmReLV72qO6IRGymxMA72N`, **BRL 9,99 por mês**.
+- Portal padrão: `bpc_1UXmWWLV72qO6IRGethwwxmR`, com faturas, atualização de cartão e cancelamento ao fim do ciclo. Troca de plano/quantidade e alterações cadastrais desabilitadas.
+- Webhook ativo: `we_1UXmfULV72qO6IRG4pZEzNk8`, em `https://mundojavascript.com.br/api/stripe/webhook`, com os sete eventos da integração, payload snapshot e API `2026-10-28.endive`, conferida no SDK instalado.
+- `STRIPE_PRICE_PRO_MENSAL` e `STRIPE_WEBHOOK_SECRET` foram salvas em produção na Vercel. O segredo também está em arquivo ignorado, `.vercel/stripe-producao.env`.
+- A emissão de `STRIPE_SECRET_KEY` ainda aguarda a verificação de identidade exigida pelo Stripe. O titular autorizou uma chave exclusiva do servidor: escrita em Customers, Checkout Sessions e Customer Portal; leitura em Products, Prices, Invoices e Subscriptions. Esses acessos foram revisados no resumo do formulário.
+- Os registros A do domínio e de `www` foram salvos no Registro.br apontando para `76.76.21.21`, conforme instrução da Vercel. A resolução pública e o HTTPS ainda estavam pendentes na última conferência.
+
+Não houve cobrança real nem criação de cliente de produção. A API do site continua com pagamentos indisponíveis enquanto faltar a chave. Antes de divulgar assinaturas, concluir a chave, publicar e validar domínio, Google e entrega do webhook em produção.
 
 ## Validação com o serviço Stripe
 
@@ -31,11 +43,9 @@ Esses testes locais com a área restrita não comprovam funcionamento das chaves
 
 ## Antes de habilitar pagamentos reais
 
-1. O titular conclui **Ativar Payments** na conta MundoJS. Tipo de empresa e dados fiscais precisam ser escolhidos pelo responsável; o painel avisa que não poderão ser alterados após verificação.
-2. Criar/copiar o produto e preço na conta de produção. IDs da área restrita não funcionam em produção.
-3. Repetir a configuração do portal na conta de produção.
-4. Com DNS/HTTPS e login Google funcionando no domínio definitivo, registrar `https://mundojavascript.com.br/api/stripe/webhook` com os sete eventos listados no README e a versão compatível do SDK.
-5. Configurar na Vercel as três variáveis de produção: `STRIPE_SECRET_KEY`, `STRIPE_PRICE_PRO_MENSAL` e `STRIPE_WEBHOOK_SECRET`. Fazer novo deploy revisado.
-6. Conferir sincronização, cancelamento e acesso no ambiente publicado. O retorno do Checkout não concede Pro; a concessão depende da confirmação do webhook.
+1. O titular conclui a verificação de identidade exigida para emitir a chave autorizada. Guardar a chave somente no servidor e na variável protegida de produção da Vercel, preservando a separação da área restrita.
+2. Confirmar propagação DNS/HTTPS e login Google no domínio definitivo.
+3. Fazer novo deploy com as três variáveis Stripe de produção e conferir a resposta da API e do webhook. Não usar IDs da área restrita em produção.
+4. Conferir sincronização, cancelamento e acesso no ambiente publicado. O retorno do Checkout não concede Pro; a concessão depende da confirmação do webhook.
 
 Referências: [testar Billing](https://docs.stripe.com/billing/testing), [portal do cliente](https://docs.stripe.com/customer-management/configure-portal) e [webhooks](https://docs.stripe.com/webhooks).
