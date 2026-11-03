@@ -15,7 +15,14 @@ export function generateStaticParams() {
 }
 export async function generateMetadata({ params }: Parametros): Promise<Metadata> {
   const projeto = buscarProjeto((await params).trilha);
-  return projeto ? { title: projeto.titulo, description: projeto.resumo } : {};
+  return projeto
+    ? {
+        title: projeto.titulo,
+        description: projeto.resumo,
+        alternates: { canonical: `/projetos/${projeto.trilha}` },
+        robots: { index: false, follow: true },
+      }
+    : {};
 }
 export default async function Projeto({ params }: Parametros) {
   const projeto = buscarProjeto((await params).trilha);

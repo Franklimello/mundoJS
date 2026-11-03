@@ -1,10 +1,13 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { FolhaDaVitrine } from '@/components/Folhas';
 import { ContagemDaTrilha } from '@/components/Progresso';
 import { ContinuarEstudando } from '@/components/ContinuarEstudando';
 import { MedirVisita } from '@/components/MedirVisita';
 import { todasAsLicoes, trilhas } from '@/conteudo';
 import { trilhaGratuita } from '@/conta/planos';
+
+export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 export default function Inicio() {
   return (

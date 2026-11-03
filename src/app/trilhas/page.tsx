@@ -3,7 +3,12 @@ import { TrilhaRecolhivel } from '@/components/TrilhaRecolhivel';
 import { trilhas } from '@/conteudo';
 import { temProAtual } from '@/servidor/acesso-conteudo';
 
-export const metadata: Metadata = { title: 'Trilhas' };
+export const metadata: Metadata = {
+  title: 'Trilhas',
+  description:
+    'Estude JavaScript do zero, listas, funções, código assíncrono e DOM. Conheça a trilha gratuita e as trilhas Pro do MundoJS.',
+  alternates: { canonical: '/trilhas' },
+};
 export const dynamic = 'force-dynamic';
 
 export default async function Trilhas() {

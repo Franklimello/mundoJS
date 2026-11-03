@@ -6,6 +6,7 @@ import { trilhas, todasAsLicoes } from '@/conteudo';
 const totalExercicios = trilhas.flatMap(todasAsLicoes).reduce((total, licao) => total + licao.exercicios.length, 0);
 export const metadata: Metadata = {
   title: 'Planos',
+  alternates: { canonical: '/planos' },
   description:
     'Comece com JavaScript do zero grátis. Libere todas as trilhas, projetos e mais ajuda no Pro por R$ 9,99 ao mês.',
 };
