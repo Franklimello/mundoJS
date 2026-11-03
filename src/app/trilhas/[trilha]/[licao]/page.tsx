@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { CertificadoDaTrilha } from '@/components/Progresso';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Conteudo } from '@/components/Conteudo';
@@ -89,22 +90,28 @@ export default async function PaginaDaLicao({ params }: Parametros) {
         </>
       }
       depois={
-        <nav className="licao-navegacao" aria-label="Entre as lições">
-          {anterior ? (
-            <Link href={href(anterior.licao.slug)}>
-              <span className="navegacao-sentido">Anterior</span>
-              {anterior.licao.titulo}
-            </Link>
-          ) : (
-            <span />
-          )}
-          {proxima && (
-            <Link href={href(proxima.licao.slug)} className="navegacao-proxima">
-              <span className="navegacao-sentido">Próxima</span>
-              {proxima.licao.titulo}
-            </Link>
-          )}
-        </nav>
+        <>
+          <CertificadoDaTrilha
+            trilha={trilha.slug}
+            licoes={todasAsLicoes(trilha).map((licao) => ({ slug: licao.slug, total: licao.exercicios.length }))}
+          />
+          <nav className="licao-navegacao" aria-label="Entre as lições">
+            {anterior ? (
+              <Link href={href(anterior.licao.slug)}>
+                <span className="navegacao-sentido">Anterior</span>
+                {anterior.licao.titulo}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {proxima && (
+              <Link href={href(proxima.licao.slug)} className="navegacao-proxima">
+                <span className="navegacao-sentido">Próxima</span>
+                {proxima.licao.titulo}
+              </Link>
+            )}
+          </nav>
+        </>
       }
     />
   );

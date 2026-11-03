@@ -72,6 +72,9 @@ function PainelConta({ id, nome, email }: { id: string; nome: string; email: str
         </p>
       )}
       <div className="conta-acoes">
+        <Link href="/conta/certificados" className="botao botao-leve">
+          Meus certificados
+        </Link>
         <Link href="/conta/plano" className="botao botao-leve">
           Meu plano e uso do tutor
         </Link>

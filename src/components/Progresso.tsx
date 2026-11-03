@@ -2,6 +2,30 @@
 
 import { sincronizarProgresso, useProgresso } from '@/progresso/armazem';
 import { Tique } from './Marcas';
+import Link from 'next/link';
+import { FiAward } from 'react-icons/fi';
+
+export function CertificadoDaTrilha({ trilha, licoes }: { trilha: string; licoes: { slug: string; total: number }[] }) {
+  const { pronto, exercicioConcluido, erro } = useProgresso();
+  if (
+    !pronto ||
+    erro ||
+    !licoes.length ||
+    !licoes.every(
+      (licao) =>
+        licao.total > 0 &&
+        Array.from({ length: licao.total }, (_, i) => exercicioConcluido(trilha, licao.slug, i)).every(Boolean),
+    )
+  )
+    return null;
+  return (
+    <p className="conta-acoes">
+      <Link className="botao botao-principal" href="/conta/certificados">
+        <FiAward aria-hidden="true" /> Trilha concluída! Ver meu certificado
+      </Link>
+    </p>
+  );
+}
 
 export function AvisoDoProgresso() {
   const { erro } = useProgresso();

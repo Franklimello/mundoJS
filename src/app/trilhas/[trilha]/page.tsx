@@ -6,6 +6,7 @@ import { ResultadoTrilha } from '@/components/ResultadoTrilha';
 import { buscarTrilha, todasAsLicoes, trilhas } from '@/conteudo';
 import { trilhaGratuita } from '@/conta/planos';
 import { temProAtual } from '@/servidor/acesso-conteudo';
+import { CertificadoDaTrilha } from '@/components/Progresso';
 
 type Parametros = { params: Promise<{ trilha: string }> };
 export const dynamic = 'force-dynamic';
@@ -47,6 +48,10 @@ export default async function PaginaDaTrilha({ params }: Parametros) {
       )}
       <ResultadoTrilha trilha={trilha.slug} />
       <Sumario trilha={trilha} pro={pro} />
+      <CertificadoDaTrilha
+        trilha={trilha.slug}
+        licoes={todasAsLicoes(trilha).map((licao) => ({ slug: licao.slug, total: licao.exercicios.length }))}
+      />
     </div>
   );
 }
