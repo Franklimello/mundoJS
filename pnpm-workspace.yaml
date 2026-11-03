@@ -7,3 +7,9 @@ allowBuilds:
   '@firebase/util': false
   protobufjs: false
   unrs-resolver: false
+
+# Firestore ainda fixa ~1.9.0, que possui alertas GHSA-m9gg-hp2v-232j e
+# GHSA-f596-whhp-79r4. Mantemos a mesma major com a correcao aplicada.
+# O MundoJS usa Firebase App/Auth; nao utiliza o cliente Firestore.
+overrides:
+  '@firebase/firestore>@grpc/grpc-js': 1.14.7

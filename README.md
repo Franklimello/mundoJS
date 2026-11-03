@@ -250,6 +250,14 @@ Os testes usam Stripe simulado e assinaturas de webhook geradas localmente; com 
 
 ## Publicando no Vercel
 
+### Verificações automáticas
+
+O workflow [verificar.yml](.github/workflows/verificar.yml) roda em pushes e pull requests: instala o lockfile sem alterar versões, audita dependências, aplica migrações em um Postgres 17 descartável, gera os tipos do Next.js e executa tipagem, lint, todos os testes e build. Ele usa Node.js 22 atualizado e pnpm na versão de `packageManager`. As ações estão fixadas por commit, têm permissão de leitura e não mantêm credenciais no checkout. Não utiliza segredos reais de autenticação, Stripe, Gemini ou banco de produção.
+
+Para impedir a integração de uma alteração com falha, configure o check **Tipagem, testes, seguranca e build** como obrigatório nas regras da `main` e no fluxo de publicação da hospedagem. O workflow não publica a aplicação. A auditoria completa bloqueia alertas altos/críticos; atualmente resta um alerta moderado de minimatch nas ferramentas de lint, registrado em [PRODUCAO.md](PRODUCAO.md#p02--resolver-o-aviso-de-segurança). A auditoria de dependências de produção não aponta alertas conhecidos após esta atualização.
+
+### Publicação
+
 1. Suba o repositório para o GitHub.
 2. Em [vercel.com/new](https://vercel.com/new), importe o repositório. Configure `DATABASE_URL`, `BETTER_AUTH_URL`, `BETTER_AUTH_SECRET`, `AUTH_SMTP_URL` e `AUTH_EMAIL_FROM`. Para o tutor, configure também `GEMINI_API_KEY`. Aplique `pnpm db:migrate` usando a conexão direta antes da publicação. Cada ambiente deve usar seu próprio banco e segredos.
 3. Cada push na `main` publica; cada branch ganha uma prévia.

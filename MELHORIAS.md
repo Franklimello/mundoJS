@@ -21,6 +21,10 @@ Para preparar o lançamento, acompanhar a lista priorizada com critérios de con
 - [ ] Configurar as chaves, o preço e o portal Stripe e validar o fluxo completo no ambiente de teste da conta.
 - [ ] Avaliar as melhorias com dados reais de aprendizagem, retorno e custo de IA.
 - [ ] Preparar versões da marca para cabeçalho e símbolo pequeno.
-- [ ] Antes da publicação, corrigir o aviso de segurança do Next.js e configurar SMTP real.
+- [x] Atualizar Next.js para 16.4.4, remover o aviso anterior de vulnerabilidade e validar testes/build; auditoria de produção sem alertas conhecidos.
+- [x] Preparar verificações automáticas no GitHub com auditoria, migrações, tipagem, lint, testes com Postgres e build.
+- [ ] Confirmar execução remota e exigir aprovação do check na proteção da main/publicação.
+- [ ] Atualizar as ferramentas de lint para eliminar o alerta moderado transitivo de minimatch.
+- [ ] Antes da publicação, configurar SMTP real.
 
 O histórico adaptativo usa sinais dos últimos 30 dias, sem armazenar código ou conversas nas métricas. Esses sinais não comprovam domínio de um conceito. A qualidade pedagógica precisa ser acompanhada com usuários reais; os testes automatizados verificam os contratos, a privacidade entre identidades e as orientações enviadas ao modelo.
