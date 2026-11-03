@@ -17,15 +17,24 @@ export function AvisoDoProgresso() {
 }
 
 /** "3 de 9 lições concluídas". Antes de ler o progresso salvo, só o total, para não piscar "0 de 9". */
-export function ContagemDaTrilha({ trilha, licoes }: { trilha: string; licoes: { slug: string; total: number }[] }) {
+export function ContagemDaTrilha({
+  trilha,
+  licoes,
+  emLinha = false,
+}: {
+  trilha: string;
+  licoes: { slug: string; total: number }[];
+  emLinha?: boolean;
+}) {
   const { pronto, quantasConcluidas } = useProgresso();
   const feitas = quantasConcluidas(trilha, licoes);
   const totalExercicios = licoes.reduce((soma, licao) => soma + licao.total, 0);
+  const Elemento = emLinha ? 'span' : 'p';
   return (
-    <p className="trilha-contagem">
+    <Elemento className="trilha-contagem">
       {pronto && feitas > 0 ? `${feitas} de ${licoes.length} lições concluídas` : `${licoes.length} lições`}
       {` · ${totalExercicios} exercícios`}
-    </p>
+    </Elemento>
   );
 }
 

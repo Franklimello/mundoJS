@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Sumario } from '@/components/Sumario';
+import { TrilhaRecolhivel } from '@/components/TrilhaRecolhivel';
 import { trilhas } from '@/conteudo';
 import { temProAtual } from '@/servidor/acesso-conteudo';
 
@@ -16,7 +16,7 @@ export default async function Trilhas() {
       </p>
       <div className="trilhas-completas">
         {trilhas.map((trilha) => (
-          <Sumario key={trilha.slug} trilha={trilha} comTitulo pro={pro} />
+          <TrilhaRecolhivel key={trilha.slug} trilha={trilha} pro={pro} />
         ))}
       </div>
     </div>
