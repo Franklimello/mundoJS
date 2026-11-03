@@ -22,7 +22,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Parametros): Promise<Metadata> {
   const { trilha, licao } = await params;
   const achada = buscarLicao(trilha, licao);
-  return achada ? { title: `${achada.licao.titulo} — ${achada.trilha.titulo}`, description: achada.licao.resumo } : {};
+  return achada
+    ? {
+        title: `${achada.licao.titulo} — ${achada.trilha.titulo}`,
+        description: achada.licao.resumo,
+        alternates: { canonical: `/trilhas/${achada.trilha.slug}/${achada.licao.slug}` },
+        ...(!trilhaGratuita(achada.trilha.slug) && { robots: { index: false, follow: true } }),
+      }
+    : {};
 }
 
 export default async function PaginaDaLicao({ params }: Parametros) {

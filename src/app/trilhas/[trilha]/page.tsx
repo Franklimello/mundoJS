@@ -16,7 +16,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Parametros): Promise<Metadata> {
   const trilha = buscarTrilha((await params).trilha);
-  return trilha ? { title: trilha.titulo, description: trilha.descricao } : {};
+  return trilha
+    ? { title: trilha.titulo, description: trilha.descricao, alternates: { canonical: `/trilhas/${trilha.slug}` } }
+    : {};
 }
 
 export default async function PaginaDaTrilha({ params }: Parametros) {

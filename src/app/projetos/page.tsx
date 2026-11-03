@@ -6,6 +6,7 @@ import { temProAtual } from '@/servidor/acesso-conteudo';
 export const metadata: Metadata = {
   title: 'Projetos práticos',
   description: 'Junte o que aprendeu e construa seu próprio projeto JavaScript.',
+  alternates: { canonical: '/projetos' },
 };
 export const dynamic = 'force-dynamic';
 export default async function Projetos() {

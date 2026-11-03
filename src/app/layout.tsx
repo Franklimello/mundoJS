@@ -3,12 +3,14 @@ import { Atkinson_Hyperlegible_Mono, Atkinson_Hyperlegible_Next, Bricolage_Grote
 import { Cabecalho } from '@/components/Cabecalho';
 import { AvisoDoProgresso } from '@/components/Progresso';
 import './globals.css';
+import { URL_DO_SITE } from '@/seo/site';
 
 const titulos = Bricolage_Grotesque({ subsets: ['latin'], variable: '--fonte-titulo', display: 'swap' });
 const textos = Atkinson_Hyperlegible_Next({ subsets: ['latin'], variable: '--fonte-texto', display: 'swap' });
 const codigos = Atkinson_Hyperlegible_Mono({ subsets: ['latin'], variable: '--fonte-codigo', display: 'swap' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(URL_DO_SITE),
   title: { default: 'MundoJS — aprenda JavaScript escrevendo código', template: '%s · MundoJS' },
   description:
     'Lições curtas de JavaScript com um editor que roda no navegador e um corretor que confere cada exercício na hora. Sem instalar nada.',

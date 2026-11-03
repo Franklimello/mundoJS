@@ -3,6 +3,7 @@ import { FolhaDoRascunho } from '@/components/Folhas';
 
 export const metadata: Metadata = {
   title: 'Rascunho',
+  alternates: { canonical: '/rascunho' },
   description: 'Um editor livre de JavaScript e páginas HTML/CSS, com prévia visual.',
 };
 
