@@ -3,6 +3,10 @@ import { after } from 'next/server';
 import { banco } from './banco';
 import { enviarEmailConta } from './email';
 import { firebaseGoogle } from './firebase-google';
+import { APIError } from 'better-auth/api';
+import { emailSenhaHabilitados } from './configuracao-conta';
+
+const emailHabilitado = emailSenhaHabilitados();
 
 function agendarEmail(email: string, assunto: string, texto: string) {
   after(async () => {
@@ -51,12 +55,13 @@ export const auth = betterAuth({
     },
   },
   emailAndPassword: {
-    enabled: true,
+    enabled: emailHabilitado,
     minPasswordLength: 12,
     maxPasswordLength: 128,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
+      if (!emailHabilitado) throw new APIError('FORBIDDEN', { message: 'Use o login Google nesta prévia.' });
       agendarEmail(
         user.email,
         'Redefina sua senha no MundoJS',
@@ -65,10 +70,11 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendOnSignUp: true,
-    sendOnSignIn: true,
+    sendOnSignUp: emailHabilitado,
+    sendOnSignIn: emailHabilitado,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
+      if (!emailHabilitado) throw new APIError('FORBIDDEN', { message: 'Use o login Google nesta prévia.' });
       agendarEmail(
         user.email,
         'Confirme seu e-mail no MundoJS',

@@ -86,7 +86,7 @@ function PainelConta({ id, nome, email }: { id: string; nome: string; email: str
   );
 }
 
-export function Conta({ criar = false }: { criar?: boolean }) {
+export function Conta({ criar = false, emailHabilitado = true }: { criar?: boolean; emailHabilitado?: boolean }) {
   const { data: sessao, isPending, error: erroSessao, refetch } = contaCliente.useSession();
   const [modo, setModo] = useState<'entrar' | 'criar'>(criar ? 'criar' : 'entrar');
   const [email, setEmail] = useState('');
@@ -170,33 +170,41 @@ export function Conta({ criar = false }: { criar?: boolean }) {
 
   return (
     <div className="conta-cartao">
-      <div className="conta-modos" role="group" aria-label="Acesso à conta">
-        <button
-          type="button"
-          className="botao botao-leve"
-          aria-pressed={modo === 'entrar'}
-          onClick={() => {
-            setModo('entrar');
-            setErro(null);
-            setAviso(null);
-          }}
-        >
-          Já tenho conta
-        </button>
-        <button
-          type="button"
-          className="botao botao-leve"
-          aria-pressed={modo === 'criar'}
-          onClick={() => {
-            setModo('criar');
-            setErro(null);
-            setAviso(null);
-          }}
-        >
-          Criar minha conta
-        </button>
-      </div>
-      <h2>{modo === 'entrar' ? 'Entrar na minha conta' : 'Criar minha conta'}</h2>
+      {emailHabilitado && (
+        <div className="conta-modos" role="group" aria-label="Acesso à conta">
+          <button
+            type="button"
+            className="botao botao-leve"
+            aria-pressed={modo === 'entrar'}
+            onClick={() => {
+              setModo('entrar');
+              setErro(null);
+              setAviso(null);
+            }}
+          >
+            Já tenho conta
+          </button>
+          <button
+            type="button"
+            className="botao botao-leve"
+            aria-pressed={modo === 'criar'}
+            onClick={() => {
+              setModo('criar');
+              setErro(null);
+              setAviso(null);
+            }}
+          >
+            Criar minha conta
+          </button>
+        </div>
+      )}
+      <h2>
+        {!emailHabilitado
+          ? 'Continue com sua conta Google'
+          : modo === 'entrar'
+            ? 'Entrar na minha conta'
+            : 'Criar minha conta'}
+      </h2>
       <p>
         O progresso e os rascunhos deste navegador serão incorporados à sua conta. Se houver versões diferentes de um
         rascunho, manteremos a mais recente e preservaremos a anterior para baixar.
@@ -210,46 +218,59 @@ export function Conta({ criar = false }: { criar?: boolean }) {
         <Image src="/google-g.png" width={20} height={20} alt="" />
         {ocupadoGoogle ? 'Conectando com Google…' : 'Continuar com Google'}
       </button>
-      <div className="conta-divisor">
-        <span>ou use seu e-mail</span>
-      </div>
-      <form onSubmit={(event) => void enviar(event)} className="conta-formulario" aria-busy={ocupado || ocupadoGoogle}>
-        <label htmlFor="conta-email">Seu e-mail</label>
-        <input
-          id="conta-email"
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-          autoComplete={modo === 'entrar' ? 'username' : 'email'}
-          maxLength={254}
-          spellCheck={false}
-        />
-        <label htmlFor="conta-senha">Sua senha</label>
-        <input
-          id="conta-senha"
-          type="password"
-          value={senha}
-          onChange={(event) => setSenha(event.target.value)}
-          required
-          minLength={modo === 'criar' ? 12 : 1}
-          maxLength={128}
-          autoComplete={modo === 'criar' ? 'new-password' : 'current-password'}
-          aria-describedby={modo === 'criar' ? 'conta-senha-ajuda' : undefined}
-        />
-        {modo === 'criar' && (
-          <p id="conta-senha-ajuda" className="conta-discreto">
-            Use pelo menos 12 caracteres. Uma frase fácil de lembrar também funciona.
-          </p>
-        )}
-        <button type="submit" className="botao botao-principal" disabled={ocupado || ocupadoGoogle}>
-          {ocupado
-            ? 'Aguarde…'
-            : modo === 'entrar'
-              ? 'Entrar e recuperar meu progresso'
-              : 'Criar conta e salvar meu progresso'}
-        </button>
-      </form>
+      {!emailHabilitado && (
+        <p>
+          Nesta prévia, use o Google para entrar ou criar sua conta. O acesso por e-mail e senha será liberado depois.
+        </p>
+      )}
+      {emailHabilitado && (
+        <>
+          <div className="conta-divisor">
+            <span>ou use seu e-mail</span>
+          </div>
+          <form
+            onSubmit={(event) => void enviar(event)}
+            className="conta-formulario"
+            aria-busy={ocupado || ocupadoGoogle}
+          >
+            <label htmlFor="conta-email">Seu e-mail</label>
+            <input
+              id="conta-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              autoComplete={modo === 'entrar' ? 'username' : 'email'}
+              maxLength={254}
+              spellCheck={false}
+            />
+            <label htmlFor="conta-senha">Sua senha</label>
+            <input
+              id="conta-senha"
+              type="password"
+              value={senha}
+              onChange={(event) => setSenha(event.target.value)}
+              required
+              minLength={modo === 'criar' ? 12 : 1}
+              maxLength={128}
+              autoComplete={modo === 'criar' ? 'new-password' : 'current-password'}
+              aria-describedby={modo === 'criar' ? 'conta-senha-ajuda' : undefined}
+            />
+            {modo === 'criar' && (
+              <p id="conta-senha-ajuda" className="conta-discreto">
+                Use pelo menos 12 caracteres. Uma frase fácil de lembrar também funciona.
+              </p>
+            )}
+            <button type="submit" className="botao botao-principal" disabled={ocupado || ocupadoGoogle}>
+              {ocupado
+                ? 'Aguarde…'
+                : modo === 'entrar'
+                  ? 'Entrar e recuperar meu progresso'
+                  : 'Criar conta e salvar meu progresso'}
+            </button>
+          </form>
+        </>
+      )}
       {erro && (
         <p role="alert" className="conta-erro">
           {erro}
@@ -261,7 +282,7 @@ export function Conta({ criar = false }: { criar?: boolean }) {
         </p>
       )}
       <div className="conta-acoes">
-        <Link href="/conta/recuperar">Esqueci minha senha</Link>
+        {emailHabilitado && <Link href="/conta/recuperar">Esqueci minha senha</Link>}
         <Link href="/trilhas">Continuar sem cadastro</Link>
       </div>
     </div>

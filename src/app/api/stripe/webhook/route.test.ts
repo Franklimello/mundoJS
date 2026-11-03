@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({ processar: vi.fn(), indisponivel: false }));
-vi.mock('@/servidor/banco', () => ({ banco: () => ({}) }));
+vi.mock('@/servidor/banco', () => ({ bancoCobranca: () => ({}) }));
 vi.mock('@/servidor/cobranca', () => ({
   stripe: () => {
     if (mocks.indisponivel) throw new Error('Sem chave');

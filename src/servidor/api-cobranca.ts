@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sessaoAtual } from './sessao';
-import { banco } from './banco';
+import { banco, bancoCobranca } from './banco';
 import { criarCheckout, criarPortal, ErroCobranca } from './cobranca';
 
 export const headersCobranca = { 'Cache-Control': 'private, no-store' };
@@ -40,7 +40,9 @@ export async function acaoCobranca(request: Request, acao: 'checkout' | 'portal'
     if (corpo?.identidade !== sessao.user.id)
       throw new ErroCobranca(409, 'Sua conta mudou. Atualize esta página antes de continuar.');
     const url =
-      acao === 'checkout' ? await criarCheckout(banco(), sessao.user) : await criarPortal(banco(), sessao.user.id);
+      acao === 'checkout'
+        ? await criarCheckout(bancoCobranca(), sessao.user)
+        : await criarPortal(banco(), sessao.user.id);
     return NextResponse.json({ url }, { headers: headersCobranca });
   } catch (erro) {
     return NextResponse.json(
