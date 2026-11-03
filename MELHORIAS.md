@@ -2,6 +2,9 @@
 
 Lista retomada da avaliação do produto e atualizada conforme as entregas.
 
+- [x] Emitir certificados privados por trilha concluída, com nome confirmado, registro único e download direto em PDF.
+- [x] Reunir próximo exercício, progresso por trilha, prática dos últimos sete dias e certificados no painel Meu aprendizado, respeitando o plano da conta.
+
 Para preparar o lançamento, acompanhar a lista priorizada com critérios de conclusão em [PRODUCAO.md](PRODUCAO.md).
 
 - [x] Retomar a última lição e selecionar o primeiro exercício pendente.
