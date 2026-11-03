@@ -200,6 +200,59 @@ pre {
   color: var(--tinta-forte);
 }
 
+.menu-mobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--cor-traco);
+  border-radius: 0.5rem;
+  background: var(--papel);
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.menu-mobile:hover {
+  background: var(--marca-texto);
+}
+
+@media (max-width: 48rem) {
+  .cabecalho-interno {
+    flex-wrap: wrap;
+  }
+
+  .menu-mobile {
+    display: inline-flex;
+  }
+
+  .navegacao-principal {
+    display: none;
+    flex-basis: 100%;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--cor-traco);
+  }
+
+  .navegacao-principal[data-aberto='true'] {
+    display: block;
+  }
+
+  .navegacao-principal .nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navegacao-principal .nav a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+    border-radius: 0.25rem;
+  }
+}
+
 .rodape {
   margin-top: 4rem;
   padding-block: 1.5rem;
@@ -274,6 +327,63 @@ pre {
 }
 
 /* ------------------------------------------------------------------- seções */
+
+.web-modos,
+.web-abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.web-modos [aria-pressed='true'],
+.web-abas [aria-selected='true'] {
+  background: var(--tinta);
+  color: white;
+}
+.web-abas {
+  margin: 0;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--cor-traco);
+}
+.web-abas button {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 4px;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  cursor: pointer;
+}
+.web-editor {
+  display: block;
+  width: 100%;
+  min-height: 18rem;
+  padding: 1rem;
+  resize: vertical;
+  border: 0;
+  background: var(--papel);
+  color: var(--grafite);
+  font:
+    0.95rem/1.7 var(--fonte-codigo),
+    monospace;
+  tab-size: 2;
+}
+.web-previa {
+  margin-bottom: 1.5rem;
+}
+.web-previa p {
+  color: var(--lapis);
+  font-size: 0.9rem;
+}
+.web-previa-alvo iframe {
+  display: block;
+  width: 100%;
+  min-height: 20rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 6px;
+  background: white;
+}
 
 .secao {
   padding-block: clamp(2rem, 5vw, 3.5rem);
@@ -1569,14 +1679,6 @@ pre {
 
   .trilha-linha {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .cabecalho-interno {
-    flex-wrap: wrap;
-  }
-
-  .nav {
-    gap: 1rem;
   }
 
   .folha-teclado {

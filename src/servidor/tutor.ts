@@ -61,7 +61,8 @@ export function validarPedidoTutor(valor: unknown): valor is PedidoTutor {
 }
 
 export function contextoDaLicao(pedido: PedidoTutor): string {
-  if ('livre' in pedido.contexto) return 'Editor livre de JavaScript. Ajude a aprender com o código enviado.';
+  if ('livre' in pedido.contexto)
+    return 'Editor livre de JavaScript, HTML e CSS. O código pode incluir os três arquivos identificados. Ajude com DOM e eventos quando houver uma página web. A prévia não carrega recursos externos.';
   if ('projeto' in pedido.contexto) {
     const projeto = buscarProjeto(pedido.contexto.projeto);
     if (!projeto) throw new ErroTutor(400, 'Projeto não encontrado.');
@@ -89,6 +90,11 @@ export function contextoDaLicao(pedido: PedidoTutor): string {
     enunciado: exercicio.enunciado,
     dicas: exercicio.dicas,
     objetivos: exercicio.testes.map((teste) => teste.descricao),
+    ...(exercicio.documentoInicial && {
+      ambiente:
+        'DOM no navegador, com prévia visual isolada. Use document para selecionar elementos. HTML e CSS iniciais:',
+      documentoInicial: exercicio.documentoInicial,
+    }),
   });
 }
 

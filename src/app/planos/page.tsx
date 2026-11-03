@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PlanoConta } from '@/components/PlanoConta';
 import { PERGUNTAS_GRATIS, PERGUNTAS_VISITANTE, PLANO_PRO } from '@/conta/planos';
+import { trilhas, todasAsLicoes } from '@/conteudo';
+const totalExercicios = trilhas.flatMap(todasAsLicoes).reduce((total, licao) => total + licao.exercicios.length, 0);
 export const metadata: Metadata = {
   title: 'Planos',
   description:
@@ -18,8 +20,8 @@ export default function Planos() {
         Vá além com o Pro.
       </h1>
       <p className="secao-apoio">
-        Experimente a trilha JavaScript do zero gratuitamente. No Pro, libere o curso completo com 205 exercícios, os 4
-        projetos e mais ajuda do tutor.
+        Experimente a trilha JavaScript do zero gratuitamente. No Pro, libere o curso completo com {totalExercicios}{' '}
+        exercícios, os 4 projetos e mais ajuda do tutor.
       </p>
       <div className="planos-grade">
         <section className="plano-cartao" aria-labelledby="gratis-titulo">
@@ -51,7 +53,7 @@ export default function Planos() {
           <ul>
             <li>Tudo do plano gratuito</li>
             <li>
-              <strong>Todas as trilhas e os 205 exercícios</strong>
+              <strong>Todas as trilhas e os {totalExercicios} exercícios, incluindo DOM e eventos</strong>
             </li>
             <li>4 projetos práticos para construir e compartilhar</li>
             <li>

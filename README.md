@@ -143,7 +143,11 @@ src/
 
 ## Quantidade de exercícios
 
-O curso reúne **205 exercícios**: 63 em JavaScript do zero, 42 em Listas e objetos, 57 em Listas e textos de verdade e 43 em Erros e código assíncrono. A ampliação acrescentou duas atividades a cada uma das 26 lições regulares, totalizando 52 novas atividades. Os desafios finais e os projetos integrados foram preservados.
+O curso reúne **213 exercícios**: 63 em JavaScript do zero, 42 em Listas e objetos, 57 em Listas e textos de verdade, 43 em Erros e código assíncrono e 8 em DOM e eventos. A trilha DOM tem oito lições, com seleção de elementos, textos, estilos, classes, criação de elementos, cliques, formulários e uma lista de tarefas como desafio final. Ela segue o acesso Pro das trilhas avançadas.
+
+As atividades DOM têm abas HTML, CSS e JavaScript e uma prévia interativa. Rodar recria a página; Conferir também simula as interações descritas nos testes. HTML, CSS e JavaScript são salvos juntos no mesmo rascunho Postgres, sem mudar as chaves dos exercícios antigos. O rascunho livre oferece um modo de página web separado (`rascunho-web`), preservando o rascunho JavaScript existente.
+
+A prévia mantém iframe de origem opaca com `allow-scripts allow-forms`, rede e envio de formulários bloqueados por CSP (`form-action 'none'`) e remoção de scripts, atributos de eventos e elementos ativos do HTML. A permissão de formulários permite disparar o evento nativo `submit`; o código do aluno trata esse evento com `preventDefault`. O executor JavaScript sem prévia continua com apenas `allow-scripts`. O JavaScript deve ser escrito na sua própria aba e passa pela análise e proteção de laços existentes. Os testes usam Happy DOM somente para executar as soluções de referência e os códigos iniciais confiáveis do repositório; código de usuários continua sendo executado exclusivamente no iframe do navegador. React ainda não está implementado.
 
 As atividades misturam implementação, depuração e casos de limite. Cada uma tem enunciado, dicas, código inicial, solução de referência e testes executáveis. A validação automática confere as soluções, a ausência de acertos gratuitos e a distinção entre os exercícios.
 
@@ -217,7 +221,7 @@ Em `/planos`, o lançamento tem duas opções:
 | Plano              | Preço       | Tutor                                | Conteúdo                                      |
 | ------------------ | ----------- | ------------------------------------ | --------------------------------------------- |
 | Gratuito com conta | R$ 0        | 3 perguntas por mês calendário (UTC) | JavaScript do zero completa e rascunho livre  |
-| MundoJS Pro        | R$ 9,99/mês | 100 perguntas por ciclo mensal pago  | Todas as trilhas, 205 exercícios e 4 projetos |
+| MundoJS Pro        | R$ 9,99/mês | 100 perguntas por ciclo mensal pago  | Todas as trilhas, 213 exercícios e 4 projetos |
 
 Visitantes sem conta experimentam 1 pergunta por mês neste navegador. Cada envio ao tutor conta, inclusive explicações e exemplos. Falhas conhecidas do serviço devolvem a pergunta à franquia. A reserva é atômica no Postgres; uma interrupção abrupta do processo depois da reserva pode consumir a tentativa. Perguntas não acumulam. Os limites por hora e o teto diário global continuam como proteção de custo; não há promessa de uso ilimitado. A franquia da conta é a mesma em todos os dispositivos. A redução do gratuito preserva o uso já registrado, sem reiniciar a franquia.
 

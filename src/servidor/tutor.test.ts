@@ -19,6 +19,16 @@ afterEach(() => {
 });
 
 describe('tutor Gemini', () => {
+  it('inclui o HTML e CSS iniciais de DOM sem enviar a solução nem os programas de teste', () => {
+    const contexto = JSON.parse(
+      contextoDaLicao({ ...pedido, contexto: { trilha: 'dom-e-eventos', licao: 'selecionar-elementos', indice: 0 } }),
+    );
+    expect(contexto.ambiente).toContain('DOM');
+    expect(contexto.documentoInicial.html).toContain('id="titulo"');
+    expect(contexto.documentoInicial.css).toBeTruthy();
+    expect(contexto).not.toHaveProperty('solucao');
+    expect(contexto).not.toHaveProperty('testes');
+  });
   it('substitui uma pista que trouxe código por uma orientação baseada no objetivo público', async () => {
     vi.stubGlobal(
       'fetch',

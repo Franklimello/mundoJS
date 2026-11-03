@@ -1,7 +1,9 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { type ReactNode, type Ref, useCallback, useEffect, useRef, useState } from 'react';
+import { type ReactNode, type Ref, useCallback, useEffect, useId, useRef, useState } from 'react';
+import type { DocumentoWeb } from '@/engine/documento';
+import { guardarDocumento, lerDocumento } from '@/progresso/documento';
 import { rodarNoNavegador } from '@/engine/sandbox';
 import type { ResultadoExecucao, TesteDefinicao } from '@/engine/tipos';
 import { apagarRascunho, lerRascunho, salvarRascunho } from '@/progresso/rascunhos';
@@ -20,12 +22,42 @@ const SEM_TESTES: TesteDefinicao[] = [];
 /** Quantas conferências erradas até oferecer uma solução. */
 const FALHAS_ATE_OFERECER_SOLUCAO = 3;
 
+function CampoWeb({
+  arquivo,
+  valor,
+  onChange,
+  onRodar,
+}: {
+  arquivo: 'html' | 'css';
+  valor: string;
+  onChange: (arquivo: 'html' | 'css', valor: string) => void;
+  onRodar: () => void;
+}) {
+  return (
+    <textarea
+      className="web-editor"
+      aria-label={`Editor de ${arquivo.toUpperCase()}`}
+      value={valor}
+      spellCheck={false}
+      autoCapitalize="off"
+      onChange={(evento) => onChange(arquivo, evento.target.value)}
+      onKeyDown={(evento) => {
+        if (evento.key === 'Enter' && (evento.ctrlKey || evento.metaKey)) {
+          evento.preventDefault();
+          onRodar();
+        }
+      }}
+    />
+  );
+}
+
 export interface FolhaProps {
   /** O nome da folha no alto, como "Seu código". */
   titulo: string;
   /** Descrição do campo, para leitores de tela. */
   rotuloDoEditor: string;
   codigoInicial: string;
+  documentoInicial?: DocumentoWeb;
   /** Com ela, o código é guardado no servidor e volta quando o aluno retorna. */
   chaveRascunho?: string;
   /** Com testes, aparece o botão Conferir. */
@@ -44,7 +76,7 @@ export interface FolhaProps {
   rodape?: (dados: { codigo: string; identidade?: string }) => ReactNode;
 }
 
-type Execucao = { modo: 'rodar' | 'conferir'; dados: ResultadoExecucao; codigo: string };
+type Execucao = { modo: 'rodar' | 'conferir'; dados: ResultadoExecucao; codigo: string; documento?: DocumentoWeb };
 
 /**
  * A folha pautada: editor, saída e conferência.
@@ -56,6 +88,7 @@ export function Folha({
   titulo,
   rotuloDoEditor,
   codigoInicial,
+  documentoInicial,
   chaveRascunho,
   testes = SEM_TESTES,
   solucao,
@@ -69,6 +102,11 @@ export function Folha({
   rodape,
 }: FolhaProps) {
   const [codigo, setCodigo] = useState(codigoInicial);
+  const [documento, setDocumento] = useState(documentoInicial);
+  const [aba, setAba] = useState<'javascript' | 'html' | 'css'>('javascript');
+  const idEditor = useId();
+  const previa = useRef<HTMLDivElement>(null);
+  const documentoAtual = useRef(documentoInicial);
   const [execucao, setExecucao] = useState<Execucao | null>(null);
   const [executando, setExecutando] = useState(false);
   const [falhas, setFalhas] = useState(0);
@@ -102,8 +140,13 @@ export function Folha({
       setExecutando(true);
       try {
         const codigoExecutado = codigoAtual.current;
-        const dados = await rodarNoNavegador(codigoExecutado, modo === 'conferir' ? testes : SEM_TESTES);
-        setExecucao({ modo, dados, codigo: codigoExecutado });
+        const documentoExecutado = documentoAtual.current;
+        const dados = await rodarNoNavegador(
+          codigoExecutado,
+          modo === 'conferir' ? testes : SEM_TESTES,
+          documentoExecutado && previa.current ? { documento: documentoExecutado, alvo: previa.current } : undefined,
+        );
+        setExecucao({ modo, dados, codigo: codigoExecutado, documento: documentoExecutado });
         if (contextoTutor) {
           const posicao = 'trilha' in contextoTutor ? contextoTutor : undefined;
           if (modo === 'rodar') registrarEvento({ tipo: 'codigo_rodado', posicao });
@@ -139,15 +182,20 @@ export function Folha({
       donoDoRascunho.current = salvo.identidade;
       setIdentidadeRascunho(salvo.identidade);
       if (!editado.current && salvo.codigo !== null) {
-        codigoAtual.current = salvo.codigo;
-        setCodigo(salvo.codigo);
+        const web = documentoInicial ? lerDocumento(salvo.codigo) : null;
+        codigoAtual.current = web?.javascript ?? salvo.codigo;
+        setCodigo(codigoAtual.current);
+        if (web) {
+          documentoAtual.current = web.documento;
+          setDocumento(web.documento);
+        }
       }
       setRascunhoCarregado(true);
       setErroRascunho(null);
     } catch {
       setErroRascunho('Não foi possível carregar seu rascunho.');
     }
-  }, [chaveRascunho]);
+  }, [chaveRascunho, documentoInicial]);
 
   const aoMontarOEditor = useCallback(() => {
     setEditorPronto(true);
@@ -156,16 +204,22 @@ export function Folha({
 
   const gravarRascunho = useCallback(async () => {
     if (!chaveRascunho) return;
-    const valor = codigoAtual.current;
+    const valor = documentoAtual.current
+      ? guardarDocumento(codigoAtual.current, documentoAtual.current)
+      : codigoAtual.current;
+    const inicial = documentoInicial ? guardarDocumento(codigoInicial, documentoInicial) : codigoInicial;
     try {
-      if (valor === codigoInicial) await apagarRascunho(chaveRascunho, donoDoRascunho.current);
+      if (valor === inicial) await apagarRascunho(chaveRascunho, donoDoRascunho.current);
       else await salvarRascunho(chaveRascunho, valor, donoDoRascunho.current);
-      if (codigoAtual.current === valor) pendenteDeSalvar.current = false;
+      const atual = documentoAtual.current
+        ? guardarDocumento(codigoAtual.current, documentoAtual.current)
+        : codigoAtual.current;
+      if (atual === valor) pendenteDeSalvar.current = false;
       setErroRascunho(null);
     } catch {
       setErroRascunho('Não foi possível salvar seu rascunho. Tente novamente antes de sair.');
     }
-  }, [chaveRascunho, codigoInicial]);
+  }, [chaveRascunho, codigoInicial, documentoInicial]);
 
   function alterarCodigo(valor: string) {
     editado.current = true;
@@ -174,6 +228,18 @@ export function Folha({
     setCodigo(valor);
   }
 
+  const alterarDocumento = useCallback(
+    (campo: 'html' | 'css', valor: string) => {
+      if (!documento) return;
+      editado.current = true;
+      pendenteDeSalvar.current = true;
+      const proximo = { ...documento, [campo]: valor };
+      documentoAtual.current = proximo;
+      setDocumento(proximo);
+    },
+    [documento],
+  );
+
   // Guarda o rascunho um instante depois da última tecla.
   useEffect(() => {
     if (!chaveRascunho || !rascunhoCarregado || !pendenteDeSalvar.current) return;
@@ -181,7 +247,7 @@ export function Folha({
       void gravarRascunho();
     }, 400);
     return () => clearTimeout(espera);
-  }, [codigo, chaveRascunho, rascunhoCarregado, gravarRascunho]);
+  }, [codigo, documento, chaveRascunho, rascunhoCarregado, gravarRascunho]);
 
   useEffect(() => {
     function guardarPendente() {
@@ -210,6 +276,9 @@ export function Folha({
 
   function recomecar() {
     alterarCodigo(codigoInicial);
+    documentoAtual.current = documentoInicial;
+    setDocumento(documentoInicial);
+    previa.current?.replaceChildren();
     setExecucao(null);
     setFalhas(0);
     setMostrandoSolucao(false);
@@ -222,7 +291,8 @@ export function Folha({
   const acertou = Boolean(
     conferido && !conferido.erro && conferido.testes.length > 0 && conferido.testes.every((t) => t.passou),
   );
-  const mudou = codigo !== codigoInicial;
+  const mudou =
+    codigo !== codigoInicial || documento?.html !== documentoInicial?.html || documento?.css !== documentoInicial?.css;
   const podeVerSolucao = Boolean(solucao) && falhas >= FALHAS_ATE_OFERECER_SOLUCAO && !acertou;
 
   const status = executando
@@ -282,7 +352,65 @@ export function Folha({
           </div>
         </div>
 
-        <div className="papel">
+        {documento && (
+          <div className="web-abas" role="tablist" aria-label="Arquivos da página">
+            {(['html', 'css', 'javascript'] as const).map((arquivo, indice, arquivos) => (
+              <button
+                key={arquivo}
+                id={`${idEditor}-aba-${arquivo}`}
+                type="button"
+                role="tab"
+                aria-selected={aba === arquivo}
+                aria-controls={`${idEditor}-painel-${arquivo}`}
+                tabIndex={aba === arquivo ? 0 : -1}
+                onClick={() => setAba(arquivo)}
+                onKeyDown={(evento) => {
+                  const destino =
+                    evento.key === 'ArrowRight'
+                      ? (indice + 1) % 3
+                      : evento.key === 'ArrowLeft'
+                        ? (indice + 2) % 3
+                        : evento.key === 'Home'
+                          ? 0
+                          : evento.key === 'End'
+                            ? 2
+                            : null;
+                  if (destino === null) return;
+                  evento.preventDefault();
+                  const proxima = arquivos[destino]!;
+                  setAba(proxima);
+                  document.getElementById(`${idEditor}-aba-${proxima}`)?.focus();
+                }}
+              >
+                {arquivo === 'javascript' ? 'JavaScript' : arquivo.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        )}
+        {documento &&
+          (['html', 'css'] as const).map((arquivo) => (
+            <div
+              key={arquivo}
+              id={`${idEditor}-painel-${arquivo}`}
+              role="tabpanel"
+              aria-labelledby={`${idEditor}-aba-${arquivo}`}
+              hidden={aba !== arquivo}
+            >
+              <CampoWeb
+                arquivo={arquivo}
+                valor={documento[arquivo]}
+                onChange={alterarDocumento}
+                onRodar={() => void executar('rodar')}
+              />
+            </div>
+          ))}
+        <div
+          className="papel"
+          id={documento ? `${idEditor}-painel-javascript` : undefined}
+          role={documento ? 'tabpanel' : undefined}
+          aria-labelledby={documento ? `${idEditor}-aba-javascript` : undefined}
+          hidden={Boolean(documento && aba !== 'javascript')}
+        >
           {!editorPronto && (
             <pre className="papel-esqueleto" aria-hidden="true">
               {codigo}
@@ -313,10 +441,22 @@ export function Folha({
         </p>
       )}
       <p className="folha-teclado">
-        Ctrl ou Cmd + Enter roda. Tab recua a linha; para sair do editor com o teclado, aperte Esc e depois Tab.
+        Ctrl ou Cmd + Enter roda. {documento ? 'Na aba JavaScript, Tab recua a linha; ' : 'Tab recua a linha; '}para
+        sair do editor com o teclado, aperte Esc e depois Tab.
       </p>
 
       <div className="folha-resultado" aria-busy={executando}>
+        {documento && (
+          <section className="web-previa" aria-label="Prévia visual">
+            <h3 className="folha-secao">Prévia visual</h3>
+            <p>
+              Use Rodar para atualizar. Depois, interaja com a página abaixo. Conferir recria a página e testa seu
+              código.
+            </p>
+            <div className="web-previa-alvo" ref={previa} />
+            {!execucao && <p>A prévia aparece quando você usar Rodar.</p>}
+          </section>
+        )}
         <h3 className="folha-secao">Saída</h3>
         <Saida resultado={execucao?.dados ?? null} />
       </div>
@@ -329,9 +469,9 @@ export function Folha({
           ref={tutorRef}
           aoPraticar={aoPraticar}
           contexto={contextoTutor}
-          codigo={codigo}
+          codigo={documento ? `HTML:\n${documento.html}\n\nCSS:\n${documento.css}\n\nJavaScript:\n${codigo}` : codigo}
           diagnostico={
-            execucao?.codigo === codigo
+            execucao?.codigo === codigo && execucao.documento === documento
               ? JSON.stringify({
                   erro: execucao.dados.erro,
                   testes: execucao.dados.testes,

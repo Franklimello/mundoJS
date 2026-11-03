@@ -1,11 +1,18 @@
 import { errosEAssincrono } from './trilhas/erros-e-assincrono';
+import { domEEventos } from './trilhas/dom-e-eventos';
 import { javascriptDoZero } from './trilhas/javascript-do-zero';
 import { listasEObjetos } from './trilhas/listas-e-objetos';
 import { listasETextosDeVerdade } from './trilhas/listas-e-textos-de-verdade';
 import type { Licao, Modulo, Trilha } from './tipos';
 
 /** Na ordem em que aparecem no site. Para criar uma trilha nova, acrescente aqui. */
-export const trilhas: Trilha[] = [javascriptDoZero, listasEObjetos, listasETextosDeVerdade, errosEAssincrono];
+export const trilhas: Trilha[] = [
+  javascriptDoZero,
+  listasEObjetos,
+  listasETextosDeVerdade,
+  errosEAssincrono,
+  domEEventos,
+];
 
 export interface LicaoNaTrilha {
   trilha: Trilha;
