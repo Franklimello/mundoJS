@@ -20,10 +20,10 @@ Essas verificações locais não substituem testes no endereço publicado. Os te
 
 ### P01 — Guardar uma versão recuperável do projeto
 
-**Situação:** o Git local ainda não tem commits; nenhum remoto foi listado. Não encontrei configuração de integração contínua no projeto.
+**Situação:** a primeira versão foi criada no Git e enviada à branch `main` de [Franklimello/mundoJS](https://github.com/Franklimello/mundoJS). A automação de verificações ainda está pendente.
 
-- [ ] Criar a primeira versão no Git e configurar o repositório remoto escolhido.
-- [ ] Confirmar que segredos e `.env.local` ficam fora do histórico; `.gitignore` já tem essa proteção.
+- [x] Criar a primeira versão no Git e configurar o repositório remoto escolhido.
+- [x] Confirmar que os segredos locais e `.env.local` ficam fora do envio; revisar os arquivos antes do primeiro commit.
 - [ ] Automatizar tipagem, lint, testes e build. Rodar os testes de integração com um Postgres exclusivo de teste.
 
 **Concluído quando:** conseguimos recuperar o código em outro ambiente e uma alteração com falha não passa pela verificação de publicação.
@@ -192,4 +192,4 @@ Não é necessário adicionar certificados, ranking ou um painel administrativo 
 
 ## Próxima frente proposta
 
-Começar por **P01 e P02**: guardar uma versão recuperável do trabalho, corrigir as dependências vulneráveis e repetir a validação. Depois, definir hospedagem/banco/domínio e avançar com e-mail e Stripe em homologação. Isso evita ativar pagamentos enquanto a base de produção ainda está incompleta.
+Concluir **P01 e P02**: automatizar as verificações no repositório já criado, corrigir as dependências vulneráveis e repetir a validação. Depois, definir hospedagem/banco/domínio e avançar com e-mail e Stripe em homologação. Isso evita ativar pagamentos enquanto a base de produção ainda está incompleta.
