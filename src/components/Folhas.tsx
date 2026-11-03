@@ -1,6 +1,14 @@
 'use client';
 
 import { Folha } from './Folha';
+import { useState } from 'react';
+
+const DOCUMENTO_LIVRE = {
+  html: '<h1>Minha primeira página</h1>\n<p id="mensagem">Clique para mudar este texto.</p>\n<button id="botao" type="button">Experimentar</button>',
+  css: 'h1 { color: #244c9b; }\nbutton { padding: 12px 18px; border-radius: 8px; }',
+};
+const JAVASCRIPT_WEB =
+  'const botao = document.querySelector("#botao");\nbotao.addEventListener("click", () => {\n  document.querySelector("#mensagem").textContent = "Você mudou a página com JavaScript!";\n});\n';
 
 /** As folhas fora das lições: a livre e a da vitrine. A da lição está em `LicaoInterativa.tsx`. */
 
@@ -13,15 +21,28 @@ const CODIGO_DO_RASCUNHO = [
 ].join('\n');
 
 export function FolhaDoRascunho() {
+  const [web, setWeb] = useState(false);
   return (
-    <Folha
-      titulo="Rascunho"
-      rotuloDoEditor="Editor de código livre"
-      codigoInicial={CODIGO_DO_RASCUNHO}
-      chaveRascunho="rascunho-livre"
-      contextoTutor={{ livre: true }}
-      pautasMinimas={18}
-    />
+    <>
+      <div className="web-modos" aria-label="Tipo de rascunho">
+        <button type="button" className="botao" aria-pressed={!web} onClick={() => setWeb(false)}>
+          JavaScript
+        </button>
+        <button type="button" className="botao" aria-pressed={web} onClick={() => setWeb(true)}>
+          Página web · HTML, CSS e JS
+        </button>
+      </div>
+      <Folha
+        key={web ? 'web' : 'javascript'}
+        titulo="Rascunho"
+        rotuloDoEditor="Editor de código livre"
+        codigoInicial={web ? JAVASCRIPT_WEB : CODIGO_DO_RASCUNHO}
+        documentoInicial={web ? DOCUMENTO_LIVRE : undefined}
+        chaveRascunho={web ? 'rascunho-web' : 'rascunho-livre'}
+        contextoTutor={{ livre: true }}
+        pautasMinimas={18}
+      />
+    </>
   );
 }
 

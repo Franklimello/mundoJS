@@ -460,7 +460,7 @@ export function criarExecutor() {
           };
           const nomes = nomesDoAluno.filter((nome) => nome in escopo);
           const parametros = [...AJUDANTES_DE_TESTE, ...nomes];
-          const fonteDoTeste = `(async (${parametros.join(', ')}) => { 'use strict';\n${teste.codigo}\n})\n//# sourceURL=${ARQUIVO_DO_TESTE}`;
+          const fonteDoTeste = `(async (${parametros.join(', ')}) => { 'use strict';\n{${teste.codigo}\n}\n})\n//# sourceURL=${ARQUIVO_DO_TESTE}`;
           const executarTeste = (0, eval)(fonteDoTeste) as (...a: unknown[]) => Promise<void>;
           await comLimite(
             executarTeste(

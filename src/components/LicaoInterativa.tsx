@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 import { registrarEvento } from '@/estudo/eventos';
 import type { TesteDefinicao } from '@/engine/tipos';
+import type { DocumentoWeb } from '@/engine/documento';
 import { concluirExercicio, useProgresso } from '@/progresso/armazem';
 import { Folha } from './Folha';
 import { Tique } from './Marcas';
@@ -17,6 +18,7 @@ export interface ExercicioNaTela {
   narracao?: string;
   dicas: ReactNode;
   codigoInicial: string;
+  documentoInicial?: DocumentoWeb;
   testes: TesteDefinicao[];
   solucao: string;
 }
@@ -236,6 +238,7 @@ export function LicaoInterativa({
             titulo="Seu código"
             rotuloDoEditor={total > 1 ? `Editor de código do exercício ${atual + 1}` : 'Editor de código da lição'}
             codigoInicial={exercicio.codigoInicial}
+            documentoInicial={exercicio.documentoInicial}
             chaveRascunho={atual === 0 ? `${trilha}/${licao}` : `${trilha}/${licao}#${atual}`}
             testes={exercicio.testes}
             solucao={exercicio.solucao}

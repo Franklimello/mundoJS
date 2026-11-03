@@ -17,6 +17,15 @@ function rodarLocal(
 
 const textos = (r: ResultadoExecucao) => r.saida.map((linha) => linha.texto);
 
+it('nomes locais do corretor não colidem com as variáveis do aluno', async () => {
+  const resultado = await rodarLocal('const itens = [1, 2];', [
+    { descricao: 'Pode usar um nome local já usado pelo aluno', codigo: 'const itens = [3]; igual(itens, [3]);' },
+    { descricao: 'O teste seguinte ainda enxerga o valor do aluno', codigo: 'igual(itens, [1, 2]);' },
+  ]);
+  expect(resultado.erro).toBeNull();
+  expect(resultado.testes.every((teste) => teste.passou)).toBe(true);
+});
+
 describe('analisar: erros de escrita', () => {
   it('aponta a linha e explica em português', () => {
     const analise = analisar('const a = 1;\nconsole.log("oi);\n');
@@ -318,7 +327,7 @@ describe('o iframe do executor', () => {
 
   it('avisa que está pronto e responde ao pedido com o resultado', async () => {
     const enviadas: Array<Record<string, unknown>> = [];
-    let ouvinte: ((evento: { data: unknown }) => void) | undefined;
+    let ouvinte: ((evento: { data: unknown; source?: unknown }) => void) | undefined;
     const janela = { addEventListener: (nome: string, f: typeof ouvinte) => nome === 'message' && (ouvinte = f) };
     const pai = { postMessage: (mensagem: Record<string, unknown>) => enviadas.push(mensagem) };
     new Function('window', 'parent', scriptDoIframe())(janela, pai);
@@ -328,6 +337,7 @@ describe('o iframe do executor', () => {
     const analise = analisar('console.log("oi");');
     if (!analise.ok) throw new Error('código de exemplo inválido');
     ouvinte?.({
+      source: pai,
       data: {
         tipo: 'executar',
         id: 'x1',

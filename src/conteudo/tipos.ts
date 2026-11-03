@@ -1,4 +1,5 @@
 import type { TesteDefinicao } from '@/engine/tipos';
+import type { DocumentoWeb } from '@/engine/documento';
 
 /**
  * O formato de uma lição.
@@ -26,6 +27,8 @@ export interface Exercicio {
   explicacaoAudio?: string;
   /** O que aparece no editor quando o aluno abre a lição. */
   codigoInicial: string;
+  /** Presente nas atividades de DOM; JavaScript continua no editor principal. */
+  documentoInicial?: DocumentoWeb;
   /**
    * Cada teste roda junto do código do aluno, dentro do iframe isolado. Ele
    * enxerga os nomes que o aluno declarou e estes ajudantes: `igual`,

@@ -15,6 +15,9 @@ describe('dados recebidos pela API', () => {
   });
   it('limita código em bytes e permite apagar rascunhos existentes', () => {
     expect(rascunhoValido('rascunho-livre', 'console.log(1)')).toBe(true);
+    expect(rascunhoValido('rascunho-web', '{"mundojsWeb":1,"html":"<p>Teste</p>","css":"","javascript":""}')).toBe(
+      true,
+    );
     expect(rascunhoValido('javascript-do-zero/ola-mundo', null)).toBe(true);
     expect(rascunhoValido('rascunho-livre', 'á'.repeat(100001))).toBe(false);
     expect(rascunhoValido('desconhecido', '')).toBe(false);

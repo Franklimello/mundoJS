@@ -54,6 +54,7 @@ export default async function PaginaDaLicao({ params }: Parametros) {
       </div>
     ),
     codigoInicial: exercicio.codigoInicial,
+    documentoInicial: exercicio.documentoInicial,
     testes: exercicio.testes,
     solucao: exercicio.solucao,
   }));

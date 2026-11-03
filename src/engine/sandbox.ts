@@ -1,5 +1,6 @@
 import { criarExecutor } from './executor';
 import { rodar } from './rodar';
+import { montarDocumento, type DocumentoWeb } from './documento';
 import type { PedidoBruto, ResultadoBruto, ResultadoExecucao, TesteDefinicao } from './tipos';
 
 /**
@@ -18,7 +19,8 @@ import type { PedidoBruto, ResultadoBruto, ResultadoExecucao, TesteDefinicao } f
  * o vigia daqui só pega o que escapar dele (e então descarta o iframe).
  */
 
-const POLITICA_DE_CONTEUDO = "default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'";
+const POLITICA_DE_CONTEUDO =
+  "default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'";
 const ESPERA_PELO_IFRAME_MS = 5_000;
 const FOLGA_DO_VIGIA_MS = 8_000;
 
@@ -26,9 +28,13 @@ const FOLGA_DO_VIGIA_MS = 8_000;
 export function scriptDoIframe(): string {
   return `(function () {
   var executar = (${criarExecutor.toString()})();
+  var montar = (${montarDocumento.toString()});
+  var iniciado = false;
   window.addEventListener('message', function (evento) {
     var dados = evento.data;
-    if (!dados || dados.tipo !== 'executar') return;
+    if (evento.source !== parent || iniciado || !dados || dados.tipo !== 'executar') return;
+    iniciado = true;
+    if (dados.documento) montar(document, dados.documento);
     executar(dados.pedido).then(
       function (resultado) { parent.postMessage({ tipo: 'resultado', id: dados.id, resultado: resultado }, '*'); },
       function (erro) { parent.postMessage({ tipo: 'falha', id: dados.id, mensagem: String((erro && erro.message) || erro) }, '*'); }
@@ -46,21 +52,28 @@ function resultadoComErro(mensagem: string, nome = 'ExecutorIndisponivel'): Resu
   return { saida: [], erro: { nome, mensagem }, testes: [], duracaoMs: 0 };
 }
 
-function executarNoIframe(pedido: PedidoBruto): Promise<ResultadoBruto> {
+interface PreviaWeb {
+  documento: DocumentoWeb;
+  alvo: HTMLElement;
+}
+
+function executarNoIframe(pedido: PedidoBruto, previa?: PreviaWeb): Promise<ResultadoBruto> {
   return new Promise((resolver) => {
     const iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox', 'allow-scripts');
-    iframe.setAttribute('aria-hidden', 'true');
-    iframe.tabIndex = -1;
-    iframe.title = 'Executor de código (oculto)';
-    Object.assign(iframe.style, {
-      position: 'fixed',
-      width: '0',
-      height: '0',
-      border: '0',
-      visibility: 'hidden',
-      pointerEvents: 'none',
-    });
+    iframe.setAttribute('sandbox', previa ? 'allow-scripts allow-forms' : 'allow-scripts');
+    iframe.title = previa ? 'Prévia da página HTML, CSS e JavaScript' : 'Executor de código (oculto)';
+    if (!previa) {
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.tabIndex = -1;
+      Object.assign(iframe.style, {
+        position: 'fixed',
+        width: '0',
+        height: '0',
+        border: '0',
+        visibility: 'hidden',
+        pointerEvents: 'none',
+      });
+    }
 
     const id = Math.random().toString(36).slice(2);
     let vigia: ReturnType<typeof setTimeout>;
@@ -68,7 +81,7 @@ function executarNoIframe(pedido: PedidoBruto): Promise<ResultadoBruto> {
     const terminar = (resultado: ResultadoBruto) => {
       clearTimeout(vigia);
       window.removeEventListener('message', ouvir);
-      iframe.remove();
+      if (!previa || resultado.erro) iframe.remove();
       resolver(resultado);
     };
 
@@ -83,7 +96,7 @@ function executarNoIframe(pedido: PedidoBruto): Promise<ResultadoBruto> {
           () => terminar(resultadoComErro('O código demorou demais e foi interrompido.', 'Demorou')),
           pedido.esperaMaximaMs + FOLGA_DO_VIGIA_MS,
         );
-        iframe.contentWindow?.postMessage({ tipo: 'executar', id, pedido }, '*');
+        iframe.contentWindow?.postMessage({ tipo: 'executar', id, pedido, documento: previa?.documento }, '*');
       } else if (dados.tipo === 'resultado' && dados.id === id && dados.resultado) {
         terminar(dados.resultado);
       } else if (dados.tipo === 'falha' && dados.id === id) {
@@ -97,7 +110,8 @@ function executarNoIframe(pedido: PedidoBruto): Promise<ResultadoBruto> {
       ESPERA_PELO_IFRAME_MS,
     );
     iframe.srcdoc = documentoDoIframe();
-    document.body.appendChild(iframe);
+    if (previa) previa.alvo.replaceChildren(iframe);
+    else document.body.appendChild(iframe);
   });
 }
 
@@ -105,8 +119,13 @@ function executarNoIframe(pedido: PedidoBruto): Promise<ResultadoBruto> {
 let fila: Promise<unknown> = Promise.resolve();
 
 /** Roda o código do aluno (e os testes, se houver) no iframe isolado. */
-export function rodarNoNavegador(codigo: string, testes: TesteDefinicao[] = []): Promise<ResultadoExecucao> {
-  const execucao = fila.then(() => rodar(codigo, testes, executarNoIframe));
+export function rodarNoNavegador(
+  codigo: string,
+  testes: TesteDefinicao[] = [],
+  previa?: PreviaWeb,
+): Promise<ResultadoExecucao> {
+  previa?.alvo.replaceChildren();
+  const execucao = fila.then(() => rodar(codigo, testes, (pedido) => executarNoIframe(pedido, previa)));
   fila = execucao.catch(() => undefined);
   return execucao;
 }

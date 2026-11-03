@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { Window } from 'happy-dom';
+import { montarDocumento, type DocumentoWeb } from '@/engine/documento';
 import { analisar } from '@/engine/analisar';
 import { criarExecutor } from '@/engine/executor';
 import { rodar } from '@/engine/rodar';
@@ -6,8 +8,17 @@ import { buscarLicao, todasAsLicoes, todosOsCaminhos, trilhas } from './index';
 import type { Bloco } from './tipos';
 
 const executor = criarExecutor();
-const rodarLocal = (codigo: string, testes: Parameters<typeof rodar>[1] = []) =>
-  rodar(codigo, testes, executor, { esperaMaximaMs: 1000, limiteDeVoltas: 200_000 });
+async function rodarLocal(codigo: string, testes: Parameters<typeof rodar>[1] = [], documento?: DocumentoWeb) {
+  if (!documento) return rodar(codigo, testes, executor, { esperaMaximaMs: 1000, limiteDeVoltas: 200_000 });
+  const janela = new Window({ settings: { enableJavaScriptEvaluation: true } });
+  try {
+    montarDocumento(janela.document as unknown as Document, documento);
+    const executar = janela.eval(`(${criarExecutor.toString()})()`) as ReturnType<typeof criarExecutor>;
+    return await rodar(codigo, testes, executar, { esperaMaximaMs: 1000, limiteDeVoltas: 200_000 });
+  } finally {
+    await janela.happyDOM.close();
+  }
+}
 
 const licoes = trilhas.flatMap((trilha) => todasAsLicoes(trilha).map((licao) => ({ trilha, licao })));
 const porLicao = licoes.map(({ trilha, licao }) => [`${trilha.slug}/${licao.slug}`, licao] as const);
@@ -156,7 +167,7 @@ describe('os exemplos de cada lição imprimem o que o texto diz', () => {
 
 describe('os exercícios', () => {
   it.each(porExercicio)('%s: a solução passa em todos os testes', async (_nome, exercicio) => {
-    const resultado = await rodarLocal(exercicio.solucao, exercicio.testes);
+    const resultado = await rodarLocal(exercicio.solucao, exercicio.testes, exercicio.documentoInicial);
     expect(resultado.erro, 'a solução deu erro').toBeNull();
     const falhas = resultado.testes.filter((t) => !t.passou).map((t) => `${t.descricao}: ${t.mensagem}`);
     expect(falhas).toEqual([]);
@@ -165,7 +176,7 @@ describe('os exercícios', () => {
 
   it.each(porExercicio)('%s: o código inicial roda sem erro e não passa em nenhum teste', async (_nome, exercicio) => {
     expect(analisar(exercicio.codigoInicial).ok, 'o código inicial tem erro de escrita').toBe(true);
-    const resultado = await rodarLocal(exercicio.codigoInicial, exercicio.testes);
+    const resultado = await rodarLocal(exercicio.codigoInicial, exercicio.testes, exercicio.documentoInicial);
     expect(resultado.erro, 'o código inicial deu erro ao rodar').toBeNull();
     // Nenhum teste pode passar de graça: um "certo" antes de o aluno fazer qualquer coisa
     // (por exemplo, "a lista original não mudou" quando a função nem devolve nada) engana.
