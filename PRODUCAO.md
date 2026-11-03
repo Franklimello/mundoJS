@@ -144,11 +144,11 @@ O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendên
 
 ### P09 — Configurar Stripe e validar uma assinatura completa em teste
 
-**Situação:** a conta separada MundoJS e sua área restrita foram criadas. Produto de R$ 9,99/mês, portal, pagamento/recusa, renovação e cancelamento foram configurados e simulados no serviço Stripe. Um Checkout gerado pelo MundoJS liberou Pro via webhook real no servidor local de teste. A ativação da conta de produção e suas chaves/webhook na Vercel continuam pendentes. Detalhes e limites da validação em [STRIPE.md](STRIPE.md).
+**Situação:** a conta separada MundoJS foi aprovada para pagamentos e repasses. Produto de R$ 9,99/mês, portal e webhook foram configurados em produção; preço e segredo do webhook foram salvos na Vercel. A chave de API aguarda a verificação de identidade exigida pelo Stripe. Na área restrita, pagamento/recusa, renovação, cancelamento e liberação de Pro por webhook real no servidor local passaram. DNS foi salvo, mas resolução pública, HTTPS e validação online permanecem pendentes. Detalhes em [STRIPE.md](STRIPE.md).
 
-- [ ] Conferir a configuração da conta Stripe e criar o produto Pro com preço recorrente mensal de **R$ 9,99 em BRL**, quantidade 1.
+- [x] Conferir a configuração da conta Stripe e criar o produto Pro com preço recorrente mensal de **R$ 9,99 em BRL**, quantidade 1.
 - [ ] Configurar as três variáveis no ambiente de teste e depois as correspondentes de produção.
-- [ ] Configurar o portal: faturas, cartão e cancelamento ao fim do ciclo; manter desabilitadas mudanças de preço/quantidade não suportadas pela oferta.
+- [x] Configurar o portal: faturas, cartão e cancelamento ao fim do ciclo; manter desabilitadas mudanças de preço/quantidade não suportadas pela oferta.
 - [ ] Registrar o webhook de produção em HTTPS, com os eventos e a versão compatíveis com o SDK utilizado.
 - [ ] Testar com Stripe de teste: pagamento aprovado, recusado, renovação, atualização do cartão, cancelamento e vencimento do acesso.
 - [ ] Confirmar que pagamento pendente não libera Pro e que o cancelamento no fim mantém acesso apenas até a data paga.
