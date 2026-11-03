@@ -28,7 +28,10 @@ export function ContaNavegacao() {
     } else if (mudou) window.location.reload();
   }, [usuario, isPending, error, caminho]);
   return (
-    <Link href="/conta" aria-current={caminho.startsWith('/conta') ? 'page' : undefined}>
+    <Link
+      href={data ? '/conta/aprendizado' : '/conta'}
+      aria-current={caminho.startsWith('/conta') ? 'page' : undefined}
+    >
       <FiUser size={17} aria-hidden="true" focusable="false" />
       {data ? 'Minha conta' : 'Entrar'}
     </Link>

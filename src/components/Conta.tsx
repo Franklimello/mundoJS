@@ -78,8 +78,8 @@ function PainelConta({ id, nome, email }: { id: string; nome: string; email: str
         <Link href="/conta/plano" className="botao botao-leve">
           Meu plano e uso do tutor
         </Link>
-        <Link href="/" className="botao botao-principal">
-          Continuar estudando
+        <Link href="/conta/aprendizado" className="botao botao-principal">
+          Meu aprendizado
         </Link>
         <button type="button" className="botao botao-leve" disabled={saindo} onClick={() => void sair()}>
           {saindo ? 'Saindo…' : 'Sair da conta'}
