@@ -2,7 +2,7 @@
 
 Revisão em **03/11/2026**. Ordem proposta para um lançamento com assinaturas.
 
-Esta lista se baseia no código, na configuração local e nas validações já realizadas. Não confirma configurações em painéis de hospedagem, Firebase, Stripe ou Google Cloud. Nenhuma conta externa foi alterada nesta revisão.
+Esta lista se baseia no código, na configuração local e nas validações já realizadas. A proteção da `main` foi configurada e confirmada no GitHub. Configurações de hospedagem, Firebase, Stripe ou Google Cloud ainda precisam de validação nos respectivos ambientes de produção.
 
 ## O que já existe
 
@@ -26,7 +26,9 @@ Essas verificações locais não substituem testes no endereço publicado. Os te
 - [x] Confirmar que os segredos locais e `.env.local` ficam fora do envio; revisar os arquivos antes do primeiro commit.
 - [x] Automatizar tipagem, lint, testes e build. Rodar os testes de integração com um Postgres exclusivo de teste.
 - [x] Confirmar a primeira execução do workflow no GitHub.
-- [ ] Exigir o resultado aprovado desse check na proteção da `main` e no processo de publicação. A existência do workflow sozinha não impede um envio direto ou uma publicação externa.
+- [x] Exigir pull request, branch atualizada e aprovação do check **Tipagem, testes, seguranca e build**, fornecido pelo GitHub Actions, para integrar alterações na `main`.
+- [x] Aplicar a regra também aos administradores, impedir envio forçado e exclusão da `main` e exigir resolução das conversas de revisão. Não há aprovação de outro revisor obrigatória, para permitir o trabalho individual.
+- [ ] Vincular a publicação da hospedagem somente a versões aprovadas. A proteção da branch já está ativa; o fluxo de publicação depende de P03.
 
 **Concluído quando:** conseguimos recuperar o código em outro ambiente e uma alteração com falha não passa pela verificação de publicação.
 
@@ -41,6 +43,8 @@ Essas verificações locais não substituem testes no endereço publicado. Os te
 - [x] Repetir os 940 testes com Postgres, tipagem, lint e build após a atualização.
 - [x] Conferir telas de conta, editor e planos no navegador e repetir o teste HTTP local de cadastro, e-mail, recuperação, revogação e saída. O teste de compartilhamento usa uma fixture Pro somente para a conta descartável, em banco local, sem chamar o Stripe; também verifica bloqueio gratuito e retirada do link após cancelamento.
 - [ ] Tratar o alerta moderado de minimatch em uma atualização compatível das ferramentas de lint. A versão antiga é consumida como função pelo ESLint/plugins; substituir diretamente pela major 11 quebra essa API. Não foi aplicado override incompatível nem removido o alerta da auditoria.
+
+Na revisão de compatibilidade, os plugins `eslint-plugin-react` 7.37.5, `eslint-plugin-import` 2.32.0 e `eslint-plugin-jsx-a11y` 6.10.2 continuam dependendo de minimatch 3 e declarando suporte até ESLint 9. A última versão consultada de minimatch 3 é 3.1.5, e a correção indicada pelo [aviso GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249) é 11.0.1. Atualizar apenas o ESLint para 10 não elimina essas dependências. A pendência permanece aberta; não é apresentada como correção concluída.
 
 O workflow bloqueia alertas altos/críticos e mostra os demais no log. A pendência moderada está nas dependências de desenvolvimento e não aparece em `pnpm audit --prod`. O ambiente de CI é descartável, sem chaves reais e com limite de tempo. Isso não substitui a manutenção dessa pendência nem uma revisão completa de segurança.
 
