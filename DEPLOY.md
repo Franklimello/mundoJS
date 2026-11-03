@@ -19,6 +19,8 @@ O endereço reservado não comprova um deploy aprovado. Antes de liberar o uso, 
 
 Somente `main` gera deploy automático pela integração Git. Ela está protegida por pull request e CI obrigatório. Branches podem receber deploy manual de teste, mas não compartilham automaticamente o banco principal. A integração Git da Vercel precisa estar conectada para usar o deploy automático.
 
+A regra de bloqueio usa `**` para incluir branches com `/`, como `codex/stripe-cancelamento-portal`. A exceção `main: true` mantém a publicação da branch principal. As variáveis de produção não são copiadas para prévias.
+
 `.vercelignore` exclui arquivos de ambiente, metadados locais e arquivos gerados do envio pela CLI. As conexões online e o segredo exclusivo do ambiente ficam em arquivos ignorados dentro de `.vercel`, usados na configuração. O `.env.local` continua apontando para o Docker local e o Mailpit.
 
 ## Variáveis na Vercel
