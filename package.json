@@ -1,0 +1,58 @@
+{
+  "name": "mundojs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MundoJS — aprenda JavaScript escrevendo e rodando código no navegador.",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "db:migrate": "node scripts/migrar.mjs",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "metricas": "node scripts/metricas.mjs",
+    "conta:setup": "node scripts/configurar-conta.mjs",
+    "test:conta": "node scripts/testar-conta.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.14",
+    "@lezer/highlight": "^1.2.5",
+    "@next/env": "^16.4.3",
+    "acorn": "^8.19.0",
+    "better-auth": "^1.7.15",
+    "firebase": "^13.1.0",
+    "jose": "^6.2.15",
+    "next": "^16.4.0",
+    "nodemailer": "^10.3.1",
+    "pg": "^8.23.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "stripe": "^23.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
+  }
+}

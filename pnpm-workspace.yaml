@@ -1,0 +1,9 @@
+# Scripts de instalação permitidos. `false` não quebra o pacote: só não roda o
+# postinstall dele.
+#
+# unrs-resolver (puxado pelo eslint-config-next) traz o binário nativo por
+# pacotes opcionais; o script só serve de reserva e não precisa rodar.
+allowBuilds:
+  '@firebase/util': false
+  protobufjs: false
+  unrs-resolver: false

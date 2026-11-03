@@ -1,0 +1,23 @@
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - '127.0.0.1:1025:1025'
+      - '127.0.0.1:8025:8025'
+  postgres:
+    image: postgres:17-alpine
+    ports:
+      - '127.0.0.1:5433:5432'
+    environment:
+      POSTGRES_DB: rabisco
+      POSTGRES_USER: rabisco
+      POSTGRES_PASSWORD: rabisco_local
+    volumes:
+      - rabisco_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U rabisco -d rabisco']
+      interval: 2s
+      timeout: 5s
+      retries: 20
+volumes:
+  rabisco_postgres:
