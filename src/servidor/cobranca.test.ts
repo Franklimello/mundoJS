@@ -138,9 +138,11 @@ describe.skipIf(!url)('assinaturas e franquia em Postgres real, Stripe simulado'
       return_url: 'http://localhost:3001/conta/plano',
     });
   });
-  it('ativa período pago, deduplica e respeita cancelamento ao fim', async () => {
+  it.each(['flag', 'data'])('ativa período pago, deduplica e respeita cancelamento ao fim por %s', async (modo) => {
     await vincular();
-    mock.subscriptions.list.mockResolvedValue({ data: [assinatura({ cancel_at_period_end: true })], has_more: false });
+    const atual = assinatura({ cancel_at_period_end: modo === 'flag' });
+    if (modo === 'data') atual.cancel_at = atual.items.data[0]!.current_period_end;
+    mock.subscriptions.list.mockResolvedValue({ data: [atual], has_more: false });
     await processarEvento(db, evento('evt_pago'), api);
     expect(await lerAssinatura(db, 'a')).toMatchObject({ pro: true, cancelarNoFim: true });
     await processarEvento(db, evento('evt_pago'), api);

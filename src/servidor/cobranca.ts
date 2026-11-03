@@ -234,7 +234,10 @@ export async function processarEvento(db: Pool, evento: Stripe.Event, api = stri
           assinatura ? 'active' : 'gratuito',
           item ? new Date(item.current_period_start * 1000) : null,
           item ? new Date(item.current_period_end * 1000) : null,
-          assinatura?.cancel_at_period_end ?? false,
+          Boolean(
+            assinatura?.cancel_at_period_end ||
+            (assinatura?.cancel_at != null && assinatura.cancel_at === item?.current_period_end),
+          ),
           clienteAtual.deleted ? null : cliente,
           clienteAtual.deleted ? randomUUID() : conta.cliente_chave,
         ],
