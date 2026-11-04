@@ -1,4 +1,4 @@
-import { parse, type Node } from 'acorn';
+import { parse, type Node, type Token } from 'acorn';
 import { traduzirErroDeSintaxe } from './mensagens';
 import type { ErroExecucao } from './tipos';
 
@@ -128,18 +128,42 @@ function aplicarInsercoes(codigo: string, insercoes: Insercao[]): string {
 
 export function analisar(codigo: string): Analise {
   let programa: NoGenerico;
+  const abertos: { abre: string; fecha: string; linha: number }[] = [];
+  const pares: Record<string, string> = { '(': ')', '[': ']', '{': '}', '${': '}' };
+  let ultimoTipo = '';
+  const acompanharDelimitador = (token: Token) => {
+    const simbolo = token.type.label;
+    ultimoTipo = simbolo;
+    const fecha = pares[simbolo];
+    if (fecha) abertos.push({ abre: simbolo, fecha, linha: token.loc?.start.line ?? 1 });
+    else if (simbolo === ')' || simbolo === ']' || simbolo === '}') {
+      if (abertos.at(-1)?.fecha === simbolo) abertos.pop();
+    }
+  };
   try {
     programa = parse(codigo, {
       ecmaVersion: 'latest',
       sourceType: 'script',
       allowAwaitOutsideFunction: true,
       locations: true,
+      onToken: acompanharDelimitador,
     }) as unknown as NoGenerico;
   } catch (erro) {
     const falha = erro as { message?: string; loc?: { line: number; column: number }; pos?: number };
     const posicao = falha.loc ?? { line: 1, column: 0 };
     const noFim = falha.pos !== undefined && falha.pos >= codigo.trimEnd().length;
     const depoisDeAwait = falha.pos !== undefined && /\bawait\s+$/.test(codigo.slice(0, falha.pos));
+    const aberto = abertos.at(-1);
+    const simbolo = falha.pos === undefined ? '' : codigo[falha.pos];
+    const antesDoPontoEVirgula =
+      simbolo === ';' &&
+      (aberto?.abre === '(' || aberto?.abre === '[') &&
+      ['name', 'num', 'string', 'regexp', 'true', 'false', 'null', ')', ']', '}', '`'].includes(ultimoTipo);
+    // O parser ignora comentários e textos; só consideramos símbolos reais do código.
+    const delimitador =
+      aberto && (noFim || antesDoPontoEVirgula || (simbolo && ')]}'.includes(simbolo) && simbolo !== aberto.fecha))
+        ? { ...aberto, antesDoPontoEVirgula }
+        : undefined;
     return {
       ok: false,
       erro: traduzirErroDeSintaxe(
@@ -147,6 +171,7 @@ export function analisar(codigo: string): Analise {
         { linha: posicao.line, coluna: posicao.column },
         noFim,
         depoisDeAwait,
+        delimitador,
       ),
     };
   }

@@ -19,6 +19,8 @@ export interface ErroExecucao {
   mensagem: string;
   /** Um próximo passo concreto, quando existe. */
   dica?: string;
+  /** Exemplo independente da solução do exercício, mostrado só quando solicitado. */
+  exemplo?: { codigo: string; explicacao: string };
   /** Linha do código do aluno onde o erro apareceu (a primeira linha é 1). */
   linha?: number;
   coluna?: number;

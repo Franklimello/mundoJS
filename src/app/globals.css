@@ -1338,6 +1338,7 @@ pre {
   border-left: 4px solid var(--vermelha);
   background: color-mix(in srgb, var(--vermelha) 7%, var(--papel));
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 
 .erro-titulo {
@@ -1348,6 +1349,33 @@ pre {
 .erro-dica {
   margin-top: 0.25rem;
   color: var(--grafite);
+}
+
+.erro-exemplo {
+  margin-block: 0.75rem;
+}
+
+.erro-exemplo summary {
+  min-height: 44px;
+  padding-block: 0.5rem;
+  cursor: pointer;
+  color: var(--tinta-forte);
+  font-weight: 700;
+}
+
+.erro-exemplo pre {
+  margin-block: 0.5rem;
+  padding: 0.75rem;
+  background: var(--papel);
+  border: 1px solid var(--cor-traco);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+}
+
+.erro-exemplo .erro-exemplo-nota {
+  color: var(--lapis);
+  font-size: 0.9rem;
 }
 
 /* A correção: vistos verdes e xis vermelhos, desenhados um depois do outro. */
