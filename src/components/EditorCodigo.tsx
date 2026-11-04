@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { type Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import {
   cursorCharLeft,
@@ -170,6 +170,7 @@ const cores = HighlightStyle.define([
 ]);
 
 export interface EditorCodigoProps {
+  controleRef?: Ref<{ focar: () => void }>;
   valor: string;
   onChange: (valor: string) => void;
   onRodar: () => void;
@@ -184,6 +185,7 @@ export interface EditorCodigoProps {
 }
 
 export default function EditorCodigo({
+  controleRef,
   valor,
   onChange,
   onRodar,
@@ -196,6 +198,7 @@ export default function EditorCodigo({
   const raiz = useRef<HTMLDivElement>(null);
   const barra = useRef<HTMLDivElement>(null);
   const visao = useRef<EditorView | null>(null);
+  useImperativeHandle(controleRef, () => ({ focar: () => visao.current?.focus() }), []);
   // As funções mais recentes, sem recriar o editor a cada letra digitada.
   const acoes = useRef({ onChange, onRodar, onConferir });
   useEffect(() => {

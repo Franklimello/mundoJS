@@ -14,6 +14,7 @@ import { Rodar, Tique } from './Marcas';
 import { Saida } from './Saida';
 import { Tutor, type TutorControles } from './Tutor';
 import { SalvarProgresso } from './SalvarProgresso';
+import { useModoFoco } from '@/editor/usar-modo-foco';
 
 // O editor é pesado e só roda no navegador: carrega à parte, depois da página.
 const EditorCodigo = dynamic(() => import('./EditorCodigo'), { ssr: false });
@@ -54,6 +55,7 @@ function CampoWeb({
 }
 
 export interface FolhaProps {
+  enunciado?: ReactNode;
   /** O nome da folha no alto, como "Seu código". */
   titulo: string;
   /** Descrição do campo, para leitores de tela. */
@@ -87,6 +89,7 @@ type Execucao = { modo: 'rodar' | 'conferir'; dados: ResultadoExecucao; codigo: 
  * corrige, teste por teste.
  */
 export function Folha({
+  enunciado,
   titulo,
   rotuloDoEditor,
   codigoInicial,
@@ -104,6 +107,14 @@ export function Folha({
   rodape,
 }: FolhaProps) {
   const [codigo, setCodigo] = useState(codigoInicial);
+  const [foco, setFoco] = useState(false);
+  const [painel, setPainel] = useState<'codigo' | 'enunciado' | 'resultado'>('codigo');
+  const raiz = useRef<HTMLElement>(null);
+  const resultado = useRef<HTMLDivElement>(null);
+  const controleEditor = useRef<{ focar: () => void }>(null);
+  const voltarAoEditor = useRef(false);
+  const fecharFoco = useCallback(() => setFoco(false), []);
+  useModoFoco(raiz, foco, fecharFoco);
   const [documento, setDocumento] = useState(documentoInicial);
   const [aba, setAba] = useState<'javascript' | 'html' | 'css'>('javascript');
   const idEditor = useId();
@@ -149,6 +160,9 @@ export function Folha({
           documentoExecutado && previa.current ? { documento: documentoExecutado, alvo: previa.current } : undefined,
         );
         setExecucao({ modo, dados, codigo: codigoExecutado, documento: documentoExecutado });
+        if (!rodarAoDigitar && window.matchMedia('(max-width: 62rem), (pointer: coarse)').matches) {
+          setPainel('resultado');
+        }
         if (contextoTutor) {
           const posicao = 'trilha' in contextoTutor ? contextoTutor : undefined;
           if (modo === 'rodar') registrarEvento({ tipo: 'codigo_rodado', posicao });
@@ -173,8 +187,24 @@ export function Folha({
         }
       }
     },
-    [testes, contextoTutor],
+    [testes, contextoTutor, rodarAoDigitar],
   );
+
+  useEffect(() => {
+    if (painel === 'resultado') {
+      resultado.current?.focus({ preventScroll: true });
+      if (!foco) resultado.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    } else if (painel === 'codigo' && voltarAoEditor.current) {
+      voltarAoEditor.current = false;
+      if (aba === 'javascript') controleEditor.current?.focar();
+      else document.getElementById(`${idEditor}-painel-${aba}`)?.querySelector('textarea')?.focus();
+    }
+  }, [painel, execucao, foco, aba, idEditor]);
+
+  function mostrarCodigo() {
+    voltarAoEditor.current = true;
+    setPainel('codigo');
+  }
 
   // O editor só existe no navegador: quando ele monta, volta o que o aluno estava escrevendo.
   const carregarRascunho = useCallback(async () => {
@@ -310,7 +340,43 @@ export function Folha({
           : 'O código rodou sem erro.';
 
   return (
-    <section className="folha" aria-label={titulo}>
+    <section
+      ref={raiz}
+      className={`folha${foco ? ' folha-foco' : ''}`}
+      data-painel={painel}
+      aria-label={foco ? `${titulo} · modo foco` : titulo}
+      role={foco ? 'dialog' : undefined}
+      aria-modal={foco ? true : undefined}
+    >
+      <div className="folha-mobile">
+        <div className="folha-mobile-paineis" role="group" aria-label="Área de prática">
+          <button type="button" aria-pressed={painel === 'codigo'} onClick={mostrarCodigo}>
+            Código
+          </button>
+          {enunciado && (
+            <button type="button" aria-pressed={painel === 'enunciado'} onClick={() => setPainel('enunciado')}>
+              Enunciado
+            </button>
+          )}
+          <button type="button" aria-pressed={painel === 'resultado'} onClick={() => setPainel('resultado')}>
+            Resultado
+          </button>
+        </div>
+        <button
+          type="button"
+          className="folha-foco-sair"
+          aria-pressed={foco}
+          aria-label={foco ? 'Sair do modo foco' : 'Ativar modo foco'}
+          onClick={() => setFoco(!foco)}
+        >
+          {foco ? 'Sair' : 'Modo foco'}
+        </button>
+      </div>
+      {enunciado && (
+        <div className="folha-enunciado-mobile" tabIndex={-1}>
+          {enunciado}
+        </div>
+      )}
       <div className="folha-edicao">
         <div className="folha-barra">
           <h2 className="folha-titulo">{titulo}</h2>
@@ -419,6 +485,7 @@ export function Folha({
             </pre>
           )}
           <EditorCodigo
+            controleRef={controleEditor}
             valor={codigo}
             onChange={alterarCodigo}
             onRodar={() => void executar('rodar')}
@@ -447,24 +514,32 @@ export function Folha({
         sair do editor com o teclado, aperte Esc e depois Tab.
       </p>
 
-      <div className="folha-resultado" aria-busy={executando}>
-        {documento && (
-          <section className="web-previa" aria-label="Prévia visual">
-            <h3 className="folha-secao">Prévia visual</h3>
-            <p>
-              Use Rodar para atualizar. Depois, interaja com a página abaixo. Conferir recria a página e testa seu
-              código.
-            </p>
-            <div className="web-previa-alvo" ref={previa} />
-            {!execucao && <p>A prévia aparece quando você usar Rodar.</p>}
-          </section>
-        )}
-        <h3 className="folha-secao">Saída</h3>
-        <Saida resultado={execucao?.dados ?? null} />
-      </div>
+      <div className="folha-retorno-mobile" ref={resultado} tabIndex={-1} aria-label="Resultado da execução">
+        <div className="folha-mobile-resumo">
+          <p role="status">{status || 'Execute seu código para ver o resultado.'}</p>
+          <button type="button" className="botao" onClick={mostrarCodigo}>
+            Voltar ao código
+          </button>
+        </div>
+        <div className="folha-resultado" aria-busy={executando}>
+          {documento && (
+            <section className="web-previa" aria-label="Prévia visual">
+              <h3 className="folha-secao">Prévia visual</h3>
+              <p>
+                Use Rodar para atualizar. Depois, interaja com a página abaixo. Conferir recria a página e testa seu
+                código.
+              </p>
+              <div className="web-previa-alvo" ref={previa} />
+              {!execucao && <p>A prévia aparece quando você usar Rodar.</p>}
+            </section>
+          )}
+          <h3 className="folha-secao">Saída</h3>
+          <Saida resultado={execucao?.dados ?? null} />
+        </div>
 
-      {conferido && conferido.testes.length > 0 && <Conferencia testes={conferido.testes}>{aoAcertar}</Conferencia>}
-      {acertou && <SalvarProgresso />}
+        {conferido && conferido.testes.length > 0 && <Conferencia testes={conferido.testes}>{aoAcertar}</Conferencia>}
+        {acertou && <SalvarProgresso />}
+      </div>
 
       {contextoTutor && (
         <Tutor
