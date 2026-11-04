@@ -65,6 +65,21 @@ export interface ResultadoExecucao {
   duracaoMs: number;
   investigacoes?: InvestigacaoIndice[];
   investigacoesObjetos?: InvestigacaoPropriedade[];
+  passoAPasso?: RegistroPassos;
+}
+
+export interface PassoExecucao {
+  linha: number;
+  descricao: string;
+  variaveis: { nome: string; valor: string; estado: 'nova' | 'mudou' | 'igual' }[];
+  linhasSaida: number;
+  lacos: { linha: number; volta: number }[];
+}
+
+export interface RegistroPassos {
+  passos: PassoExecucao[];
+  limiteAtingido: boolean;
+  indisponivel?: { mensagem: string; linha?: number };
 }
 
 /** O que a página entrega ao executor, depois de analisar o código. */
@@ -77,6 +92,7 @@ export interface PedidoBruto {
   nomes: string[];
   /** Nome livre de colisões do observador de leituras de índices e propriedades. */
   investigador?: string;
+  observadorPassos?: string;
   testes: TesteDefinicao[];
   /** Quanto tempo esperar por `setTimeout`/`setInterval` antes de encerrar. */
   esperaMaximaMs: number;
@@ -112,4 +128,5 @@ export interface ResultadoBruto {
   duracaoMs: number;
   investigacoes?: InvestigacaoIndice[];
   investigacoesObjetos?: InvestigacaoPropriedade[];
+  passoAPasso?: RegistroPassos;
 }

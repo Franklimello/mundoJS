@@ -1944,6 +1944,96 @@ pre {
   accent-color: var(--verde);
 }
 
+/* --------------------------------------------------------- passo a passo */
+.passos {
+  min-width: 0;
+  padding: 1rem;
+  background: var(--fundo-suave);
+  border: 1px solid var(--cor-traco);
+  border-radius: 6px;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.passos h3 {
+  font-size: 1.3rem;
+  color: var(--tinta-forte);
+}
+.passos h4 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+}
+.passos-nota,
+.passos-ajuda {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--lapis);
+}
+.passos-controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.passos .botao,
+.passos summary {
+  min-height: 44px;
+}
+.passos-status,
+.passos-pergunta {
+  color: var(--tinta-forte);
+  font-weight: 700;
+}
+.passos-volta {
+  margin-top: 0.5rem;
+}
+.passos-codigo {
+  padding: 0.75rem;
+  border-inline-start: 3px solid var(--tinta);
+  background: var(--papel);
+  white-space: pre-wrap;
+}
+.passos code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.passos-variaveis {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: var(--papel);
+}
+.passos-variaveis th,
+.passos-variaveis td {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-traco);
+  text-align: start;
+  vertical-align: top;
+}
+.passos-variaveis th:first-child {
+  width: 35%;
+}
+.passos-variaveis small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--tinta-forte);
+}
+.passos-pergunta,
+.passos-alerta,
+.passos-indisponivel .botao {
+  margin-top: 0.75rem;
+}
+.passos-alerta {
+  padding: 0.75rem;
+  background: var(--marca-texto);
+}
+.passos-ajuda summary {
+  padding-block: 0.75rem;
+  color: var(--tinta-forte);
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* ---------------------------------------------------------- investigador */
 .investigador {
   min-width: 0;

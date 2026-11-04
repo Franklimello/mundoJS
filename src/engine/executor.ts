@@ -4,6 +4,7 @@ import type {
   InvestigacaoPropriedade,
   LinhaSaida,
   PedidoBruto,
+  RegistroPassos,
   ResultadoBruto,
   TesteBruto,
   TipoLinha,
@@ -282,6 +283,75 @@ export function criarExecutor() {
     const investigacoesObjetos: InvestigacaoPropriedade[] = [];
     const propriedadesObservadas = new Set<string>();
     let observando = true;
+    const passoAPasso: RegistroPassos | undefined = pedido.observadorPassos
+      ? { passos: [], limiteAtingido: false }
+      : undefined;
+    const lacos: { linha: number; volta: number }[] = [];
+    let ultimosValores = new Map<string, string>();
+    class LimiteDePassos extends Error {}
+    function resumirEstado(item: unknown, nivel = 0): string {
+      if (typeof item === 'string') return formatar(item.slice(0, 100), 0, [], true) + (item.length > 100 ? '…' : '');
+      if (typeof item === 'function') return '[função]';
+      if (!item || typeof item !== 'object') return formatar(item);
+      const array = Array.isArray(item);
+      if (nivel >= 2) return array ? '[array]' : '[objeto]';
+      const chaves = array
+        ? Array.from({ length: Math.min(item.length, 8) }, (_, i) => String(i))
+        : Object.getOwnPropertyNames(item).slice(0, 8);
+      const partes = chaves.map((chave) => {
+        const descricao = Object.getOwnPropertyDescriptor(item, chave);
+        const valor = !descricao
+          ? '(vazio)'
+          : !('value' in descricao)
+            ? '[acessor]'
+            : resumirEstado(descricao.value, nivel + 1);
+        return array ? valor : `${chave.slice(0, 50)}: ${valor}`;
+      });
+      if (array && item.length > 8) partes.push('…');
+      return partes.length
+        ? `${array ? '[' : '{'} ${partes.join(', ')} ${array ? ']' : '}'}`.slice(0, 300)
+        : array
+          ? '[]'
+          : '{}';
+    }
+    function registrarPasso(valor: unknown, tipo: string, linha: number, variaveis: Record<string, unknown>) {
+      if (!passoAPasso) return valor;
+      if (passoAPasso.passos.length >= 160) {
+        passoAPasso.limiteAtingido = true;
+        throw new LimiteDePassos();
+      }
+      if (tipo === 'laco') lacos.push({ linha, volta: 0 });
+      if (tipo === 'volta' && lacos.at(-1)) lacos[lacos.length - 1]!.volta++;
+      if (tipo === 'fim-laco') lacos.pop();
+      const atuais = Object.entries(variaveis).map(([nome, item]) => {
+        const texto = resumirEstado(item).slice(0, 300);
+        const estado = !ultimosValores.has(nome) ? 'nova' : ultimosValores.get(nome) !== texto ? 'mudou' : 'igual';
+        return { nome, valor: texto, estado } as const;
+      });
+      ultimosValores = new Map(atuais.map((item) => [item.nome, item.valor]));
+      const descricoes: Record<string, string> = {
+        inicio: 'Antes de começar',
+        declaracao: 'Variáveis declaradas',
+        instrucao: 'Comando executado',
+        condicao: valor ? 'Condição verdadeira' : 'Condição falsa',
+        decisao: 'Decisão concluída',
+        laco: 'Preparou o laço',
+        volta: 'Começou uma volta do laço',
+        'fim-laco': 'Laço encerrado',
+        bloco: 'Saiu do bloco',
+        break: 'Vai sair do laço',
+        continue: 'Vai para a próxima volta',
+        fim: 'Fim da execução',
+      };
+      passoAPasso.passos.push({
+        linha,
+        descricao: descricoes[tipo] ?? 'Comando executado',
+        variaveis: atuais,
+        linhasSaida: saida.length,
+        lacos: lacos.filter((laco) => laco.volta > 0).map((laco) => ({ ...laco })),
+      });
+      return valor;
+    }
 
     function lerIndice(
       objeto: Record<PropertyKey, unknown>,
@@ -477,7 +547,7 @@ export function criarExecutor() {
 
     try {
       const fonte =
-        `(async (console, setTimeout, setInterval, clearTimeout, clearInterval, alert, prompt, confirm, ${NOME_DA_PROTECAO}${pedido.investigador ? `, ${pedido.investigador}` : ''}) => { 'use strict';\n` +
+        `(async (console, setTimeout, setInterval, clearTimeout, clearInterval, alert, prompt, confirm, ${NOME_DA_PROTECAO}${pedido.investigador ? `, ${pedido.investigador}` : ''}${pedido.observadorPassos ? `, ${pedido.observadorPassos}` : ''}) => { 'use strict';\n` +
         `${pedido.codigo}\n;return {${nomesDoAluno.join(', ')}};\n})\n//# sourceURL=${ARQUIVO_DO_ALUNO}`;
       const funcao = (0, eval)(fonte) as (...a: unknown[]) => Promise<Record<string, unknown>>;
       escopo = await funcao(
@@ -490,11 +560,12 @@ export function criarExecutor() {
         avisar('prompt'),
         avisar('confirm'),
         protecao,
-        lerIndice,
+        ...(pedido.investigador ? [lerIndice] : []),
+        ...(pedido.observadorPassos ? [registrarPasso] : []),
       );
       rodouSemErro = true;
     } catch (erro) {
-      registrarErro(erro);
+      if (!(erro instanceof LimiteDePassos)) registrarErro(erro);
     }
 
     // Espera os temporizadores que o código deixou armados, até o limite.
@@ -607,6 +678,7 @@ export function criarExecutor() {
       duracaoMs: Date.now() - inicio,
       ...(investigacoes.length && { investigacoes }),
       ...(investigacoesObjetos.length && { investigacoesObjetos }),
+      ...(passoAPasso && { passoAPasso }),
     };
   };
 }

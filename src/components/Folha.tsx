@@ -12,6 +12,8 @@ import { registrarEvento } from '@/estudo/eventos';
 import { Conferencia } from './Conferencia';
 import { Rodar, Tique } from './Marcas';
 import { Saida } from './Saida';
+import { PassoAPasso } from './PassoAPasso';
+import { FiSkipForward } from 'react-icons/fi';
 import { Tutor, type TutorControles } from './Tutor';
 import { SalvarProgresso } from './SalvarProgresso';
 import { useModoFoco } from '@/editor/usar-modo-foco';
@@ -83,7 +85,13 @@ export interface FolhaProps {
   rodape?: (dados: { codigo: string; identidade?: string }) => ReactNode;
 }
 
-type Execucao = { modo: 'rodar' | 'conferir'; dados: ResultadoExecucao; codigo: string; documento?: DocumentoWeb };
+type Execucao = {
+  id: string;
+  modo: 'rodar' | 'conferir' | 'passos';
+  dados: ResultadoExecucao;
+  codigo: string;
+  documento?: DocumentoWeb;
+};
 
 /**
  * A folha pautada: editor, saída e conferência.
@@ -143,6 +151,7 @@ export function Folha({
   const codigoAtual = useRef(codigo);
   const ocupado = useRef(false);
   const pendente = useRef(false);
+  const execucaoAutomatica = useRef<ReturnType<typeof setTimeout> | null>(null);
   const editado = useRef(false);
   const pendenteDeSalvar = useRef(false);
   const donoDoRascunho = useRef<string | undefined>(undefined);
@@ -153,7 +162,11 @@ export function Folha({
   });
 
   const executar = useCallback(
-    async (modo: 'rodar' | 'conferir') => {
+    async (modo: 'rodar' | 'conferir' | 'passos') => {
+      if (modo === 'passos') {
+        if (execucaoAutomatica.current !== null) clearTimeout(execucaoAutomatica.current);
+        pendente.current = false;
+      }
       if (ocupado.current) {
         // O aluno digitou durante uma execução: roda de novo com o texto mais novo.
         if (modo === 'rodar') pendente.current = true;
@@ -168,15 +181,20 @@ export function Folha({
           codigoExecutado,
           modo === 'conferir' ? testes : SEM_TESTES,
           documentoExecutado && previa.current ? { documento: documentoExecutado, alvo: previa.current } : undefined,
+          { passoAPasso: modo === 'passos' },
         );
-        setExecucao({ modo, dados, codigo: codigoExecutado, documento: documentoExecutado });
-        if (!rodarAoDigitar && window.matchMedia('(max-width: 62rem), (pointer: coarse)').matches) {
+        setExecucao({ id: crypto.randomUUID(), modo, dados, codigo: codigoExecutado, documento: documentoExecutado });
+        if (
+          (modo === 'passos' || !rodarAoDigitar) &&
+          window.matchMedia('(max-width: 62rem), (pointer: coarse)').matches
+        ) {
           setPainel('resultado');
         }
         if (contextoTutor) {
           const posicao = 'trilha' in contextoTutor ? contextoTutor : undefined;
-          if (modo === 'rodar') registrarEvento({ tipo: 'codigo_rodado', posicao });
-          else
+          if (modo !== 'conferir') {
+            if (!dados.passoAPasso?.indisponivel) registrarEvento({ tipo: 'codigo_rodado', posicao });
+          } else
             registrarEvento({
               tipo: 'exercicio_conferido',
               posicao,
@@ -352,6 +370,7 @@ export function Folha({
       },
       primeiraRodada.current ? 0 : 900,
     );
+    execucaoAutomatica.current = espera;
     return () => clearTimeout(espera);
   }, [codigo, rodarAoDigitar, executar]);
 
@@ -400,11 +419,28 @@ export function Folha({
       ? ''
       : execucao.dados.erro
         ? 'O código deu erro.'
-        : conferido
-          ? acertou
-            ? 'Tudo certo.'
-            : `${conferido.testes.filter((t) => t.passou).length} de ${conferido.testes.length} testes certos.`
-          : 'O código rodou sem erro.';
+        : execucao.modo === 'passos'
+          ? execucao.dados.passoAPasso?.indisponivel
+            ? 'Passo a passo indisponível para este código.'
+            : 'Registro da execução pronto.'
+          : conferido
+            ? acertou
+              ? 'Tudo certo.'
+              : `${conferido.testes.filter((t) => t.passou).length} de ${conferido.testes.length} testes certos.`
+            : 'O código rodou sem erro.';
+
+  const irParaLinha =
+    execucao?.codigo === codigo
+      ? (linha: number) => {
+          linhaParaFocar.current = linha;
+          setAba('javascript');
+          mostrarCodigo();
+          if (painel === 'codigo') {
+            controleEditor.current?.irParaLinha(linha);
+            linhaParaFocar.current = null;
+          }
+        }
+      : undefined;
 
   return (
     <section
@@ -482,6 +518,12 @@ export function Folha({
               >
                 <Tique tamanho={16} className="sem-animacao" />
                 Conferir
+              </button>
+            )}
+            {!documento && (
+              <button type="button" className="botao" onClick={() => void executar('passos')} disabled={executando}>
+                <FiSkipForward aria-hidden="true" />
+                Passo a passo
               </button>
             )}
           </div>
@@ -630,23 +672,21 @@ export function Folha({
               {!execucao && <p>A prévia aparece quando você usar Rodar.</p>}
             </section>
           )}
-          <h3 className="folha-secao">Saída</h3>
-          <Saida
-            resultado={execucao?.dados ?? null}
-            aoIrParaLinha={
-              execucao?.codigo === codigo
-                ? (linha) => {
-                    linhaParaFocar.current = linha;
-                    setAba('javascript');
-                    mostrarCodigo();
-                    if (painel === 'codigo') {
-                      controleEditor.current?.irParaLinha(linha);
-                      linhaParaFocar.current = null;
-                    }
-                  }
-                : undefined
-            }
-          />
+          {execucao?.dados.passoAPasso ? (
+            <PassoAPasso
+              key={execucao.id}
+              resultado={execucao.dados}
+              codigo={execucao.codigo}
+              aoIrParaLinha={irParaLinha}
+              aoRodar={() => void executar('rodar')}
+              bloqueado={executando}
+            />
+          ) : (
+            <>
+              <h3 className="folha-secao">Saída</h3>
+              <Saida resultado={execucao?.dados ?? null} aoIrParaLinha={irParaLinha} />
+            </>
+          )}
         </div>
 
         {conferido && conferido.testes.length > 0 && <Conferencia testes={conferido.testes}>{aoAcertar}</Conferencia>}

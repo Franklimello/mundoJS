@@ -123,9 +123,10 @@ export function rodarNoNavegador(
   codigo: string,
   testes: TesteDefinicao[] = [],
   previa?: PreviaWeb,
+  opcoes: { passoAPasso?: boolean } = {},
 ): Promise<ResultadoExecucao> {
   previa?.alvo.replaceChildren();
-  const execucao = fila.then(() => rodar(codigo, testes, (pedido) => executarNoIframe(pedido, previa)));
+  const execucao = fila.then(() => rodar(codigo, testes, (pedido) => executarNoIframe(pedido, previa), opcoes));
   fila = execucao.catch(() => undefined);
   return execucao;
 }
