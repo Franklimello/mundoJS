@@ -1,7 +1,13 @@
 import type { ResultadoExecucao } from '@/engine/tipos';
 
 /** O que o código mostrou, e o erro que o interrompeu, se houve. */
-export function Saida({ resultado }: { resultado: ResultadoExecucao | null }) {
+export function Saida({
+  resultado,
+  aoIrParaLinha,
+}: {
+  resultado: ResultadoExecucao | null;
+  aoIrParaLinha?: (linha: number) => void;
+}) {
   if (!resultado) {
     return (
       <p className="saida-vazia">
@@ -33,6 +39,11 @@ export function Saida({ resultado }: { resultado: ResultadoExecucao | null }) {
           <p className="erro-titulo">{erro.linha ? `Deu erro na linha ${erro.linha}` : 'Deu erro'}</p>
           <p>{erro.mensagem}</p>
           {erro.dica && <p className="erro-dica">{erro.dica}</p>}
+          {erro.linha && aoIrParaLinha && (
+            <button type="button" className="botao" onClick={() => aoIrParaLinha(erro.linha!)}>
+              Ir para a linha {erro.linha}
+            </button>
+          )}
         </div>
       )}
     </>

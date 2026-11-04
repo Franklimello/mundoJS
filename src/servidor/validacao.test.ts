@@ -1,8 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { filtrarProgressoLegado, progressoValido, rascunhoValido } from './validacao';
+import { chaveDoDesafio, DESAFIOS_RASCUNHO } from '@/conteudo/desafios-rascunho';
 
 const data = '2026-11-03T10:00:00.000Z';
 describe('dados recebidos pela API', () => {
+  it('aceita rascunhos separados somente para desafios e modos cadastrados', () => {
+    const chaves = DESAFIOS_RASCUNHO.map(chaveDoDesafio);
+    expect(new Set(chaves).size).toBe(16);
+    for (const chave of chaves) {
+      expect(rascunhoValido(chave, 'tentativa')).toBe(true);
+      expect(rascunhoValido(chave, null)).toBe(true);
+    }
+    expect(rascunhoValido('rascunho-desafio/web/maior-numero', 'x')).toBe(false);
+    expect(rascunhoValido('rascunho-desafio/javascript/desconhecido', 'x')).toBe(false);
+  });
   it('aceita só lições e exercícios existentes com datas válidas', () => {
     const progresso = { versao: 1, concluidas: {}, exerciciosConcluidos: { 'javascript-do-zero/ola-mundo#0': data } };
     expect(progressoValido(progresso)).toBe(true);

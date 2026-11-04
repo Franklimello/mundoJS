@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { type ReactNode, type Ref, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { type ReactNode, type Ref, useCallback, useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import type { DocumentoWeb } from '@/engine/documento';
 import { guardarDocumento, lerDocumento } from '@/progresso/documento';
 import { rodarNoNavegador } from '@/engine/sandbox';
@@ -15,6 +15,7 @@ import { Saida } from './Saida';
 import { Tutor, type TutorControles } from './Tutor';
 import { SalvarProgresso } from './SalvarProgresso';
 import { useModoFoco } from '@/editor/usar-modo-foco';
+import type { ControlesEditor } from '@/editor/controles';
 
 // O editor é pesado e só roda no navegador: carrega à parte, depois da página.
 const EditorCodigo = dynamic(() => import('./EditorCodigo'), { ssr: false });
@@ -55,6 +56,8 @@ function CampoWeb({
 }
 
 export interface FolhaProps {
+  controleRef?: Ref<{ salvarAntesDeSair: () => Promise<boolean> }>;
+  dadosExemplo?: { texto: string; arquivo: 'javascript' | 'html' };
   enunciado?: ReactNode;
   /** O nome da folha no alto, como "Seu código". */
   titulo: string;
@@ -89,6 +92,8 @@ type Execucao = { modo: 'rodar' | 'conferir'; dados: ResultadoExecucao; codigo: 
  * corrige, teste por teste.
  */
 export function Folha({
+  controleRef,
+  dadosExemplo,
   enunciado,
   titulo,
   rotuloDoEditor,
@@ -111,7 +116,8 @@ export function Folha({
   const [painel, setPainel] = useState<'codigo' | 'enunciado' | 'resultado'>('codigo');
   const raiz = useRef<HTMLElement>(null);
   const resultado = useRef<HTMLDivElement>(null);
-  const controleEditor = useRef<{ focar: () => void }>(null);
+  const controleEditor = useRef<ControlesEditor>(null);
+  const linhaParaFocar = useRef<number | null>(null);
   const voltarAoEditor = useRef(false);
   const fecharFoco = useCallback(() => setFoco(false), []);
   useModoFoco(raiz, foco, fecharFoco);
@@ -129,6 +135,10 @@ export function Folha({
   const [rascunhoCarregado, setRascunhoCarregado] = useState(false);
   const [identidadeRascunho, setIdentidadeRascunho] = useState<string>();
   const [erroRascunho, setErroRascunho] = useState<string | null>(null);
+  const [estadoRascunho, setEstadoRascunho] = useState<
+    'carregando' | 'pronto' | 'pendente' | 'salvando' | 'salvo' | 'erro'
+  >('carregando');
+  const gravacaoAtual = useRef(0);
 
   const codigoAtual = useRef(codigo);
   const ocupado = useRef(false);
@@ -198,6 +208,10 @@ export function Folha({
       voltarAoEditor.current = false;
       if (aba === 'javascript') controleEditor.current?.focar();
       else document.getElementById(`${idEditor}-painel-${aba}`)?.querySelector('textarea')?.focus();
+      if (linhaParaFocar.current !== null) {
+        controleEditor.current?.irParaLinha(linhaParaFocar.current);
+        linhaParaFocar.current = null;
+      }
     }
   }, [painel, execucao, foco, aba, idEditor]);
 
@@ -224,8 +238,12 @@ export function Folha({
       }
       setRascunhoCarregado(true);
       setErroRascunho(null);
+      setEstadoRascunho(pendenteDeSalvar.current ? 'pendente' : salvo.codigo === null ? 'pronto' : 'salvo');
+      return true;
     } catch {
       setErroRascunho('Não foi possível carregar seu rascunho.');
+      setEstadoRascunho('erro');
+      return false;
     }
   }, [chaveRascunho, documentoInicial]);
 
@@ -235,7 +253,9 @@ export function Folha({
   }, [carregarRascunho]);
 
   const gravarRascunho = useCallback(async () => {
-    if (!chaveRascunho) return;
+    if (!chaveRascunho) return true;
+    const tentativa = ++gravacaoAtual.current;
+    setEstadoRascunho('salvando');
     const valor = documentoAtual.current
       ? guardarDocumento(codigoAtual.current, documentoAtual.current)
       : codigoAtual.current;
@@ -246,16 +266,44 @@ export function Folha({
       const atual = documentoAtual.current
         ? guardarDocumento(codigoAtual.current, documentoAtual.current)
         : codigoAtual.current;
-      if (atual === valor) pendenteDeSalvar.current = false;
-      setErroRascunho(null);
+      if (tentativa === gravacaoAtual.current) {
+        if (atual === valor) pendenteDeSalvar.current = false;
+        setEstadoRascunho(atual === valor ? 'salvo' : 'pendente');
+        setErroRascunho(null);
+      }
+      return true;
     } catch {
-      setErroRascunho('Não foi possível salvar seu rascunho. Tente novamente antes de sair.');
+      if (tentativa === gravacaoAtual.current) {
+        setErroRascunho(
+          navigator.onLine
+            ? 'Não foi possível salvar seu rascunho. Tente novamente antes de sair.'
+            : 'Você está sem conexão. Seu código ainda não foi salvo; mantenha esta página aberta e tente novamente ao reconectar.',
+        );
+        setEstadoRascunho('erro');
+      }
+      return false;
     }
   }, [chaveRascunho, codigoInicial, documentoInicial]);
+
+  useImperativeHandle(
+    controleRef,
+    () => ({
+      salvarAntesDeSair: async () => {
+        if (!pendenteDeSalvar.current) return true;
+        if (!rascunhoCarregado && !(await carregarRascunho())) return false;
+        while (pendenteDeSalvar.current) {
+          if (!(await gravarRascunho())) return false;
+        }
+        return true;
+      },
+    }),
+    [rascunhoCarregado, carregarRascunho, gravarRascunho],
+  );
 
   function alterarCodigo(valor: string) {
     editado.current = true;
     pendenteDeSalvar.current = true;
+    setEstadoRascunho('pendente');
     codigoAtual.current = valor;
     setCodigo(valor);
   }
@@ -265,6 +313,7 @@ export function Folha({
       if (!documento) return;
       editado.current = true;
       pendenteDeSalvar.current = true;
+      setEstadoRascunho('pendente');
       const proximo = { ...documento, [campo]: valor };
       documentoAtual.current = proximo;
       setDocumento(proximo);
@@ -326,6 +375,24 @@ export function Folha({
   const mudou =
     codigo !== codigoInicial || documento?.html !== documentoInicial?.html || documento?.css !== documentoInicial?.css;
   const podeVerSolucao = Boolean(solucao) && falhas >= FALHAS_ATE_OFERECER_SOLUCAO && !acertou;
+
+  function inserirDados() {
+    if (!dadosExemplo) return;
+    mostrarCodigo();
+    setAba(dadosExemplo.arquivo);
+    if (dadosExemplo.arquivo === 'javascript') controleEditor.current?.inserirDados(dadosExemplo.texto);
+    else if (documento && !documento.html.includes(dadosExemplo.texto.trim()))
+      alterarDocumento('html', dadosExemplo.texto.trim() + '\n' + documento.html);
+  }
+
+  const legendaRascunho = {
+    carregando: 'Carregando rascunho…',
+    pronto: 'Pronto para editar',
+    pendente: 'Alterações não salvas',
+    salvando: 'Salvando…',
+    salvo: 'Salvo',
+    erro: 'Não salvo · tente novamente',
+  }[estadoRascunho];
 
   const status = executando
     ? 'Rodando…'
@@ -419,6 +486,31 @@ export function Folha({
             )}
           </div>
         </div>
+
+        {(chaveRascunho || dadosExemplo) && (
+          <div className="folha-ferramentas">
+            {chaveRascunho && (
+              <p className="folha-salvamento" role="status" data-estado={estadoRascunho}>
+                {legendaRascunho}
+              </p>
+            )}
+            {dadosExemplo && (
+              <button
+                type="button"
+                className="botao botao-leve"
+                onClick={inserirDados}
+                disabled={
+                  !editorPronto ||
+                  (dadosExemplo.arquivo === 'javascript' ? codigo : (documento?.html ?? '')).includes(
+                    dadosExemplo.texto.trim(),
+                  )
+                }
+              >
+                Inserir dados do desafio
+              </button>
+            )}
+          </div>
+        )}
 
         {documento && (
           <div className="web-abas" role="tablist" aria-label="Arquivos da página">
@@ -515,6 +607,11 @@ export function Folha({
       </p>
 
       <div className="folha-retorno-mobile" ref={resultado} tabIndex={-1} aria-label="Resultado da execução">
+        {execucao && (execucao.codigo !== codigo || execucao.documento !== documento) && (
+          <p className="folha-resultado-antigo">
+            Este resultado é da execução anterior. O código mudou; use Rodar ou Conferir para atualizar.
+          </p>
+        )}
         <div className="folha-mobile-resumo">
           <p role="status">{status || 'Execute seu código para ver o resultado.'}</p>
           <button type="button" className="botao" onClick={mostrarCodigo}>
@@ -534,7 +631,22 @@ export function Folha({
             </section>
           )}
           <h3 className="folha-secao">Saída</h3>
-          <Saida resultado={execucao?.dados ?? null} />
+          <Saida
+            resultado={execucao?.dados ?? null}
+            aoIrParaLinha={
+              execucao?.codigo === codigo
+                ? (linha) => {
+                    linhaParaFocar.current = linha;
+                    setAba('javascript');
+                    mostrarCodigo();
+                    if (painel === 'codigo') {
+                      controleEditor.current?.irParaLinha(linha);
+                      linhaParaFocar.current = null;
+                    }
+                  }
+                : undefined
+            }
+          />
         </div>
 
         {conferido && conferido.testes.length > 0 && <Conferencia testes={conferido.testes}>{aoAcertar}</Conferencia>}

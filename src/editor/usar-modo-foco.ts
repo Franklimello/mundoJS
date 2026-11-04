@@ -33,6 +33,8 @@ export function useModoFoco(raiz: RefObject<HTMLElement | null>, ativo: boolean,
         fechar();
       }
       if (evento.key !== 'Tab') return;
+      // No código, Tab pertence ao recuo e aos campos de um modelo; Escape sai do foco.
+      if (evento.target instanceof HTMLElement && evento.target.closest('.cm-content')) return;
       const controles = [
         ...elemento!.querySelectorAll<HTMLElement>(
           'button:not(:disabled), select, textarea, input, a[href], [tabindex="0"], [contenteditable="true"]',

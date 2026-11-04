@@ -10,6 +10,10 @@ export interface DesafioRascunho {
   extra: string;
 }
 
+export function chaveDoDesafio(desafio: Pick<DesafioRascunho, 'id' | 'modo'>) {
+  return `rascunho-desafio/${desafio.modo}/${desafio.id}`;
+}
+
 export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
   {
     id: 'maior-numero',

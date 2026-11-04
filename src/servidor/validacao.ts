@@ -1,9 +1,11 @@
 import { trilhas, todasAsLicoes } from '@/conteudo';
 import type { Progresso } from '@/progresso/tipos';
+import { chaveDoDesafio, DESAFIOS_RASCUNHO } from '@/conteudo/desafios-rascunho';
 
 const licoes = new Set<string>();
 const exercicios = new Set<string>();
 const rascunhos = new Set(['rascunho-livre', 'rascunho-web']);
+for (const desafio of DESAFIOS_RASCUNHO) rascunhos.add(chaveDoDesafio(desafio));
 for (const trilha of trilhas) {
   rascunhos.add(`projeto/${trilha.slug}`);
   for (const licao of todasAsLicoes(trilha)) {
