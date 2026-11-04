@@ -73,6 +73,10 @@ export const splitEJoin: Licao = {
         },
       ],
       codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const nome = "Ana Maria Silva";',
+        'const frase = "um dois três";',
+        '',
         'function iniciais(nome) {',
         '  // separe as palavras, pegue a primeira letra de cada uma e junte',
         '}',
@@ -80,6 +84,10 @@ export const splitEJoin: Licao = {
         'function inverterPalavras(frase) {',
         '  // separe, inverta e junte de novo',
         '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(iniciais(nome));',
+        'console.log(inverterPalavras(frase));',
         '',
       ),
       testes: [
@@ -141,7 +149,18 @@ export const splitEJoin: Licao = {
           tom: 'cuidado',
         },
       ],
-      codigoInicial: linhas('function contarPalavras(frase) {', '  // separe a frase e conte as partes', '}', ''),
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const frase = "um dois três";',
+        '',
+        'function contarPalavras(frase) {',
+        '  // separe a frase e conte as partes',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(contarPalavras(frase));',
+        '',
+      ),
       testes: [
         {
           descricao: 'contarPalavras("um dois três") devolve 3',
@@ -176,7 +195,18 @@ export const splitEJoin: Licao = {
             'Escreva a função `criarSlug(titulo)`, que transforma um título no pedaço de endereço de uma página: tudo em minúsculas e as palavras ligadas por hífen. Por exemplo, `criarSlug("Aprendendo JavaScript Hoje")` devolve `"aprendendo-javascript-hoje"`. As palavras vêm separadas por um espaço só.',
         },
       ],
-      codigoInicial: linhas('function criarSlug(titulo) {', '  // minúsculas, e hífen no lugar dos espaços', '}', ''),
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const titulo = "Aprendendo JavaScript Hoje";',
+        '',
+        'function criarSlug(titulo) {',
+        '  // minúsculas, e hífen no lugar dos espaços',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(criarSlug(titulo));',
+        '',
+      ),
       testes: [
         {
           descricao: 'criarSlug("Aprendendo JavaScript Hoje") devolve “aprendendo-javascript-hoje”',
@@ -219,7 +249,18 @@ export const splitEJoin: Licao = {
           tom: 'cuidado',
         },
       ],
-      codigoInicial: linhas('function somarLinha(linha) {', '  // separe, converta em números e some', '}', ''),
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const linha = "10,20,30";',
+        '',
+        'function somarLinha(linha) {',
+        '  // separe, converta em números e some',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(somarLinha(linha));',
+        '',
+      ),
       testes: [
         {
           descricao: 'somarLinha("10,20,30") devolve 60',
@@ -256,9 +297,15 @@ export const splitEJoin: Licao = {
         },
       ],
       codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const texto = "arara";',
+        '',
         'function ehPalindromo(texto) {',
         '  // limpe o texto e compare com ele mesmo ao contrário',
         '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(ehPalindromo(texto));',
         '',
       ),
       testes: [
@@ -301,7 +348,18 @@ export const splitEJoin: Licao = {
             'Escreva a função `capitalizar(frase)`, que deixa a **primeira letra de cada palavra em maiúscula** e o resto em minúsculas. Por exemplo, `capitalizar("jOÃO da silva")` devolve `"João Da Silva"`. As palavras vêm separadas por um espaço só.',
         },
       ],
-      codigoInicial: linhas('function capitalizar(frase) {', '  // trate cada palavra e junte de novo', '}', ''),
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const frase = "jOÃO da silva";',
+        '',
+        'function capitalizar(frase) {',
+        '  // trate cada palavra e junte de novo',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(capitalizar(frase));',
+        '',
+      ),
       testes: [
         {
           descricao: 'capitalizar("jOÃO da silva") devolve “João Da Silva”',
@@ -342,7 +400,18 @@ export const splitEJoin: Licao = {
             'Crie `formatarConvidados(texto)`. Os nomes vêm separados por ponto e vírgula. Tire os espaços de cada nome, ignore as partes vazias e junte os convidados com vírgula seguida de espaço.',
         },
       ],
-      codigoInicial: 'function formatarConvidados(texto) {\n  // separe, limpe, filtre e junte os nomes\n}\n',
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const texto = " Ana ; ; Bia; Caio ";',
+        '',
+        'function formatarConvidados(texto) {',
+        '  // separe, limpe, filtre e junte os nomes',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(formatarConvidados(texto));',
+        '',
+      ),
       testes: [
         {
           descricao: 'Limpa os espaços e remove partes vazias',
@@ -366,7 +435,18 @@ export const splitEJoin: Licao = {
             'Crie `montarFicha(linha)`, que recebe três campos no formato `"nome;idade;cidade"` e devolve um objeto com nome, idade numérica e cidade. Tire os espaços das pontas do nome e da cidade. Considere entradas com os três campos e uma idade numérica válida.',
         },
       ],
-      codigoInicial: 'function montarFicha(linha) {\n  // separe os campos e monte o objeto\n}\n',
+      codigoInicial: linhas(
+        '// Dados de exemplo: altere os valores para experimentar.',
+        'const linha = " Ana ; 25 ; Recife ";',
+        '',
+        'function montarFicha(linha) {',
+        '  // separe os campos e monte o objeto',
+        '}',
+        '',
+        '// Rode para experimentar sua função com os dados acima.',
+        'console.log(montarFicha(linha));',
+        '',
+      ),
       testes: [
         {
           descricao: 'Lê os três campos e converte a idade',
