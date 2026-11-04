@@ -433,7 +433,7 @@ pre {
   background: var(--papel);
   color: var(--grafite);
   font:
-    0.95rem/1.7 var(--fonte-codigo),
+    var(--fonte-editor, 0.95rem)/1.7 var(--fonte-codigo),
     monospace;
   tab-size: 2;
 }
@@ -1118,7 +1118,7 @@ pre {
     ),
     var(--fundo-pautado);
   color: var(--tinta);
-  font-size: 1rem;
+  font-size: var(--fonte-editor, 1rem);
   line-height: var(--pauta);
   white-space: pre-wrap;
   pointer-events: none;
@@ -2179,6 +2179,10 @@ pre {
 }
 
 @media (max-width: 42rem) {
+  .folha {
+    --fonte-editor: 0.875rem;
+  }
+
   body {
     font-size: 1.0625rem;
   }
@@ -2285,5 +2289,11 @@ pre {
   }
   .nav {
     gap: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .folha {
+    --fonte-editor: 0.8125rem;
   }
 }
