@@ -2,7 +2,20 @@
 
 import { useEffect, useRef } from 'react';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { defaultKeymap, history, historyKeymap, indentWithTab, temporarilySetTabFocusMode } from '@codemirror/commands';
+import {
+  cursorCharLeft,
+  cursorCharRight,
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentLess,
+  indentMore,
+  indentWithTab,
+  insertNewlineAndIndent,
+  redo,
+  temporarilySetTabFocusMode,
+  undo,
+} from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { bracketMatching, HighlightStyle, indentOnInput, indentUnit, syntaxHighlighting } from '@codemirror/language';
 import { EditorState, StateEffect, StateField } from '@codemirror/state';
@@ -17,6 +30,50 @@ import {
   lineNumbers,
 } from '@codemirror/view';
 import { tags as t } from '@lezer/highlight';
+import { inserirAtalho } from '@/editor/inserir-atalho';
+
+const SIMBOLOS = [
+  { texto: '{ }', nome: 'Inserir chaves', abre: '{', fecha: '}' },
+  { texto: '[ ]', nome: 'Inserir colchetes', abre: '[', fecha: ']' },
+  { texto: '( )', nome: 'Inserir parênteses', abre: '(', fecha: ')' },
+  { texto: '" "', nome: 'Inserir aspas duplas', abre: '"', fecha: '"' },
+  { texto: "' '", nome: 'Inserir aspas simples', abre: "'", fecha: "'" },
+  { texto: '` `', nome: 'Inserir crases', abre: '`', fecha: '`' },
+  ...[
+    ';',
+    ',',
+    '.',
+    ':',
+    '=',
+    '===',
+    '=>',
+    '+',
+    '-',
+    '*',
+    '/',
+    '%',
+    '!',
+    '&&',
+    '||',
+    '<',
+    '>',
+    '?',
+    '_',
+    '}',
+    ']',
+    ')',
+  ].map((texto) => ({ texto, nome: `Inserir ${texto}`, abre: texto, fecha: undefined })),
+];
+
+const ACOES_MOVEIS = [
+  { texto: '←', nome: 'Mover cursor para a esquerda', comando: cursorCharLeft },
+  { texto: '→', nome: 'Mover cursor para a direita', comando: cursorCharRight },
+  { texto: 'Recuar', nome: 'Aumentar recuo da linha', comando: indentMore },
+  { texto: 'Desrecuar', nome: 'Diminuir recuo da linha', comando: indentLess },
+  { texto: 'Nova linha', nome: 'Inserir nova linha com recuo', comando: insertNewlineAndIndent },
+  { texto: 'Desfazer', nome: 'Desfazer edição', comando: undo },
+  { texto: 'Refazer', nome: 'Refazer edição', comando: redo },
+];
 
 /**
  * O editor de código.
@@ -137,6 +194,7 @@ export default function EditorCodigo({
   aoMontar,
 }: EditorCodigoProps) {
   const raiz = useRef<HTMLDivElement>(null);
+  const barra = useRef<HTMLDivElement>(null);
   const visao = useRef<EditorView | null>(null);
   // As funções mais recentes, sem recriar o editor a cada letra digitada.
   const acoes = useRef({ onChange, onRodar, onConferir });
@@ -194,7 +252,14 @@ export default function EditorCodigo({
           EditorState.tabSize.of(2),
           indentUnit.of('  '),
           EditorView.lineWrapping,
-          EditorView.contentAttributes.of({ 'aria-label': rotulo, spellcheck: 'false', autocapitalize: 'off' }),
+          EditorView.scrollMargins.of(() => ({ top: barra.current?.offsetHeight ?? 0 })),
+          EditorView.contentAttributes.of({
+            'aria-label': rotulo,
+            spellcheck: 'false',
+            autocapitalize: 'off',
+            autocorrect: 'off',
+            autocomplete: 'off',
+          }),
           campoDaLinhaComErro,
           tema,
           EditorView.updateListener.of((atualizacao) => {
@@ -225,5 +290,61 @@ export default function EditorCodigo({
     visao.current?.dispatch({ effects: definirLinhaComErro.of(linhaComErro) });
   }, [linhaComErro]);
 
-  return <div ref={raiz} className="editor" style={{ ['--pautas-minimas' as string]: pautasMinimas }} />;
+  function executarAtalho(acao: (view: EditorView) => void) {
+    const view = visao.current;
+    if (!view) return;
+    view.focus();
+    acao(view);
+  }
+
+  return (
+    <div className="editor-com-atalhos" style={{ ['--pautas-minimas' as string]: pautasMinimas }}>
+      <div ref={barra} className="editor-atalhos" role="group" aria-label="Atalhos de código para celular">
+        <p className="editor-atalhos-ajuda">Atalhos de código · deslize as linhas para ver mais</p>
+        <div className="editor-atalhos-linha" role="group" aria-label="Símbolos de JavaScript">
+          {SIMBOLOS.map(({ texto, nome, abre, fecha }) => (
+            <button
+              key={texto}
+              type="button"
+              aria-label={nome}
+              title={nome}
+              onPointerDown={(evento) => evento.preventDefault()}
+              onClick={() => executarAtalho((view) => view.dispatch(inserirAtalho(view.state, abre, fecha)))}
+            >
+              {texto}
+            </button>
+          ))}
+        </div>
+        <div className="editor-atalhos-acoes" role="group" aria-label="Edição e execução">
+          <div className="editor-atalhos-linha">
+            {ACOES_MOVEIS.map(({ texto, nome, comando }) => (
+              <button
+                key={nome}
+                type="button"
+                aria-label={nome}
+                title={nome}
+                onPointerDown={(evento) => evento.preventDefault()}
+                onClick={() =>
+                  executarAtalho((view) => {
+                    comando(view);
+                  })
+                }
+              >
+                {texto}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="editor-atalho-rodar"
+            onPointerDown={(evento) => evento.preventDefault()}
+            onClick={() => executarAtalho(() => acoes.current.onRodar())}
+          >
+            Rodar código
+          </button>
+        </div>
+      </div>
+      <div ref={raiz} className="editor" />
+    </div>
+  );
 }

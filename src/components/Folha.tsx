@@ -40,6 +40,8 @@ function CampoWeb({
       value={valor}
       spellCheck={false}
       autoCapitalize="off"
+      autoCorrect="off"
+      autoComplete="off"
       onChange={(evento) => onChange(arquivo, evento.target.value)}
       onKeyDown={(evento) => {
         if (evento.key === 'Enter' && (evento.ctrlKey || evento.metaKey)) {

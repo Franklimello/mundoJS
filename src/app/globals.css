@@ -1277,6 +1277,76 @@ pre {
   padding: 0 8px 8px 0;
 }
 
+.editor-atalhos {
+  display: none;
+}
+
+@media (max-width: 896px), (pointer: coarse) {
+  .editor-com-atalhos {
+    min-width: 0;
+  }
+
+  .editor-atalhos {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 0.35rem;
+    border-bottom: 1px solid var(--cor-traco);
+    background: var(--papel);
+  }
+
+  .editor-atalhos-ajuda {
+    margin-bottom: 0.25rem;
+    color: var(--lapis);
+    font-size: 0.875rem;
+  }
+
+  .editor-atalhos-linha {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.15rem 0.15rem 0.35rem;
+    overscroll-behavior-x: contain;
+  }
+
+  .editor-atalhos-acoes {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .editor-atalhos-acoes .editor-atalhos-linha {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .editor-atalhos button {
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--cor-traco);
+    border-radius: 0.3rem;
+    background: var(--fundo-suave);
+    color: var(--tinta-forte);
+    font: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .editor-atalhos button:active {
+    background: var(--marca-texto);
+  }
+
+  .editor-atalhos .editor-atalho-rodar {
+    margin-top: 0.15rem;
+    background: var(--tinta);
+    color: var(--papel);
+  }
+}
+
 .rascunho-desafio {
   margin-bottom: 1.5rem;
   padding: clamp(1rem, 3vw, 1.5rem);
