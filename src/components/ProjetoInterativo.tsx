@@ -1,6 +1,8 @@
 'use client';
 
 import type { TesteDefinicao } from '@/engine/tipos';
+import type { ReactNode } from 'react';
+import type { DocumentoWeb } from '@/engine/documento';
 import { Folha } from './Folha';
 import { CompartilharProjeto } from './CompartilharProjeto';
 
@@ -8,10 +10,14 @@ export function ProjetoInterativo({
   trilha,
   codigoInicial,
   testes,
+  documentoInicial,
+  enunciado,
 }: {
   trilha: string;
   codigoInicial: string;
   testes: TesteDefinicao[];
+  documentoInicial?: DocumentoWeb;
+  enunciado?: ReactNode;
 }) {
   return (
     <div id="editor-do-projeto" className="projeto-editor" tabIndex={-1}>
@@ -19,6 +25,8 @@ export function ProjetoInterativo({
         titulo="Meu projeto"
         rotuloDoEditor="Editor do projeto"
         codigoInicial={codigoInicial}
+        documentoInicial={documentoInicial}
+        enunciado={enunciado}
         testes={testes}
         chaveRascunho={`projeto/${trilha}`}
         pautasMinimas={18}

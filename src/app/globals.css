@@ -2024,6 +2024,20 @@ pre {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
+
+.projeto-enunciado > section {
+  margin-top: 1.25rem;
+}
+
+.projeto-enunciado h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.projeto-editor .web-previa-alvo iframe {
+  min-height: 50rem;
+}
 .projeto-etapas details {
   border-block-start: 1px solid var(--cor-traco);
   padding-block: 0.5rem;

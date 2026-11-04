@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PlanoConta } from '@/components/PlanoConta';
 import { PERGUNTAS_GRATIS, PERGUNTAS_VISITANTE, PLANO_PRO } from '@/conta/planos';
 import { trilhas, todasAsLicoes } from '@/conteudo';
+import { catalogoProjetos } from '@/projetos/catalogo';
 const totalExercicios = trilhas.flatMap(todasAsLicoes).reduce((total, licao) => total + licao.exercicios.length, 0);
 export const metadata: Metadata = {
   title: 'Planos',
@@ -22,7 +23,7 @@ export default function Planos() {
       </h1>
       <p className="secao-apoio">
         Experimente a trilha JavaScript do zero gratuitamente. No Pro, libere o curso completo com {totalExercicios}{' '}
-        exercícios, os 4 projetos e mais ajuda do tutor.
+        exercícios, os {catalogoProjetos.length} projetos e mais ajuda do tutor.
       </p>
       <div className="planos-grade">
         <section className="plano-cartao" aria-labelledby="gratis-titulo">
@@ -56,7 +57,7 @@ export default function Planos() {
             <li>
               <strong>Todas as trilhas e os {totalExercicios} exercícios, incluindo Math, JSON, Date e DOM</strong>
             </li>
-            <li>4 projetos práticos para construir e compartilhar</li>
+            <li>{catalogoProjetos.length} projetos práticos para construir e compartilhar</li>
             <li>
               <strong>{PLANO_PRO.perguntas} perguntas ao tutor por ciclo mensal</strong>
             </li>

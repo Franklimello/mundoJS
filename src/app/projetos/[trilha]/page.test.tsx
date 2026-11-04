@@ -17,4 +17,14 @@ describe('projetos exclusivos do Pro', () => {
     const liberado = await Pagina({ params: Promise.resolve({ trilha: 'javascript-do-zero' }) });
     expect(liberado.type).not.toBe(ConteudoPro);
   });
+  it('protege código, testes e documento da calculadora de compras', async () => {
+    const resultado = await Pagina({ params: Promise.resolve({ trilha: 'ferramentas-do-javascript' }) });
+    const projeto = buscarProjeto('ferramentas-do-javascript')!;
+    expect(resultado.type).toBe(ConteudoPro);
+    expect(JSON.stringify(resultado)).not.toContain(projeto.codigoInicial);
+    expect(JSON.stringify(resultado)).not.toContain(projeto.documentoInicial!.html);
+    mocks.pro.mockResolvedValue(true);
+    const liberado = await Pagina({ params: Promise.resolve({ trilha: 'ferramentas-do-javascript' }) });
+    expect(liberado.type).not.toBe(ConteudoPro);
+  });
 });

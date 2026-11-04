@@ -18,7 +18,7 @@ export function ConteudoPro({
       </h1>
       <p className="secao-apoio">
         {projeto ? 'Construa este projeto com o Pro.' : 'Continue nesta trilha com o Pro.'} Por R$ 9,99/mês, você libera
-        todas as trilhas, os 4 projetos e 100 perguntas ao tutor por ciclo.
+        todas as trilhas, os projetos e 100 perguntas ao tutor por ciclo.
       </p>
       <div className="conta-acoes">
         <Link href="/planos" className="botao botao-principal">

@@ -15,8 +15,8 @@ export default async function Projetos() {
     <div className="pagina secao">
       <h1 className="titulo-de-pagina">Da lição para um projeto seu.</h1>
       <p className="secao-apoio">
-        Os 4 projetos práticos fazem parte do Pro. Junte o que aprendeu em um programa completo, salve seu código e
-        compartilhe uma versão de leitura.
+        Os {catalogoProjetos.length} projetos práticos fazem parte do Pro. Junte o que aprendeu em um programa completo,
+        salve seu código e compartilhe uma versão de leitura.
       </p>
       <div className="projetos-grade">
         {catalogoProjetos.map((projeto, indice) => (
