@@ -43,10 +43,13 @@ export const eOu: Licao = {
     {
       titulo: 'Entrar na festa',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `podeEntrar(idade, temConvite)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `podeEntrar(idade, temConvite)`. Ela devolve `true` se a pessoa tem 18 anos ou mais **ou** tem convite, e `false` caso contrário.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` se a pessoa tiver `18` anos ou mais, ou se tiver convite.',
+            'Devolva `false` apenas quando nenhuma das duas condições for atendida.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -91,10 +94,13 @@ export const eOu: Licao = {
     {
       titulo: 'Fim de semana',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ehFimDeSemana(dia)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `ehFimDeSemana(dia)`, que recebe o nome do dia em minúsculas e devolve `true` para `"sábado"` ou `"domingo"`, e `false` para qualquer outro dia.',
+          tipo: 'lista',
+          itens: [
+            'O nome do dia será recebido em minúsculas.',
+            'Devolva `true` para `"sábado"` e `"domingo"`. Para qualquer outro dia, devolva `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -128,10 +134,13 @@ export const eOu: Licao = {
     {
       titulo: 'Dentro dos limites',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `estaEntre(numero, minimo, maximo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `estaEntre(numero, minimo, maximo)`, que devolve `true` se o número é maior ou igual ao mínimo **e** menor ou igual ao máximo. Os limites contam como "dentro".',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` se o número estiver entre os dois limites, incluindo o mínimo e o máximo.',
+            'Devolva `false` se estiver fora desse intervalo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -166,10 +175,13 @@ export const eOu: Licao = {
     {
       titulo: 'Dirigir sem beber',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `podeDirigir(idade, temCarteira, bebeu)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `podeDirigir(idade, temCarteira, bebeu)`. Ela devolve `true` só se a pessoa tem 18 anos ou mais, **tem** carteira e **não** bebeu.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` somente se as três regras forem atendidas: idade de pelo menos `18` anos, carteira presente e nenhuma bebida consumida.',
+            'Em qualquer outro caso, devolva `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -219,13 +231,14 @@ export const eOu: Licao = {
     {
       titulo: 'Ano bissexto',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'Escreva a função `ehBissexto(ano)`. Um ano é bissexto quando:',
-        },
+        { tipo: 'p', texto: 'Complete `ehBissexto(ano)` e devolva `true` ou `false`.' },
         {
           tipo: 'lista',
-          itens: ['é divisível por 4 **e** não é divisível por 100; **ou**', 'é divisível por 400.'],
+          itens: [
+            'O ano é bissexto se for divisível por `4` e não por `100`, ou se for divisível por `400`.',
+            'Ser divisível significa que o resto da divisão é zero.',
+            'Exemplos: `2024` e `2000` são bissextos; `1900` não é.',
+          ],
         },
         {
           tipo: 'nota',
@@ -268,10 +281,13 @@ export const eOu: Licao = {
     {
       titulo: 'Retirada de um pedido',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `podeRetirar(pago, emEstoque, documento)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `podeRetirar(pago, emEstoque, documento)`, que devolve true somente quando as três condições são verdadeiras: o pedido foi pago, está em estoque e o documento foi apresentado.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` somente se o pedido estiver pago, o produto estiver em estoque e o documento tiver sido apresentado.',
+            'Se qualquer condição for falsa, devolva `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -302,10 +318,13 @@ export const eOu: Licao = {
     {
       titulo: 'Duas formas de ganhar frete',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `temFreteGratis(valor, assinante)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `temFreteGratis(valor, assinante)`. O frete é grátis quando o valor é pelo menos 100 reais ou quando o cliente é assinante. Devolva true ou false.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` para compras de pelo menos `100` reais ou para clientes assinantes.',
+            'Nos outros casos, devolva `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(

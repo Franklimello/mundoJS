@@ -63,12 +63,12 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Iniciais e palavras ao contrário',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções. Nos testes, as palavras vêm separadas por um espaço só.' },
+        { tipo: 'p', texto: 'Complete as duas funções. As palavras serão separadas por um único espaço.' },
         {
           tipo: 'lista',
           itens: [
-            '`iniciais(nome)` devolve as iniciais em maiúsculas: `iniciais("Ana Maria Silva")` devolve `"AMS"`.',
-            '`inverterPalavras(frase)` devolve as palavras na ordem contrária: `inverterPalavras("um dois três")` devolve `"três dois um"`.',
+            '`iniciais(nome)`: devolva as primeiras letras das palavras, juntas e em maiúsculas. Exemplo: `"Ana Maria Silva"` → `"AMS"`.',
+            '`inverterPalavras(frase)`: devolva as palavras na ordem inversa, separadas por espaço. Exemplo: `"um dois três"` → `"três dois um"`.',
           ],
         },
       ],
@@ -135,10 +135,13 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Contando palavras',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarPalavras(frase)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarPalavras(frase)`, que devolve quantas palavras a frase tem. As palavras vêm separadas por um espaço só, e um texto vazio tem `0` palavras.',
+          tipo: 'lista',
+          itens: [
+            'As palavras serão separadas por um único espaço. Devolva a quantidade de palavras.',
+            'Para um texto vazio, devolva `0`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -185,10 +188,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Endereço de uma página',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarSlug(titulo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `criarSlug(titulo)`, que transforma um título no pedaço de endereço de uma página: tudo em minúsculas e as palavras ligadas por hífen. Por exemplo, `criarSlug("Aprendendo JavaScript Hoje")` devolve `"aprendendo-javascript-hoje"`. As palavras vêm separadas por um espaço só.',
+          tipo: 'lista',
+          itens: [
+            'Converta o título para minúsculas e una as palavras com hífen, formando um trecho de endereço.',
+            'As palavras serão separadas por um único espaço.',
+            'Exemplo: `"Aprendendo JavaScript Hoje"` deve resultar em `"aprendendo-javascript-hoje"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -231,10 +238,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Somando uma linha de números',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somarLinha(linha)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `somarLinha(linha)`. Ela recebe números separados por vírgula, como `"10,20,30"`, e devolve a soma deles: `60`.',
+          tipo: 'lista',
+          itens: [
+            'A entrada é um texto com números separados por vírgula.',
+            'Converta cada parte em número e devolva a soma.',
+            'Exemplo: `"10,20,30"` deve resultar no número `60`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -282,10 +293,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Palíndromo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ehPalindromo(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Um palíndromo é um texto que se lê igual de trás para frente, como `arara`. Escreva a função `ehPalindromo(texto)`, que devolve `true` ou `false`, ignorando maiúsculas e **espaços**: `"Ana"` é palíndromo, e `"a sacada da casa"` também.',
+          tipo: 'lista',
+          itens: [
+            'Um palíndromo é um texto que fica igual quando lido de trás para frente.',
+            'Ignore espaços e diferenças entre maiúsculas e minúsculas. Devolva `true` ou `false`.',
+            'Exemplos de palíndromos: `"Ana"`, `"arara"` e `"a sacada da casa"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -332,10 +347,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Nome próprio',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `capitalizar(frase)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `capitalizar(frase)`, que deixa a **primeira letra de cada palavra em maiúscula** e o resto em minúsculas. Por exemplo, `capitalizar("jOÃO da silva")` devolve `"João Da Silva"`. As palavras vêm separadas por um espaço só.',
+          tipo: 'lista',
+          itens: [
+            'Deixe a primeira letra de cada palavra em maiúscula e as demais em minúsculas.',
+            'As palavras serão separadas por um único espaço. Devolva a frase ajustada.',
+            'Exemplo: `"jOÃO da silva"` deve resultar em `"João Da Silva"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -382,10 +401,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Uma lista de convidados limpa',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `formatarConvidados(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `formatarConvidados(texto)`. Os nomes vêm separados por ponto e vírgula. Tire os espaços de cada nome, ignore as partes vazias e junte os convidados com vírgula seguida de espaço.',
+          tipo: 'lista',
+          itens: [
+            'Os nomes vêm separados por ponto e vírgula.',
+            'Retire os espaços das pontas de cada nome e descarte partes vazias.',
+            'Devolva os nomes unidos por vírgula e espaço: `", "`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -415,10 +438,14 @@ export const splitEJoin: Licao = {
     {
       titulo: 'Uma ficha a partir de uma linha',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `montarFicha(linha)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `montarFicha(linha)`, que recebe três campos no formato `"nome;idade;cidade"` e devolve um objeto com nome, idade numérica e cidade. Tire os espaços das pontas do nome e da cidade. Considere entradas com os três campos e uma idade numérica válida.',
+          tipo: 'lista',
+          itens: [
+            'A entrada tem o formato `"nome;idade;cidade"`, com os três campos e uma idade válida.',
+            'Devolva um objeto com `nome`, `idade` e `cidade`. Converta a idade para número.',
+            'Retire os espaços das pontas do nome e da cidade.',
+          ],
         },
       ],
       codigoInicial: linhas(

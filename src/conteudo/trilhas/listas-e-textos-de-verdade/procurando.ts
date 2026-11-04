@@ -63,12 +63,12 @@ export const procurando: Licao = {
     {
       titulo: 'Achar e conferir',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções:' },
+        { tipo: 'p', texto: 'Complete as duas funções.' },
         {
           tipo: 'lista',
           itens: [
-            '`acharPorId(itens, id)` devolve o item cujo `id` é igual ao pedido, ou `undefined` se não existir.',
-            '`todosPagaram(pedidos)` devolve `true` se todos os pedidos têm `pago: true`. Para uma lista vazia, também devolve `true`.',
+            '`acharPorId(itens, id)`: devolva o objeto com o `id` procurado, ou `undefined` se ele não existir.',
+            '`todosPagaram(pedidos)`: devolva `true` se todos os pedidos tiverem `pago: true`; caso contrário, `false`. Para uma lista vazia, devolva `true`.',
           ],
         },
       ],
@@ -138,10 +138,14 @@ igual(acharPorId(itens, 7), undefined, 'acharPorId(itens, 7)')`,
     {
       titulo: 'O primeiro negativo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `primeiroNegativo(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `primeiroNegativo(numeros)`, que devolve o **primeiro** número negativo da lista, ou `undefined` se não houver nenhum. Em `[5, 3, -2, -8]`, a resposta é `-2`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o primeiro número negativo, respeitando a ordem da lista.',
+            'Se não houver negativos, devolva `undefined`.',
+            'Exemplo: `[5, 3, -2, -8]` deve resultar em `-2`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -183,10 +187,14 @@ igual(primeiroNegativo([]), undefined, 'primeiroNegativo([])')`,
     {
       titulo: 'Tem algum adulto?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `temAdulto(pessoas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `temAdulto(pessoas)`, que recebe objetos `{ nome, idade }` e devolve `true` se **alguma** pessoa tem 18 anos ou mais. Numa lista vazia, devolve `false`.',
+          tipo: 'lista',
+          itens: [
+            'Cada pessoa tem `nome` e `idade`.',
+            'Devolva `true` se pelo menos uma pessoa tiver `18` anos ou mais. Caso contrário, `false`.',
+            'Para uma lista vazia, devolva `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -227,10 +235,14 @@ igual(primeiroNegativo([]), undefined, 'primeiroNegativo([])')`,
     {
       titulo: 'Formulário preenchido',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `tudoPreenchido(campos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `tudoPreenchido(campos)`, que recebe uma lista de textos e devolve `true` se **todos** têm algo escrito. Um campo só com espaços conta como vazio. Uma lista vazia devolve `true`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` se todos os textos tiverem algum conteúdo, ou `false` se algum estiver vazio.',
+            'Um texto contendo apenas espaços conta como vazio.',
+            'Para uma lista vazia, devolva `true`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -275,10 +287,13 @@ igual(primeiroNegativo([]), undefined, 'primeiroNegativo([])')`,
     {
       titulo: 'Em que posição está?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `posicaoDaTarefa(tarefas, id)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `posicaoDaTarefa(tarefas, id)`, que devolve a **posição** (o índice) da tarefa com aquele `id`, ou `-1` se ela não existir.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o índice da tarefa com o `id` informado. Os índices começam em `0`.',
+            'Se a tarefa não existir, devolva `-1`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -325,10 +340,14 @@ igual(posicaoDaTarefa(tarefas, 10), 0, 'posicaoDaTarefa(tarefas, 10)')`,
     {
       titulo: 'Está na lista de convidados?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `estaConvidado(convidados, nome)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `estaConvidado(convidados, nome)`, que devolve `true` se o nome está na lista de convidados, **sem ligar para maiúsculas e minúsculas**. Por exemplo, `estaConvidado(["Ana", "Bia"], "ana")` devolve `true`.',
+          tipo: 'lista',
+          itens: [
+            'Procure o nome na lista sem diferenciar maiúsculas de minúsculas.',
+            'Devolva `true` se encontrar e `false` se não encontrar.',
+            'Exemplo: `estaConvidado(["Ana", "Bia"], "ana")` deve devolver `true`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -377,10 +396,13 @@ igual(posicaoDaTarefa(tarefas, 10), 0, 'posicaoDaTarefa(tarefas, 10)')`,
     {
       titulo: 'Todos os produtos disponíveis?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `todosDisponiveis(produtos)` usando `every`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `todosDisponiveis(produtos)`, que usa every para verificar se cada produto tem quantidade maior que zero. Como no comportamento de every, uma lista vazia devolve true: nenhum item descumpre a regra.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` se todos os produtos tiverem `quantidade` maior que `0`. Caso contrário, `false`.',
+            'Para uma lista vazia, devolva `true`, seguindo o comportamento de `every`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -410,10 +432,13 @@ igual(posicaoDaTarefa(tarefas, 10), 0, 'posicaoDaTarefa(tarefas, 10)')`,
     {
       titulo: 'A primeira tarefa pendente',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `posicaoDaPendencia(tarefas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `posicaoDaPendencia(tarefas)`, que devolve o índice da primeira tarefa cuja propriedade concluida é false. Se todas estiverem concluídas, ou a lista estiver vazia, devolva -1.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o índice da primeira tarefa com `concluida: false`.',
+            'Se todas estiverem concluídas, ou se a lista estiver vazia, devolva `-1`.',
+          ],
         },
       ],
       codigoInicial: linhas(

@@ -40,10 +40,14 @@ export const contas: Licao = {
     {
       titulo: 'Total da compra',
       enunciado: [
+        { tipo: 'p', texto: 'Calcule o valor final da compra.' },
         {
-          tipo: 'p',
-          texto:
-            'Uma loja vende itens a `preco` cada, o cliente leva `quantidade` e ganha um `desconto` em reais. Crie a variável `total` com a conta (preço vezes quantidade, menos o desconto) e mostre-a.',
+          tipo: 'lista',
+          itens: [
+            'Use as variáveis `preco`, `quantidade` e `desconto` já fornecidas.',
+            'Guarde em `total` o preço vezes a quantidade, menos o desconto em reais.',
+            'Mostre `total` com `console.log`.',
+          ],
         },
       ],
       codigoInicial: linhas('const preco = 12;', 'const quantidade = 3;', 'const desconto = 5;', ''),
@@ -82,10 +86,8 @@ verdadeiro(
     {
       titulo: 'O resto da divisão',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'A constante `numero` vale 17. Crie `resto` com o **resto** da divisão de `numero` por 5 e mostre-o.',
-        },
+        { tipo: 'p', texto: 'Calcule o resto da divisão de `numero` por `5`.' },
+        { tipo: 'lista', itens: ['Guarde o resultado em `resto`.', 'Mostre `resto` com `console.log`.'] },
       ],
       codigoInicial: linhas('const numero = 17;', ''),
       testes: [
@@ -105,10 +107,13 @@ verdadeiro(
     {
       titulo: 'A ordem das contas',
       enunciado: [
+        { tipo: 'p', texto: 'Crie `resultado` com uma expressão que resulte em `20`.' },
         {
-          tipo: 'p',
-          texto:
-            'Faça `resultado` valer `20` usando **apenas** os números 2, 3 e 4, com uma soma e uma multiplicação. Sem parênteses a conta dá outro valor: descubra onde eles precisam entrar.',
+          tipo: 'lista',
+          itens: [
+            'Use somente os números `2`, `3` e `4`, uma soma e uma multiplicação.',
+            'Use parênteses para definir a ordem das operações.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -131,9 +136,13 @@ verdadeiro(
     {
       titulo: 'Média de duas notas',
       enunciado: [
+        { tipo: 'p', texto: 'Calcule a média das duas notas fornecidas.' },
         {
-          tipo: 'p',
-          texto: 'Crie `media` com a média de `nota1` e `nota2` (some as duas e divida por 2) e mostre-a.',
+          tipo: 'lista',
+          itens: [
+            'Some `nota1` e `nota2` e divida a soma por `2`.',
+            'Guarde o valor em `media` e mostre-o com `console.log`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -170,10 +179,14 @@ verdadeiro(linha.includes('nota1') && linha.includes('nota2'), 'Calcule a média
     {
       titulo: 'Horas e minutos que sobram',
       enunciado: [
+        { tipo: 'p', texto: 'Converta `minutos` em horas completas e minutos restantes.' },
         {
-          tipo: 'p',
-          texto:
-            'Uma atividade durou `minutos` minutos. Crie `restantes` com o resto da divisão por 60 e `horas` com a quantidade de horas completas. Mostre os dois valores nessa ordem: horas e minutos restantes.',
+          tipo: 'lista',
+          itens: [
+            'Guarde as horas completas em `horas`.',
+            'Guarde o resto da divisão por `60` em `restantes`.',
+            'Mostre `horas` e `restantes`, nessa ordem.',
+          ],
         },
       ],
       codigoInicial: linhas('const minutos = 137;', ''),
@@ -193,11 +206,8 @@ verdadeiro(linha.includes('nota1') && linha.includes('nota2'), 'Calcule a média
     {
       titulo: 'Consertando a média do preço',
       enunciado: [
-        {
-          tipo: 'p',
-          texto:
-            'O código tenta calcular quanto custou cada item, mas usa o operador errado. Corrija a conta de `media`, usando `total` e `itens`, e mantenha a saída do resultado.',
-        },
+        { tipo: 'p', texto: 'Corrija a conta de `media` para calcular o custo de cada item.' },
+        { tipo: 'lista', itens: ['Divida `total` por `itens`.', 'Mantenha o comando que mostra o resultado.'] },
       ],
       codigoInicial: 'const total = 45;\nconst itens = 3;\nconst media = total + itens;\nconsole.log(media);\n',
       testes: [

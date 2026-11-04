@@ -77,15 +77,12 @@ export const ordenar: Licao = {
     {
       titulo: 'Números e preços',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'Escreva duas funções. As duas devolvem uma lista **nova** e não alteram a original.',
-        },
+        { tipo: 'p', texto: 'Complete as duas funções. Ambas devem devolver uma nova lista, sem alterar a original.' },
         {
           tipo: 'lista',
           itens: [
-            '`ordenarNumeros(numeros)` devolve os números do menor para o maior.',
-            '`maisBaratosPrimeiro(itens)` devolve os itens `{ nome, preco }` do menor para o maior preço.',
+            '`ordenarNumeros(numeros)`: ordene os números do menor para o maior.',
+            '`maisBaratosPrimeiro(itens)`: ordene os objetos `{ nome, preco }` do menor para o maior preço.',
           ],
         },
       ],
@@ -159,10 +156,10 @@ igual(itens.map((item) => item.nome), ['b', 'a'], 'A ordem da lista original')`,
     {
       titulo: 'Do maior para o menor',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `maioresPrimeiro(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `maioresPrimeiro(numeros)`, que devolve uma lista nova com os números do **maior para o menor**. A original não pode mudar.',
+          tipo: 'lista',
+          itens: ['Devolva uma nova lista com os números do maior para o menor.', 'Não altere a lista original.'],
         },
       ],
       codigoInicial: linhas(
@@ -205,10 +202,14 @@ igual(original, [1, 3, 2], 'A lista original')`,
     {
       titulo: 'Em ordem alfabética',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `emOrdemAlfabetica(nomes)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `emOrdemAlfabetica(nomes)`, que devolve uma lista nova com os nomes em ordem alfabética, **respeitando os acentos**: `["Édson", "Bia", "Ana"]` vira `["Ana", "Bia", "Édson"]`. A original não pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com os nomes em ordem alfabética, respeitando os acentos.',
+            'Não altere a lista original.',
+            'Exemplo: `["Édson", "Bia", "Ana"]` deve resultar em `["Ana", "Bia", "Édson"]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -259,15 +260,16 @@ igual(original, ['b', 'a'], 'A lista original')`,
     {
       titulo: 'O pódio',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `podio(pontos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `podio(pontos)`, que devolve os **três maiores** números da lista, do maior para o menor. Com menos de três números, devolve todos, também do maior para o menor. Por exemplo, `podio([5, 1, 9, 3, 7])` devolve `[9, 7, 5]`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva os três maiores números, do maior para o menor.',
+            'Se houver menos de três números, devolva todos nessa mesma ordem.',
+            'Exemplo: `[5, 1, 9, 3, 7]` deve resultar em `[9, 7, 5]`.',
+          ],
         },
-        {
-          tipo: 'nota',
-          texto: '`lista.slice(0, 3)` pega os três primeiros itens (ou menos, se a lista for menor).',
-        },
+        { tipo: 'nota', texto: '`lista.slice(0, 3)` pega os três primeiros itens (ou menos, se a lista for menor).' },
       ],
       codigoInicial: linhas(
         'const pontos = [5, 1, 9, 3, 7];',
@@ -307,10 +309,14 @@ igual(original, [4, 1, 3, 2], 'A lista original')`,
     {
       titulo: 'Idade e, no empate, nome',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ordenarPessoas(pessoas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `ordenarPessoas(pessoas)`, que devolve uma lista nova de objetos `{ nome, idade }` do mais novo para o mais velho. Quando duas pessoas têm a mesma idade, vem primeiro quem tem o **nome** antes na ordem alfabética. A original não pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista de objetos `{ nome, idade }`, da menor para a maior idade.',
+            'Se duas pessoas tiverem a mesma idade, ordene seus nomes alfabeticamente.',
+            'Não altere a lista original.',
+          ],
         },
         {
           tipo: 'nota',
@@ -382,10 +388,14 @@ igual(original.map((p) => p.nome), ['B', 'A'], 'A ordem da lista original')`,
     {
       titulo: 'A mediana',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `mediana(numeros)`. A lista não estará vazia.' },
         {
-          tipo: 'p',
-          texto:
-            'A **mediana** é o valor do meio de uma lista ordenada. Quando a lista tem tamanho par, é a média dos dois valores do meio. Escreva a função `mediana(numeros)` (a lista nunca vem vazia): `mediana([3, 1, 2])` devolve `2`, e `mediana([4, 1, 3, 2])` devolve `2.5`. A lista original não pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Considere os números em ordem crescente. Se a quantidade for ímpar, devolva o valor do meio.',
+            'Se a quantidade for par, devolva a média dos dois valores do meio.',
+            'Não altere a lista original. Exemplos: `[3, 1, 2]` → `2`; `[4, 1, 3, 2]` → `2.5`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -436,10 +446,14 @@ igual(original, [9, 1, 5], 'A lista original')`,
     {
       titulo: 'Palavras por tamanho e nome',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ordenarPorTamanho(palavras)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `ordenarPorTamanho(palavras)`, que devolve uma lista nova ordenada por tamanho crescente. Em empate, use a ordem alfabética com localeCompare. Não altere a lista recebida.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista, das palavras mais curtas para as mais longas.',
+            'Em caso de empate no tamanho, use a ordem alfabética com `localeCompare`.',
+            'Não altere a lista recebida.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -469,10 +483,14 @@ igual(original, [9, 1, 5], 'A lista original')`,
     {
       titulo: 'Uma ordem própria de prioridades',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ordenarPrioridades(tarefas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `ordenarPrioridades(tarefas)`, que devolve uma cópia ordenada por prioridade: alta, depois media, depois baixa. As prioridades sempre têm um desses três valores. Em empate, mantenha a ordem de entrada.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma cópia ordenada por `prioridade`: primeiro `alta`, depois `media` e por último `baixa`.',
+            'As prioridades sempre terão um desses valores.',
+            'Para prioridades iguais, mantenha a ordem de entrada.',
+          ],
         },
       ],
       codigoInicial: linhas(

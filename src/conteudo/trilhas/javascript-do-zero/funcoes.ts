@@ -50,10 +50,14 @@ export const funcoes: Licao = {
     {
       titulo: 'Área do retângulo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `areaDoRetangulo(largura, altura)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `areaDoRetangulo(largura, altura)`, que **devolve** a área: a largura vezes a altura.',
+          tipo: 'lista',
+          itens: [
+            '`largura` e `altura` são as medidas do retângulo.',
+            'Devolva a largura multiplicada pela altura usando `return`.',
+            'Exemplo: `areaDoRetangulo(3, 4)` deve devolver `12`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -90,10 +94,14 @@ export const funcoes: Licao = {
     {
       titulo: 'Uma saudação que volta',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `saudar(nome)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `saudar(nome)`, que **devolve** o texto `"Olá, "` seguido do nome e de um `"!"`. Por exemplo, `saudar("Ana")` devolve `Olá, Ana!`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma saudação no formato `Olá, Ana!`, usando o nome recebido.',
+            'Mantenha a vírgula, o espaço e o ponto de exclamação.',
+            'Use `return` para devolver o texto.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -129,10 +137,14 @@ export const funcoes: Licao = {
     {
       titulo: 'Celsius para Fahrenheit',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `paraFahrenheit(celsius)` para converter uma temperatura.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `paraFahrenheit(celsius)`. A conta é: multiplique por 9, divida por 5 e some 32. Por exemplo, `paraFahrenheit(100)` devolve `212`.',
+          tipo: 'lista',
+          itens: [
+            'Multiplique `celsius` por `9`, divida por `5` e some `32`.',
+            'Devolva o resultado com `return`.',
+            'Exemplo: `paraFahrenheit(100)` deve devolver `212`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -160,10 +172,14 @@ export const funcoes: Licao = {
     {
       titulo: 'Preço com desconto',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comDesconto(preco, percentual)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comDesconto(preco, percentual)`, que devolve o preço depois de tirar o desconto em porcentagem. Por exemplo, `comDesconto(100, 10)` devolve `90`: dez por cento de 100 é 10, e 100 menos 10 dá 90.',
+          tipo: 'lista',
+          itens: [
+            'Calcule o desconto como uma porcentagem do preço recebido.',
+            'Devolva o preço após o desconto usando `return`.',
+            'Exemplo: preço `100` e percentual `10` devem resultar em `90`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -201,10 +217,14 @@ export const funcoes: Licao = {
     {
       titulo: 'Função que chama função',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somaDeQuadrados(a, b)`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `quadrado` já está pronta. Escreva `somaDeQuadrados(a, b)`, que devolve o quadrado de `a` mais o quadrado de `b`, **chamando** `quadrado` nas duas parcelas. Por exemplo, `somaDeQuadrados(3, 4)` devolve `25`.',
+          tipo: 'lista',
+          itens: [
+            'A função `quadrado` já está pronta. Use-a para calcular o quadrado de cada número recebido.',
+            'Devolva a soma dos dois resultados com `return`.',
+            'Exemplo: `somaDeQuadrados(3, 4)` deve devolver `25`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -257,10 +277,13 @@ export const funcoes: Licao = {
     {
       titulo: 'O estoque depois da venda',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `estoqueRestante(quantidade, vendidos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `estoqueRestante(quantidade, vendidos)`, que devolve quantos itens sobram depois da venda. Considere quantidades não negativas e vendas que não ultrapassam o estoque.',
+          tipo: 'lista',
+          itens: [
+            'Devolva a quantidade que sobra depois de retirar os itens vendidos.',
+            'Use `return`. As quantidades não são negativas e a venda não ultrapassa o estoque.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -292,10 +315,13 @@ export const funcoes: Licao = {
     {
       titulo: 'O resultado que não sai da função',
       enunciado: [
+        { tipo: 'p', texto: 'Corrija `triplo(n)` para devolver o resultado calculado.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `triplo(n)` calcula o resultado, mas quem a chama recebe undefined. Corrija a função para devolver o triplo do número recebido.',
+          tipo: 'lista',
+          itens: [
+            'A função deve entregar três vezes o número recebido usando `return`.',
+            'Quem chama a função deve receber o número, em vez de `undefined`.',
+          ],
         },
       ],
       codigoInicial: linhas(

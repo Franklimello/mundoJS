@@ -109,12 +109,13 @@ export const promessas: Licao = {
     {
       titulo: 'Esperar e buscar',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções que **devolvem promessas**:' },
+        { tipo: 'p', texto: 'Complete as duas funções. Ambas devem devolver promessas.' },
         {
           tipo: 'lista',
           itens: [
-            '`esperar(ms)` devolve uma promessa que se resolve (sem valor) depois de `ms` milissegundos.',
-            '`buscarUsuario(id)` devolve uma promessa que, depois de **10 milissegundos**, se resolve com `{ id: id, nome: "Usuário " + id }` — se `id` for maior que zero. Para `id` zero ou negativo, a promessa é **rejeitada** com `new Error("Usuário não encontrado")`.',
+            '`esperar(ms)`: a promessa deve resolver sem valor depois de `ms` milissegundos.',
+            '`buscarUsuario(id)`: depois de `10` milissegundos, resolva com `{ id: id, nome: "Usuário " + id }` se o id for maior que zero.',
+            'Para id zero ou negativo, rejeite a promessa com `new Error("Usuário não encontrado")`.',
           ],
         },
       ],
@@ -197,10 +198,14 @@ verdadeiro(gasto >= 5, 'buscarUsuario(1) respondeu em ' + gasto + ' ms; deveria 
     {
       titulo: 'Encadeando passos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `calcular(n)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `calcular(n)`, que devolve uma **promessa**. Comece de uma promessa já resolvida com `n` (`Promise.resolve(n)`) e encadeie dois `.then`: o primeiro **multiplica por 3** e o segundo **subtrai 1**. Por exemplo, `calcular(4)` se resolve com `11`.',
+          tipo: 'lista',
+          itens: [
+            'Comece com `Promise.resolve(n)` e encadeie dois `.then`.',
+            'No primeiro, multiplique por `3`. No segundo, subtraia `1`.',
+            'Devolva a promessa final. Exemplo: com `n = 4`, ela deve resolver com `11`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -240,10 +245,13 @@ verdadeiro(gasto >= 5, 'buscarUsuario(1) respondeu em ' + gasto + ' ms; deveria 
     {
       titulo: 'Plano B',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `valorOuReserva(promessa, reserva)` usando `.catch`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `valorOuReserva(promessa, reserva)`, que devolve uma nova promessa. Se a `promessa` se resolver, a nova se resolve com o mesmo valor. Se a `promessa` for **rejeitada**, a nova se resolve com a `reserva`, em vez de falhar. Use `.catch`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma promessa que resolva com o valor original quando houver sucesso.',
+            'Se a promessa recebida for rejeitada, a promessa devolvida deve resolver com `reserva`, sem rejeitar.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -288,10 +296,14 @@ igual(await valorOuReserva(falha, 0), 0, 'A reserva 0')`,
     {
       titulo: 'Somando tarefas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somarTarefas(tarefas)` usando `Promise.all`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `somarTarefas(tarefas)`. Cada tarefa é uma **função** que, ao ser chamada, começa um trabalho e devolve uma promessa de número. `somarTarefas` começa **todas as tarefas ao mesmo tempo**, espera todas com `Promise.all` e devolve uma promessa com a **soma** dos números. Para uma lista vazia, a soma é `0`. Se qualquer tarefa for rejeitada, a promessa devolvida também é.',
+          tipo: 'lista',
+          itens: [
+            'Cada tarefa é uma função que inicia um trabalho e devolve uma promessa de número.',
+            'Inicie todas as tarefas antes de esperar os resultados. Depois, devolva uma promessa com a soma dos números.',
+            'Para uma lista vazia, a soma é `0`. Se qualquer tarefa falhar, mantenha a rejeição.',
+          ],
         },
         {
           tipo: 'nota',
@@ -360,10 +372,13 @@ igual(erro.message, 'falhou', 'A mensagem do erro')`,
     {
       titulo: 'A mais rápida',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `maisRapida(promessas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `maisRapida(promessas)`, que devolve uma promessa com o resultado da **primeira** promessa da lista que terminar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma promessa que termine assim que a primeira promessa da lista terminar.',
+            'Preserve o valor, no sucesso, ou o erro, na rejeição. Não espere todas terminarem.',
+          ],
         },
         {
           tipo: 'nota',
@@ -418,10 +433,13 @@ igual(erro.message, 'falhou', 'A mensagem do erro')`,
     {
       titulo: 'Quem chega primeiro?',
       enunciado: [
+        { tipo: 'p', texto: 'Ajuste a ordem das mensagens usando uma promessa já resolvida.' },
         {
-          tipo: 'p',
-          texto:
-            'O programa abaixo mostra as mensagens fora de ordem. Agende, com uma **promessa já resolvida**, a mensagem `3: promessa`, para que a saída final seja: `1: começa`, `2: síncrono`, `3: promessa`, `4: timeout`.',
+          tipo: 'lista',
+          itens: [
+            'Agende `3: promessa` para aparecer depois do código síncrono e antes do temporizador.',
+            'A saída deve ser exatamente: `1: começa`, `2: síncrono`, `3: promessa`, `4: timeout`, uma mensagem por linha.',
+          ],
         },
         {
           tipo: 'nota',
@@ -461,10 +479,14 @@ igual(saida, ['1: começa', '2: síncrono', '3: promessa', '4: timeout'], 'As li
     {
       titulo: 'Uma promessa vira um resultado',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `resultadoDaPromessa(promessa)` usando `catch`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `resultadoDaPromessa(promessa)`, que devolve outra promessa. Se houver sucesso, ela resolve com `{ ok: true, valor }`; se houver rejeição com Error, resolve com `{ ok: false, mensagem }`. Trate a falha com catch, sem deixar a promessa final rejeitada.',
+          tipo: 'lista',
+          itens: [
+            'No sucesso, a promessa devolvida deve resolver com `{ ok: true, valor }`.',
+            'Na rejeição com `Error`, ela deve resolver com `{ ok: false, mensagem }`, usando a mensagem do erro.',
+            'Não deixe a promessa final rejeitada.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -494,10 +516,13 @@ igual(saida, ['1: começa', '2: síncrono', '3: promessa', '4: timeout'], 'As li
     {
       titulo: 'Montar um placar com duas buscas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `montarPlacar(nomePrometido, pontosPrometidos)` usando `Promise.all` e `then`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `montarPlacar(nomePrometido, pontosPrometidos)`, que espera as duas promessas e devolve uma promessa com o texto no formato `"Ana: 12"`. Se uma delas falhar, preserve a rejeição original. Use Promise.all e then.',
+          tipo: 'lista',
+          itens: [
+            'Espere as duas promessas e devolva uma promessa com o texto no formato `"Ana: 12"`.',
+            'Se qualquer uma falhar, preserve o erro original da rejeição.',
+          ],
         },
       ],
       codigoInicial: linhas(

@@ -64,10 +64,14 @@ export const seSenao: Licao = {
     {
       titulo: 'Faixas de idade',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `situacao(idade)` e devolva um destes textos:' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `situacao(idade)`. Ela devolve `"Criança"` para menos de 12 anos, `"Adolescente"` para menos de 18, e `"Adulto"` nos demais casos.',
+          tipo: 'lista',
+          itens: [
+            '`"Criança"` se a idade for menor que `12`.',
+            '`"Adolescente"` se a idade for de `12` até `17`.',
+            '`"Adulto"` se a idade for `18` ou mais.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -126,10 +130,13 @@ export const seSenao: Licao = {
     {
       titulo: 'Par ou ímpar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `parOuImpar(numero)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `parOuImpar(numero)`, que devolve o texto `"par"` ou o texto `"ímpar"`. Lembre-se do `%`: um número é par quando o resto da divisão por 2 é zero.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `"par"` quando o resto da divisão por `2` for zero.',
+            'Nos outros casos, devolva `"ímpar"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -166,10 +173,14 @@ export const seSenao: Licao = {
     {
       titulo: 'Faixas de frete',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `frete(valorDaCompra)` e devolva o valor do frete:' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `frete(valorDaCompra)`. Compras de `200` ou mais têm frete grátis (`0`). De `100` até menos de `200`, o frete é `15`. Abaixo de `100`, o frete é `25`.',
+          tipo: 'lista',
+          itens: [
+            '`0` para compras de `200` reais ou mais.',
+            '`15` para compras de `100` até menos de `200` reais.',
+            '`25` para compras abaixo de `100` reais.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -210,10 +221,8 @@ export const seSenao: Licao = {
     {
       titulo: 'O maior dos dois',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'Escreva a função `maior(a, b)`, que devolve o maior dos dois números. Use um `if` para comparar.',
-        },
+        { tipo: 'p', texto: 'Complete `maior(a, b)`.' },
+        { tipo: 'lista', itens: ['Compare os dois números com `if` e devolva o maior usando `return`.'] },
       ],
       codigoInicial: linhas(
         'const a = 3;',
@@ -253,10 +262,14 @@ export const seSenao: Licao = {
     {
       titulo: 'Positivo, negativo ou zero',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `sinal(numero)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `sinal(numero)`, que devolve `"positivo"`, `"negativo"` ou `"zero"`. O zero precisa ter o seu próprio caso.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `"positivo"` para valores maiores que zero.',
+            'Devolva `"negativo"` para valores menores que zero.',
+            'Para zero, devolva `"zero"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -295,10 +308,14 @@ export const seSenao: Licao = {
     {
       titulo: 'Desconto por quantidade',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `totalPorQuantidade(preco, quantidade)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `totalPorQuantidade(preco, quantidade)`. Com 10 itens ou mais, aplique 10% de desconto ao total; abaixo disso, devolva preço vezes quantidade, sem desconto.',
+          tipo: 'lista',
+          itens: [
+            'Calcule o total multiplicando o preço pela quantidade.',
+            'Com `10` itens ou mais, aplique `10%` de desconto ao total.',
+            'Devolva o total final. Com menos de `10` itens, não aplique desconto.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -329,10 +346,14 @@ export const seSenao: Licao = {
     {
       titulo: 'Comprimento mínimo da senha',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `avaliarComprimento(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `avaliarComprimento(texto)`, que devolve `"aceita"` quando o texto tem pelo menos 8 caracteres, e `"curta"` nos demais casos. Este exercício verifica só o comprimento, não a segurança de uma senha real.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `"aceita"` se o texto tiver pelo menos `8` caracteres.',
+            'Caso contrário, devolva `"curta"`.',
+            'Avalie apenas o tamanho do texto; não é uma validação de segurança de senha.',
+          ],
         },
       ],
       codigoInicial: linhas(

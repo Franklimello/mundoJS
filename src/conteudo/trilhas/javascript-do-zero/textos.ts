@@ -46,10 +46,14 @@ export const textos: Licao = {
     {
       titulo: 'Mensagem com crases',
       enunciado: [
+        { tipo: 'p', texto: 'Monte uma mensagem com o nome e a idade fornecidos.' },
         {
-          tipo: 'p',
-          texto:
-            'Com `nome` e `idade` já criados, monte a variável `mensagem` usando um template literal, para ela valer exatamente `Ana tem 25 anos.`. Depois, mostre-a.',
+          tipo: 'lista',
+          itens: [
+            'Crie `mensagem` usando um template literal.',
+            'O texto deve ser exatamente `Ana tem 25 anos.`.',
+            'Mostre `mensagem` com `console.log`.',
+          ],
         },
       ],
       codigoInicial: linhas('const nome = "Ana";', 'const idade = 25;', ''),
@@ -84,10 +88,10 @@ igual(mensagem, 'Ana tem 25 anos.', 'mensagem')`,
     {
       titulo: 'Juntando com o +',
       enunciado: [
+        { tipo: 'p', texto: 'Crie uma saudação usando a variável `nome`.' },
         {
-          tipo: 'p',
-          texto:
-            'Com `nome` já criado, monte `saudacao` juntando textos com o `+`, para ela valer `Olá, Bia!`. Depois, mostre-a.',
+          tipo: 'lista',
+          itens: ['Guarde em `saudacao` o texto `Olá, Bia!`.', 'Use `+` para juntar os textos e mostre o resultado.'],
         },
       ],
       codigoInicial: linhas('const nome = "Bia";', ''),
@@ -119,10 +123,13 @@ verdadeiro(
     {
       titulo: 'Quantas letras?',
       enunciado: [
+        { tipo: 'p', texto: 'Conte os caracteres de `palavra`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `tamanho` com a quantidade de caracteres da constante `palavra` e mostre-a. Deixe o computador contar: não digite o número.',
+          tipo: 'lista',
+          itens: [
+            'Guarde a quantidade em `tamanho`, usando o tamanho do texto em vez de digitar o número.',
+            'Mostre `tamanho` com `console.log`.',
+          ],
         },
       ],
       codigoInicial: linhas('const palavra = "desenvolvimento";', ''),
@@ -151,12 +158,13 @@ verdadeiro(
     {
       titulo: 'Maiúsculas e inicial',
       enunciado: [
+        { tipo: 'p', texto: 'Use `frase` para criar dois valores.' },
         {
           tipo: 'lista',
           itens: [
-            'Crie `grito` com a `frase` toda em maiúsculas.',
-            'Crie `inicial` com o primeiro caractere da `frase`.',
-            'Mostre os dois, nesta ordem, cada um numa linha.',
+            '`grito`: a frase inteira em maiúsculas.',
+            '`inicial`: o primeiro caractere da frase.',
+            'Mostre `grito` e depois `inicial`, um por linha.',
           ],
         },
       ],
@@ -192,10 +200,13 @@ verdadeiro(
     {
       titulo: 'A última letra da palavra',
       enunciado: [
+        { tipo: 'p', texto: 'Encontre a última letra de `palavra`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `ultima` com a última letra de `palavra`, usando o tamanho do texto. Mostre o tamanho na primeira linha e a última letra na segunda.',
+          tipo: 'lista',
+          itens: [
+            'Guarde essa letra em `ultima`, usando o tamanho do texto para localizar a posição.',
+            'Mostre o tamanho de `palavra` na primeira linha e `ultima` na segunda.',
+          ],
         },
       ],
       codigoInicial: linhas('const palavra = "estudar";', ''),
@@ -213,10 +224,13 @@ verdadeiro(
     {
       titulo: 'Consertando a interpolação',
       enunciado: [
+        { tipo: 'p', texto: 'Corrija `mensagem` para usar o valor de `curso`.' },
         {
-          tipo: 'p',
-          texto:
-            'O aviso mostra os caracteres de `${curso}` em vez do nome do curso. Corrija `mensagem` usando um template literal e mostre `Curso: JavaScript`.',
+          tipo: 'lista',
+          itens: [
+            'Use um template literal no lugar do texto que mostra `${curso}`.',
+            'A saída deve ser `Curso: JavaScript`.',
+          ],
         },
       ],
       codigoInicial: 'const curso = "JavaScript";\nconst mensagem = "Curso: ${curso}";\nconsole.log(mensagem);\n',

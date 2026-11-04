@@ -47,10 +47,14 @@ export const desafioFinal: Licao = {
     {
       titulo: 'Nomes arrumados',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `limparNome(nome)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Os nomes chegam bagunçados: `"  aNA "`, `"BIA"`, `"caio"`. Escreva a função `limparNome(nome)`, que tira os espaços das pontas e deixa só a **primeira letra em maiúscula**, e o resto em minúsculas: `"  aNA "` vira `"Ana"`.',
+          tipo: 'lista',
+          itens: [
+            'Retire os espaços das pontas e deixe apenas a primeira letra em maiúscula, com o restante em minúsculas.',
+            'Devolva o nome ajustado.',
+            'Exemplo: `"  aNA "` deve resultar em `"Ana"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -96,10 +100,14 @@ export const desafioFinal: Licao = {
     {
       titulo: 'Somando por jogador',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `totalPorJogador(eventos)`. A função `limparNome` já está pronta.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `limparNome` já está pronta. Escreva `totalPorJogador(eventos)`, que recebe a lista de eventos `{ jogador, pontos }` e devolve um **objeto** com o total de cada jogador, usando o nome já limpo. Por exemplo, os eventos de `"ana"` com 10 e de `" Ana"` com 5 viram `{ Ana: 15 }`.',
+          tipo: 'lista',
+          itens: [
+            'Cada evento tem `jogador` e `pontos`. Use o nome limpo para reunir eventos do mesmo jogador.',
+            'Devolva um objeto com o total de pontos de cada nome.',
+            'Exemplo: `"ana"` com `10` pontos e `" Ana"` com `5` devem resultar em `{ Ana: 15 }`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -167,10 +175,14 @@ igual(totalPorJogador(eventos), { Ana: 15, Bia: 20 }, 'totalPorJogador(eventos)'
     {
       titulo: 'Montando o ranking',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ranking(totais)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `ranking(totais)`, que recebe um objeto como `{ Ana: 15, Bia: 20 }` e devolve uma lista de objetos `{ jogador, total }` **do maior para o menor total**. Em caso de empate, vem primeiro quem tem o nome antes na ordem alfabética. Para `{ Ana: 15, Bia: 20 }`, o resultado é `[{ jogador: "Bia", total: 20 }, { jogador: "Ana", total: 15 }]`.',
+          tipo: 'lista',
+          itens: [
+            'Receba um objeto com os pontos por jogador, como `{ Ana: 15, Bia: 20 }`.',
+            'Devolva uma lista de objetos `{ jogador, total }`, do maior para o menor total.',
+            'Em caso de empate, use a ordem alfabética dos nomes. No exemplo, Bia vem antes de Ana.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -224,10 +236,14 @@ igual(totalPorJogador(eventos), { Ana: 15, Bia: 20 }, 'totalPorJogador(eventos)'
     {
       titulo: 'O texto do ranking',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `textoDoRanking(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `textoDoRanking(lista)`, que recebe a lista de `{ jogador, total }` já ordenada e devolve uma lista de textos no formato `1. Bia: 20 pts`: a posição (começando em 1), o nome e o total.',
+          tipo: 'lista',
+          itens: [
+            'A lista já estará ordenada e terá objetos com `jogador` e `total`.',
+            'Devolva uma lista de textos no formato `1. Bia: 20 pts`.',
+            'As posições começam em `1`. Mantenha os espaços e a ordem dos jogadores.',
+          ],
         },
       ],
       codigoInicial: linhas(

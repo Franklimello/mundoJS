@@ -70,13 +70,13 @@ export const desmontarECopiar: Licao = {
     {
       titulo: 'Desmontar e copiar',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva três funções:' },
+        { tipo: 'p', texto: 'Complete as três funções.' },
         {
           tipo: 'lista',
           itens: [
-            '`descrever(item)` recebe `{ nome, preco, quantidade }` e devolve `"2x Caneta = 6"` (quantidade, nome e o total). Se `quantidade` não vier, vale `1`. Use desestruturação.',
-            '`atualizar(pessoa, mudancas)` devolve um objeto **novo**, com tudo de `pessoa` e as `mudancas` por cima. `pessoa` não pode mudar.',
-            '`trocar(par)` recebe uma lista de dois itens e devolve a mesma lista com a ordem trocada: `trocar([1, 2])` devolve `[2, 1]`.',
+            '`descrever(item)`: receba `{ nome, preco, quantidade }` e devolva um texto como `"2x Caneta = 6"`. O último número é preço vezes quantidade. Se a quantidade não vier, use `1`. Use desestruturação.',
+            '`atualizar(pessoa, mudancas)`: devolva um novo objeto com os dados de pessoa e as mudanças por cima, sem alterar pessoa.',
+            '`trocar(par)`: receba dois itens e devolva-os na ordem inversa. Exemplo: `[1, 2]` → `[2, 1]`.',
           ],
         },
       ],
@@ -158,10 +158,14 @@ igual(trocar(['x', 'y']), ['y', 'x'], "trocar(['x', 'y'])")`,
     {
       titulo: 'Acrescentar sem mexer na lista',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comItem(lista, item)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comItem(lista, item)`, que devolve uma **lista nova**: os itens da original e, no fim, o `item`. A lista original não pode mudar (por isso, nada de `push`). Por exemplo, `comItem([1, 2], 3)` devolve `[1, 2, 3]`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com os itens recebidos e, no final, o novo item.',
+            'Não altere a lista original nem use `push` nela.',
+            'Exemplo: `comItem([1, 2], 3)` deve devolver `[1, 2, 3]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -205,10 +209,14 @@ verdadeiro(resultado !== original, 'Devolva uma lista nova, e não a mesma lista
     {
       titulo: 'Juntando listas sem repetir',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `uniao(a, b)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `uniao(a, b)`, que devolve uma lista nova com todos os itens de `a` e, depois deles, só os itens de `b` que **não** estão em `a`. Por exemplo, `uniao([1, 2], [2, 3])` devolve `[1, 2, 3]`. As listas originais não podem mudar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com todos os itens de `a`, seguidos dos itens de `b` que não existem em `a`.',
+            'Não altere nenhuma das listas recebidas.',
+            'Exemplo: `uniao([1, 2], [2, 3])` deve devolver `[1, 2, 3]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -256,8 +264,15 @@ igual([a, b], [[1, 2], [2, 3]], 'As duas listas originais')`,
       enunciado: [
         {
           tipo: 'p',
-          texto:
-            'Escreva a função `criarUsuario({ nome, papel, ativo })`, que devolve um objeto com essas três propriedades. Quando `papel` não vem, vale `"leitor"`; quando `ativo` não vem, vale `true`. Use valores padrão na desestruturação.',
+          texto: 'Complete `criarUsuario({ nome, papel, ativo })` usando desestruturação com valores padrão.',
+        },
+        {
+          tipo: 'lista',
+          itens: [
+            'Devolva um objeto com `nome`, `papel` e `ativo`.',
+            'Se `papel` não vier, use `"leitor"`. Se `ativo` não vier, use `true`.',
+            'Preserve `ativo: false` quando esse valor for informado.',
+          ],
         },
         {
           tipo: 'nota',
@@ -307,10 +322,14 @@ igual([a, b], [[1, 2], [2, 3]], 'As duas listas originais')`,
     {
       titulo: 'Concluir uma tarefa',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `concluirTarefa(tarefas, id)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `concluirTarefa(tarefas, id)`, que devolve uma **lista nova** em que a tarefa com aquele `id` tem `feita: true`. As outras tarefas ficam como estão, e a lista original (e suas tarefas) **não podem mudar**.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista em que a tarefa com o `id` informado tenha `feita: true`.',
+            'Mantenha os dados das outras tarefas.',
+            'Não altere a lista original nem os objetos que ela contém.',
+          ],
         },
         {
           tipo: 'nota',
@@ -382,10 +401,14 @@ igual(tarefas, [{ id: 1, titulo: 'Estudar', feita: false }], 'A lista original')
     {
       titulo: 'Preferências com atualização parcial',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `atualizarPreferencias(atuais, alteracoes)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `atualizarPreferencias(atuais, alteracoes)`, que devolve um objeto novo com as propriedades dos dois objetos. Alterações devem vencer quando a mesma propriedade aparece nos dois. Nenhuma entrada deve ser modificada. A cópia é só do primeiro nível.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um novo objeto reunindo as propriedades dos dois objetos.',
+            'Quando uma propriedade existir nos dois, use o valor de `alteracoes`.',
+            'Não modifique as entradas. Copie apenas o primeiro nível dos objetos.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -415,10 +438,14 @@ igual(tarefas, [{ id: 1, titulo: 'Estudar', feita: false }], 'A lista original')
     {
       titulo: 'O primeiro e o restante',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `separarPrimeiro(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `separarPrimeiro(lista)`, que devolve um objeto com primeiro e resto. O primeiro recebe o item inicial, ou null se a lista estiver vazia; resto é uma nova lista com os demais itens.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um objeto com `primeiro` e `resto`.',
+            '`primeiro` deve ser o item inicial, ou `null` se a lista estiver vazia.',
+            '`resto` deve ser uma nova lista com os demais itens.',
+          ],
         },
         {
           tipo: 'nota',

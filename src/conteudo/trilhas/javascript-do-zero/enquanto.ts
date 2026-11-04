@@ -51,10 +51,14 @@ export const enquanto: Licao = {
     {
       titulo: 'Quantas vezes dobrar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quantasVezesDobrar(inicio, limite)` usando `while`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `quantasVezesDobrar(inicio, limite)`. Começando em `inicio`, ela dobra o valor repetidamente e devolve **quantas vezes** foi preciso dobrar até o valor chegar ao `limite` ou passar dele. Por exemplo, de 3 até 10: 3 → 6 → 12, são 2 vezes. Use um laço `while`.',
+          tipo: 'lista',
+          itens: [
+            'Comece em `inicio` e dobre o valor até ele alcançar ou ultrapassar `limite`.',
+            'Devolva a quantidade de vezes que o valor foi dobrado.',
+            'Exemplo: de `3` até `10`, os valores são `3`, `6` e `12`. O resultado é `2`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -113,10 +117,15 @@ export const enquanto: Licao = {
     {
       titulo: 'Quantos dígitos?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quantosDigitos(n)` usando `while`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `quantosDigitos(n)`, que devolve quantos dígitos tem o número inteiro `n` (zero ou maior). Por exemplo, `quantosDigitos(1234)` devolve `4`. Use um laço `while`: enquanto o número tiver dois dígitos ou mais, corte o último e conte.',
+          tipo: 'lista',
+          itens: [
+            '`n` será um inteiro não negativo. Devolva a quantidade de dígitos dele.',
+            'O número `0` tem um dígito e deve devolver `1`.',
+            'Enquanto o valor tiver dois dígitos ou mais, retire o último dígito e conte.',
+            'Exemplo: `quantosDigitos(1234)` deve devolver `4`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -164,10 +173,13 @@ export const enquanto: Licao = {
     {
       titulo: 'Soma dos dígitos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somaDosDigitos(n)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `somaDosDigitos(n)`, que soma os dígitos de um número inteiro (zero ou maior). Por exemplo, `somaDosDigitos(123)` devolve `6`, porque 1 + 2 + 3 = 6.',
+          tipo: 'lista',
+          itens: [
+            '`n` será um inteiro não negativo. Some seus dígitos e devolva o total.',
+            'Exemplo: `somaDosDigitos(123)` deve devolver `6`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -223,18 +235,14 @@ export const enquanto: Licao = {
     {
       titulo: 'Passos até chegar a 1',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'Pegue um número inteiro positivo e repita estes passos até ele chegar a `1`:',
-        },
+        { tipo: 'p', texto: 'Complete `passosAteUm(n)` para um inteiro positivo.' },
         {
           tipo: 'lista',
-          itens: ['se o número é **par**, divida-o por 2;', 'se é **ímpar**, multiplique por 3 e some 1.'],
-        },
-        {
-          tipo: 'p',
-          texto:
-            'Escreva a função `passosAteUm(n)`, que devolve quantos passos foram necessários. De 6, por exemplo: 6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1, são 8 passos. Quem já está no 1 precisa de 0.',
+          itens: [
+            'Repita até chegar a `1`: se o número for par, divida por `2`; se for ímpar, multiplique por `3` e some `1`.',
+            'Devolva a quantidade de passos realizados.',
+            'Exemplos: começando em `6`, são `8` passos. Começando em `1`, são `0` passos.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -280,10 +288,14 @@ export const enquanto: Licao = {
     {
       titulo: 'Quantas parcelas faltam',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quantasParcelas(divida, parcela)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `quantasParcelas(divida, parcela)`. Enquanto houver dívida, desconte uma parcela e conte o pagamento. A última pode ser menor. Considere dívida inteira não negativa e parcela inteira positiva.',
+          tipo: 'lista',
+          itens: [
+            'Retire uma parcela da dívida a cada pagamento e conte os pagamentos até quitar tudo.',
+            'A última parcela pode ser menor. Devolva a quantidade de pagamentos.',
+            'A dívida será um inteiro não negativo e a parcela, um inteiro positivo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -316,10 +328,14 @@ export const enquanto: Licao = {
     {
       titulo: 'Dígitos de trás para frente',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `inverterNumero(n)` usando `while` e operações numéricas.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `inverterNumero(n)`, que inverte os dígitos de um inteiro não negativo usando while e contas. Zeros que ficam à esquerda desaparecem: 120 vira 21. Não transforme o número em texto.',
+          tipo: 'lista',
+          itens: [
+            '`n` será um inteiro não negativo. Devolva seus dígitos na ordem inversa.',
+            'Não converta o número em texto. Zeros à esquerda não aparecem no resultado.',
+            'Exemplo: `120` deve resultar em `21`.',
+          ],
         },
       ],
       codigoInicial: linhas(

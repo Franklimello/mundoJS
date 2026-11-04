@@ -258,6 +258,8 @@ Os testes usam Stripe simulado e assinaturas de webhook geradas localmente; com 
 
 ### Dados no código inicial dos exercícios
 
+Os enunciados começam com uma tarefa direta e separam as regras em itens curtos. Nomeie a função ou as variáveis exigidas, diga o que deve ser devolvido ou mostrado e explicite limites, listas vazias, ordem e alteração dos dados quando forem relevantes. Exemplos precisam respeitar o contrato avaliado pelos testes. Mantenha dicas de implementação separadas das regras e não coloque instruções comentadas no editor.
+
 Exercícios que recebem dados devem trazer exemplos utilizáveis em `codigoInicial`: listas, objetos, textos, números ou funções simuladas, conforme o desafio. Mantenha a implementação que o aluno precisa escrever incompleta e inclua apenas chamadas que possam rodar antes de implementá-la. Os modelos do editor não contêm comentários: instruções e dicas ficam fora do código. Exercícios de escrita livre podem começar vazios.
 
 Os testes conferem que o ponto de partida não entrega acertos e que os dados e chamadas funcionam junto da solução correta. Atividades cujo objetivo é criar variáveis ou estruturas mantêm essa parte como tarefa do aluno. Rascunhos salvos têm prioridade sobre o modelo inicial; **Recomeçar** carrega o modelo atual após a confirmação, substituindo o código daquela folha.

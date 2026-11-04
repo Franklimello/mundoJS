@@ -40,10 +40,14 @@ export const mapFilter: Licao = {
     {
       titulo: 'Dobrar os pares',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `dobrarPares(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `dobrarPares(numeros)`. Ela devolve uma **lista nova** só com os números pares, cada um já dobrado. Por exemplo, `dobrarPares([1, 2, 3, 4])` devolve `[4, 8]`. A lista original não pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Selecione os números pares e multiplique cada um por `2`.',
+            'Devolva os resultados em uma nova lista, sem alterar a original.',
+            'Exemplo: `[1, 2, 3, 4]` deve resultar em `[4, 8]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -95,10 +99,14 @@ igual(original, [1, 2, 3, 4], 'A lista original')`,
     {
       titulo: 'Nomes em maiúsculas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `emMaiusculas(nomes)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `emMaiusculas(nomes)`, que devolve uma **lista nova** com cada nome em maiúsculas. Por exemplo, `emMaiusculas(["ana", "bia"])` devolve `["ANA", "BIA"]`. A lista original não pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com todos os nomes em maiúsculas.',
+            'Não altere a lista recebida.',
+            'Exemplo: `["ana", "bia"]` deve resultar em `["ANA", "BIA"]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -141,10 +149,14 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'Só os textos longos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `textosLongos(textos, minimo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `textosLongos(textos, minimo)`, que devolve uma lista nova só com os textos que têm **pelo menos** `minimo` caracteres. Por exemplo, `textosLongos(["oi", "olá", "bom dia"], 3)` devolve `["olá", "bom dia"]`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista apenas com os textos que têm pelo menos `minimo` caracteres.',
+            'Textos com tamanho igual ao mínimo também entram.',
+            'Exemplo: com `["oi", "olá", "bom dia"]` e mínimo `3`, devolva `["olá", "bom dia"]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -189,10 +201,14 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'Aplicando um desconto',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `aplicarDesconto(precos, percentual)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `aplicarDesconto(precos, percentual)`, que devolve uma lista nova com todos os preços já descontados. Por exemplo, `aplicarDesconto([100, 50], 10)` devolve `[90, 45]`.',
+          tipo: 'lista',
+          itens: [
+            'Aplique a porcentagem de desconto a cada preço.',
+            'Devolva os preços finais em uma nova lista.',
+            'Exemplo: `[100, 50]` com desconto de `10%` deve resultar em `[90, 45]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -237,10 +253,14 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'Quadrados grandes',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quadradosGrandes(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `quadradosGrandes(numeros)`. Ela eleva cada número ao quadrado e devolve **só** os resultados maiores que 10. Por exemplo, `quadradosGrandes([1, 2, 3, 4, 5])` devolve `[16, 25]`, porque 9 não passa de 10.',
+          tipo: 'lista',
+          itens: [
+            'Calcule o quadrado de cada número e mantenha apenas os resultados maiores que `10`.',
+            'Devolva esses resultados em uma lista.',
+            'Exemplo: `[1, 2, 3, 4, 5]` deve resultar em `[16, 25]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -292,10 +312,13 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'Quantos passaram',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quantosPassaram(notas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `quantosPassaram(notas)`, que devolve **quantas** notas são `7` ou mais. Por exemplo, `quantosPassaram([7, 5, 9, 3, 8])` devolve `3`.',
+          tipo: 'lista',
+          itens: [
+            'Conte as notas maiores ou iguais a `7` e devolva a quantidade, não a lista de notas.',
+            'Exemplo: `[7, 5, 9, 3, 8]` deve resultar em `3`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -338,10 +361,14 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'Etiquetas dos preços selecionados',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `etiquetasDePreco(precos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `etiquetasDePreco(precos)`, que mantém os preços a partir de 10 e os transforma em textos como `"R$ 12"`. Preserve a ordem e não modifique a lista recebida.',
+          tipo: 'lista',
+          itens: [
+            'Mantenha apenas os preços maiores ou iguais a `10`.',
+            'Transforme cada preço selecionado em um texto no formato `"R$ 12"`.',
+            'Devolva a nova lista na ordem recebida, sem alterar a original.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -371,10 +398,13 @@ igual(original, ['ana', 'bia'], 'A lista original')`,
     {
       titulo: 'O filter sem resposta',
       enunciado: [
+        { tipo: 'p', texto: 'Corrija o retorno do callback de `filter` em `soMaiores(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `soMaiores(lista)` deveria selecionar os valores maiores que 10, mas o callback do filter não devolve sua decisão. Corrija o retorno, mantendo o bloco com chaves.',
+          tipo: 'lista',
+          itens: [
+            'A função deve selecionar apenas os valores maiores que `10`.',
+            'Mantenha as chaves do callback e devolva a decisão com `return`.',
+          ],
         },
       ],
       codigoInicial: linhas(
