@@ -12,6 +12,8 @@ export interface EventoEstudo {
   tipo: TipoEventoEstudo;
   posicao?: PosicaoEstudo;
   passou?: boolean;
+  pagina?: import('./origem').PaginaEntrada;
+  canal?: import('./origem').CanalEntrada;
 }
 
 export interface LicaoParaRetomar {
