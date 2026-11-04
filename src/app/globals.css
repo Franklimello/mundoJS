@@ -1277,6 +1277,59 @@ pre {
   padding: 0 8px 8px 0;
 }
 
+.rascunho-desafio {
+  margin-bottom: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--cor-traco);
+  border-radius: 0.5rem;
+  background: var(--fundo-suave);
+  overflow-wrap: anywhere;
+}
+
+.rascunho-desafio-rotulo {
+  margin-bottom: 0.5rem;
+  color: var(--tinta);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.rascunho-desafio h2 {
+  margin-bottom: 0.75rem;
+  color: var(--tinta-forte);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+.rascunho-desafio summary {
+  min-height: 44px;
+  margin-top: 0.75rem;
+  padding-block: 0.6rem;
+  color: var(--tinta);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rascunho-desafio-passos {
+  display: grid;
+  gap: 0.9rem;
+  margin-block: 0.5rem 1rem;
+  padding-left: 1.5rem;
+}
+
+.rascunho-desafio-passos li::marker {
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+.rascunho-desafio-extra {
+  padding-top: 1rem;
+  border-top: 1px solid var(--cor-traco);
+}
+
+.rascunho-desafio-livre {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
 /* ------------------------------------------------------------------- contas */
 
 .conta-pagina {

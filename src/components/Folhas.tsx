@@ -32,6 +32,58 @@ export function FolhaDoRascunho() {
           Página web · HTML, CSS e JS
         </button>
       </div>
+      {!web && (
+        <section className="rascunho-desafio" aria-labelledby="desafio-rascunho-titulo">
+          <p className="rascunho-desafio-rotulo">Desafio para praticar · Arrays e funções</p>
+          <h2 id="desafio-rascunho-titulo">Encontre o maior número do array</h2>
+          <p>
+            Faça um algoritmo que receba um array de números e devolva o maior valor. Use um laço para comparar os
+            números, sem usar <code>Math.max</code> ou ordenar o array.
+          </p>
+          <details>
+            <summary>Precisa de ajuda? Veja o passo a passo</summary>
+            <ol className="rascunho-desafio-passos">
+              <li>
+                <strong>Crie um array com 8 números.</strong> Chame de <code>numeros</code> e use os valores{' '}
+                <code>[12, 5, 24, 8, 19, 3, 16, 10]</code>.
+              </li>
+              <li>
+                <strong>Crie uma função que receba o array.</strong> Dê o nome <code>encontrarMaior</code> à função e
+                use <code>lista</code> como parâmetro. Considere que a lista terá pelo menos um número.
+              </li>
+              <li>
+                <strong>Guarde o primeiro número como o maior por enquanto.</strong> Dentro da função, crie uma variável{' '}
+                <code>maior</code> com o valor de <code>lista[0]</code>. Começar pelo primeiro valor também permite
+                trabalhar com números negativos.
+              </li>
+              <li>
+                <strong>Percorra os outros números com um laço.</strong> Use <code>for</code> para visitar os valores a
+                partir do segundo elemento do array.
+              </li>
+              <li>
+                <strong>Compare cada valor com o maior guardado.</strong> Use <code>if</code>: quando encontrar um
+                número maior, atualize a variável <code>maior</code>.
+              </li>
+              <li>
+                <strong>Devolva o resultado ao terminar o laço.</strong> Use <code>return</code> depois de percorrer
+                todos os números.
+              </li>
+              <li>
+                <strong>Chame a função e veja a saída.</strong> Escreva{' '}
+                <code>console.log(encontrarMaior(numeros));</code> fora da função e clique em <strong>Rodar</strong>. O
+                resultado esperado é <code>24</code>.
+              </li>
+            </ol>
+            <p className="rascunho-desafio-extra">
+              Funcionou? Experimente <code>[-8, -2, -15]</code> (resultado <code>-2</code>), <code>[7, 7, 3]</code>{' '}
+              (resultado <code>7</code>) e <code>[5]</code> (resultado <code>5</code>).
+            </p>
+          </details>
+          <p className="rascunho-desafio-livre">
+            Escreva sua tentativa no editor abaixo. O rascunho continua livre para experimentar outras ideias.
+          </p>
+        </section>
+      )}
       <Folha
         key={web ? 'web' : 'javascript'}
         titulo="Rascunho"
