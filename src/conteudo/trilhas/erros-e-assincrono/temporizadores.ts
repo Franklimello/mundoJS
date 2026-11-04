@@ -82,15 +82,14 @@ export const temporizadores: Licao = {
     {
       titulo: 'Contagem em intervalos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarAte(n, aCadaNumero, aoTerminar)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarAte(n, aCadaNumero, aoTerminar)`. Ela chama `aCadaNumero(1)`, `aCadaNumero(2)`, e assim por diante até `n`, **um número a cada 10 milissegundos**, e depois chama `aoTerminar()` uma única vez. Com `n` igual a 0, só chama `aoTerminar()`.',
-        },
-        {
-          tipo: 'p',
-          texto:
-            '10 milissegundos é pouco de propósito: assim o corretor não demora para conferir. Nada acontece na hora que `contarAte` é chamada — tudo vem depois.',
+          tipo: 'lista',
+          itens: [
+            'Chame `aCadaNumero` com os valores de `1` até `n`, um a cada `10` milissegundos.',
+            'Depois do último número, chame `aoTerminar()` exatamente uma vez.',
+            'Para `n = 0`, chame apenas `aoTerminar()`. Nenhuma chamada deve acontecer imediatamente, durante a execução inicial de `contarAte`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -159,10 +158,13 @@ igual(eventos, [1, 2, 'fim'], 'Depois de esperar um pouco')`,
     {
       titulo: 'Dizer depois',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `dizerDepois(texto, ms, aoDizer)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `dizerDepois(texto, ms, aoDizer)`. Passados `ms` milissegundos, ela chama `aoDizer(texto)`, uma única vez. Nada acontece na hora em que `dizerDepois` é chamada.',
+          tipo: 'lista',
+          itens: [
+            'Espere `ms` milissegundos e chame `aoDizer(texto)` uma única vez.',
+            'Não chame `aoDizer` imediatamente, durante a execução inicial da função.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -211,10 +213,15 @@ igual(vezes, 1, 'Quantas vezes aoDizer foi chamada')`,
     {
       titulo: 'A ordem dos avisos',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre três mensagens com estes prazos, contados a partir do início do programa:' },
         {
-          tipo: 'p',
-          texto:
-            'Faça o programa mostrar três linhas, nesta ordem: `Preparando` **agora**, `Pronto` depois de 30 milissegundos e `Servido` depois de 60 milissegundos (contados a partir do começo).',
+          tipo: 'lista',
+          itens: [
+            '`Preparando`: imediatamente.',
+            '`Pronto`: depois de `30` milissegundos.',
+            '`Servido`: depois de `60` milissegundos.',
+            'Cada mensagem deve aparecer em uma linha, nessa ordem.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -242,10 +249,14 @@ igual(saida, ['Preparando', 'Pronto', 'Servido'], 'As linhas mostradas')`,
     {
       titulo: 'Cancelar a tempo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `agendar(funcao, ms)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `agendar(funcao, ms)`, que chama a `funcao` depois de `ms` milissegundos e **devolve uma função `cancelar`**. Se `cancelar()` for chamada antes de o tempo passar, a `funcao` nunca roda. Chamar `cancelar()` depois que a `funcao` já rodou não causa problema nenhum.',
+          tipo: 'lista',
+          itens: [
+            'Agende a execução de `funcao` para depois de `ms` milissegundos.',
+            'Devolva uma função `cancelar`. Se ela for chamada antes do prazo, a função agendada não deve executar.',
+            'Cancelar depois da execução não deve causar erro.',
+          ],
         },
         {
           tipo: 'nota',
@@ -306,10 +317,14 @@ igual(rodou, 1, 'Quantas vezes a função rodou')`,
     {
       titulo: 'Um passo depois do outro',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `emSequencia(passos, aoTerminar)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `emSequencia(passos, aoTerminar)`. Cada passo é uma função que recebe uma função `proximo` e **só a chama quando termina** (pode demorar). `emSequencia` roda o primeiro passo; quando ele chamar `proximo()`, roda o segundo; e assim por diante. Depois do último passo, chama `aoTerminar()`. Sem passos, chama `aoTerminar()` direto.',
+          tipo: 'lista',
+          itens: [
+            'Cada passo recebe uma função `proximo` e a chama quando termina.',
+            'Execute um passo por vez. Só comece o seguinte depois que o atual chamar `proximo()`.',
+            'Depois do último passo, chame `aoTerminar()`. Se a lista estiver vazia, chame `aoTerminar()` diretamente.',
+          ],
         },
         {
           tipo: 'nota',
@@ -393,10 +408,15 @@ igual(eventos, ['lento começa', 'lento termina', 'rápido começa'], 'A ordem d
     {
       titulo: 'Tempo limite',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comTempoLimite(iniciar, ms, aoResponder)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comTempoLimite(iniciar, ms, aoResponder)`. Ela chama `iniciar(aoTerminar)`, que começa um trabalho e chama `aoTerminar(resultado)` quando termina. Se o trabalho terminar em até `ms` milissegundos, `aoResponder(resultado)` é chamada. Se não, `aoResponder("tempo esgotado")` é chamada. Em qualquer caso, `aoResponder` roda **uma única vez**, mesmo que o trabalho termine depois.',
+          tipo: 'lista',
+          itens: [
+            'Chame `iniciar(aoTerminar)` para começar o trabalho.',
+            'Se ele terminar dentro do prazo de `ms` milissegundos, chame `aoResponder` com o resultado recebido.',
+            'Se o prazo acabar antes, chame `aoResponder("tempo esgotado")`.',
+            '`aoResponder` deve ser chamada somente uma vez, mesmo se o trabalho terminar depois do prazo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -457,10 +477,13 @@ igual(respostas, ['feito'], 'Depois de esperar um pouco')`,
     {
       titulo: 'Uma resposta que vem depois',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `responderDepois(valor, aoResponder)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `responderDepois(valor, aoResponder)`, que chama o callback uma única vez com valor, depois de 20 milissegundos. O callback não pode acontecer durante a chamada inicial da função.',
+          tipo: 'lista',
+          itens: [
+            'Espere `20` milissegundos e chame `aoResponder(valor)` exatamente uma vez.',
+            'A chamada não pode ocorrer durante a execução inicial de `responderDepois`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -490,10 +513,13 @@ igual(respostas, ['feito'], 'Depois de esperar um pouco')`,
     {
       titulo: 'Devolver uma forma de cancelar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `adiarAviso(ms, acao)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `adiarAviso(ms, acao)`, que agenda acao para depois de ms milissegundos e devolve uma função de cancelamento. Se essa função for chamada antes do prazo, a ação não acontece.',
+          tipo: 'lista',
+          itens: [
+            'Agende `acao` para depois de `ms` milissegundos.',
+            'Devolva uma função de cancelamento. Se ela for chamada antes do prazo, a ação não deve executar.',
+          ],
         },
       ],
       codigoInicial: linhas(

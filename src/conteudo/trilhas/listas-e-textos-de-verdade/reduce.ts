@@ -79,12 +79,12 @@ export const reduce: Licao = {
     {
       titulo: 'Quadrados e maior',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções, as duas com `reduce`:' },
+        { tipo: 'p', texto: 'Complete as duas funções usando `reduce`.' },
         {
           tipo: 'lista',
           itens: [
-            '`somaDosQuadrados(numeros)` devolve a soma de cada número vezes ele mesmo: `somaDosQuadrados([1, 2, 3])` devolve `14` (1 + 4 + 9). Para uma lista vazia, devolve `0`.',
-            '`maiorNumero(numeros)` devolve o maior número da lista. A lista nunca vem vazia.',
+            '`somaDosQuadrados(numeros)`: devolva a soma dos quadrados dos números. Para uma lista vazia, devolva `0`. Exemplo: `[1, 2, 3]` → `14`.',
+            '`maiorNumero(numeros)`: devolva o maior número. Essa lista não estará vazia.',
           ],
         },
       ],
@@ -150,10 +150,14 @@ export const reduce: Licao = {
     {
       titulo: 'O total do carrinho, com reduce',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `totalDoCarrinho(itens)` usando `reduce`.' },
         {
-          tipo: 'p',
-          texto:
-            'Você já somou o carrinho com um laço. Agora faça com `reduce`: escreva `totalDoCarrinho(itens)`, que soma `preco * quantidade` de cada item `{ nome, preco, quantidade }`. Um carrinho vazio vale `0`.',
+          tipo: 'lista',
+          itens: [
+            'Cada item tem `nome`, `preco` e `quantidade`.',
+            'Devolva a soma de preço vezes quantidade de todos os itens.',
+            'Para um carrinho vazio, devolva `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -198,10 +202,14 @@ igual(totalDoCarrinho(itens), 26, 'totalDoCarrinho(itens)')`,
     {
       titulo: 'Frase a partir de palavras',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `montarFrase(palavras)` usando `reduce`, sem usar `join`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `montarFrase(palavras)`, que junta as palavras numa frase separadas por um espaço, **usando `reduce`** (sem o `join`). `montarFrase(["um", "dois", "três"])` devolve `"um dois três"`. Uma lista vazia devolve `""`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um texto com as palavras separadas por um único espaço, sem espaço sobrando nas pontas.',
+            'Para uma lista vazia, devolva `""`.',
+            'Exemplo: `["um", "dois", "três"]` deve resultar em `"um dois três"`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -247,10 +255,14 @@ igual(totalDoCarrinho(itens), 26, 'totalDoCarrinho(itens)')`,
     {
       titulo: 'Contando as letras',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarLetras(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarLetras(texto)`, que devolve um objeto dizendo quantas vezes cada letra aparece. `contarLetras("banana")` devolve `{ b: 1, a: 3, n: 2 }`. Um texto vazio devolve `{}`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um objeto com uma propriedade para cada letra e a quantidade de vezes que ela aparece.',
+            'Para um texto vazio, devolva `{}`.',
+            'Exemplo: `"banana"` deve resultar em `{ b: 1, a: 3, n: 2 }`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -299,10 +311,13 @@ igual(totalDoCarrinho(itens), 26, 'totalDoCarrinho(itens)')`,
     {
       titulo: 'O menor e o maior de uma vez',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `limites(numeros)` com um único `reduce` e um objeto como acumulador.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `limites(numeros)`, que devolve um objeto `{ menor, maior }` com o menor e o maior número da lista (que nunca vem vazia). `limites([3, 9, 2])` devolve `{ menor: 2, maior: 9 }`. Faça tudo num único `reduce`, com um objeto como acumulador.',
+          tipo: 'lista',
+          itens: [
+            'A lista não estará vazia. Devolva um objeto com as propriedades `menor` e `maior`.',
+            'Exemplo: `[3, 9, 2]` deve resultar em `{ menor: 2, maior: 9 }`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -353,10 +368,14 @@ igual(totalDoCarrinho(itens), 26, 'totalDoCarrinho(itens)')`,
     {
       titulo: 'Um resumo dos sinais',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `resumirNumeros(numeros)` usando `reduce`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `resumirNumeros(numeros)`, usando reduce para contar valores positivos, negativos e zeros. Devolva um objeto com essas três propriedades, incluindo contagens zeradas.',
+          tipo: 'lista',
+          itens: [
+            'Conte quantos valores são positivos, negativos e iguais a zero.',
+            'Devolva um objeto com `positivos`, `negativos` e `zeros`.',
+            'Inclua as três propriedades mesmo quando alguma contagem for `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -388,10 +407,13 @@ igual(totalDoCarrinho(itens), 26, 'totalDoCarrinho(itens)')`,
     {
       titulo: 'Acumulando sem repetições',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `unicosComReduce(numeros)` usando `reduce`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `unicosComReduce(numeros)`, que usa reduce para devolver uma lista sem números repetidos, mantendo a primeira ocorrência de cada valor. Não modifique a lista de entrada.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma lista sem números repetidos, mantendo a primeira ocorrência de cada valor.',
+            'Não altere a lista recebida.',
+          ],
         },
       ],
       codigoInicial: linhas(

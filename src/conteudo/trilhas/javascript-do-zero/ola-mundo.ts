@@ -45,10 +45,10 @@ export const olaMundo: Licao = {
       explicacaoAudio:
         'Pense no programa como uma sequência de pedidos ao computador. Cada console ponto log mostra uma nova linha. A primeira mensagem tem um texto exato; na segunda, você escolhe uma frase sobre seu objetivo. Leia a saída para conferir a ordem das duas mensagens.',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre duas mensagens, uma por linha, usando `console.log`.' },
         {
-          tipo: 'p',
-          texto:
-            'Faça o programa mostrar duas linhas: primeiro `Olá, mundo!` e, depois, uma frase sua sobre o que você quer aprender.',
+          tipo: 'lista',
+          itens: ['Primeira linha: `Olá, mundo!`.', 'Segunda linha: uma frase sua sobre o que quer aprender.'],
         },
       ],
       codigoInicial: '',
@@ -72,10 +72,10 @@ igual(saida[0], 'Olá, mundo!', 'A primeira linha')`,
     {
       titulo: 'O número e a frase',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre dois valores, um por linha, usando `console.log`.' },
         {
-          tipo: 'p',
-          texto:
-            'Mostre, em duas linhas, o número `2026` e depois o texto `Bem-vindo!`. Lembre: **número não leva aspas**; texto leva.',
+          tipo: 'lista',
+          itens: ['Primeiro, o número `2026`, sem aspas.', 'Depois, o texto `Bem-vindo!`, entre aspas.'],
         },
       ],
       codigoInicial: '',
@@ -100,11 +100,8 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
     {
       titulo: 'A escadinha',
       enunciado: [
-        {
-          tipo: 'p',
-          texto:
-            'Faça o programa desenhar uma escadinha de asteriscos, com **exatamente** estas 3 linhas, uma abaixo da outra: `*`, depois `**`, depois `***`.',
-        },
+        { tipo: 'p', texto: 'Mostre uma escada de asteriscos com exatamente três linhas.' },
+        { tipo: 'lista', itens: ['Primeira linha: `*`.', 'Segunda linha: `**`.', 'Terceira linha: `***`.'] },
       ],
       codigoInicial: '',
       testes: [
@@ -122,10 +119,13 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
     {
       titulo: 'Valores numa linha só',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre `Olá 2026 Ana` em uma única linha.' },
         {
-          tipo: 'p',
-          texto:
-            'Com **um único** `console.log` de três valores, mostre uma linha só: `Olá 2026 Ana`. O primeiro e o terceiro são textos; o do meio é um número.',
+          tipo: 'lista',
+          itens: [
+            'Use apenas um `console.log`, com três valores separados por vírgula.',
+            '`Olá` e `Ana` são textos. `2026` deve ser um número.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -151,11 +151,8 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
     {
       titulo: 'Três avisos na ordem',
       enunciado: [
-        {
-          tipo: 'p',
-          texto:
-            'Corrija os avisos para mostrar exatamente três linhas: `Início`, `Processando` e `Fim`, nessa ordem. Use um comando para cada linha.',
-        },
+        { tipo: 'p', texto: 'Corrija o código para mostrar três mensagens nesta ordem:' },
+        { tipo: 'lista', itens: ['`Início`.', '`Processando`.', '`Fim`.', 'Use um `console.log` para cada linha.'] },
       ],
       codigoInicial: 'console.log("Começo");\nconsole.log("Fim");\n',
       testes: [
@@ -174,10 +171,15 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
     {
       titulo: 'Uma etiqueta de produto',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre uma etiqueta com exatamente três linhas.' },
         {
-          tipo: 'p',
-          texto:
-            'Mostre uma etiqueta em três linhas: `Produto: Caderno`, `Preço: 12` e `Quantidade: 2`. Em cada comando, separe o rótulo e o valor com vírgula. Os valores 12 e 2 devem ser números.',
+          tipo: 'lista',
+          itens: [
+            '`Produto: Caderno`.',
+            '`Preço: 12`.',
+            '`Quantidade: 2`.',
+            'Em cada `console.log`, separe o rótulo e o valor com vírgula. Escreva `12` e `2` como números.',
+          ],
         },
       ],
       codigoInicial: '',

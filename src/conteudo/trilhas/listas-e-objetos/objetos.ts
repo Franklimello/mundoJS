@@ -53,11 +53,12 @@ export const objetos: Licao = {
     {
       titulo: 'Criar e apresentar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete as duas funções.' },
         {
           tipo: 'lista',
           itens: [
-            'Escreva `criarPessoa(nome, idade)`, que devolve um objeto com as propriedades `nome` e `idade`.',
-            'Escreva `apresentar(pessoa)`, que devolve um texto no formato `Ana, 25 anos`.',
+            '`criarPessoa(nome, idade)`: devolva um objeto com as propriedades `nome` e `idade`.',
+            '`apresentar(pessoa)`: devolva um texto no formato `Ana, 25 anos`, usando os dados do objeto.',
           ],
         },
       ],
@@ -109,10 +110,13 @@ export const objetos: Licao = {
     {
       titulo: 'Mexendo na conta',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize o objeto `conta`, que já está no editor.' },
         {
-          tipo: 'p',
-          texto:
-            'O objeto `conta` já existe. Mude o `saldo` para `150` e acrescente uma propriedade nova, `ativa`, valendo `true`. Não crie outro objeto: mude esse.',
+          tipo: 'lista',
+          itens: [
+            'Mude `saldo` para `150` e acrescente `ativa` com valor `true`.',
+            'Altere o próprio objeto, sem criar outro.',
+          ],
         },
       ],
       codigoInicial: linhas('const conta = { titular: "Ana", saldo: 100 };', ''),
@@ -131,10 +135,13 @@ export const objetos: Licao = {
     {
       titulo: 'Fazendo aniversário',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `fazerAniversario(pessoa)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `fazerAniversario(pessoa)`. Ela soma 1 à propriedade `idade` **do próprio objeto recebido** e devolve esse objeto. Depois de `fazerAniversario(ana)`, a variável `ana` já tem a idade nova.',
+          tipo: 'lista',
+          itens: [
+            'Some `1` à propriedade `idade` do objeto recebido.',
+            'Devolva esse mesmo objeto. A idade deve continuar atualizada fora da função.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -178,10 +185,14 @@ igual(caio.idade, 32, 'A idade de caio depois de duas chamadas')`,
     {
       titulo: 'O retângulo pronto',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarRetangulo(largura, altura)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `criarRetangulo(largura, altura)`, que devolve um objeto com três propriedades: `largura`, `altura` e `area` (a largura vezes a altura). Por exemplo, `criarRetangulo(3, 4)` devolve `{ largura: 3, altura: 4, area: 12 }`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um objeto com `largura`, `altura` e `area`.',
+            '`area` deve ser a largura multiplicada pela altura.',
+            'Exemplo: `criarRetangulo(3, 4)` deve devolver `{ largura: 3, altura: 4, area: 12 }`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -222,10 +233,14 @@ igual(caio.idade, 32, 'A idade de caio depois de duas chamadas')`,
     {
       titulo: 'O nome da propriedade numa variável',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `valorDe(objeto, chave)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `valorDe(objeto, chave)`, que devolve o valor da propriedade cujo nome está guardado em `chave`. Por exemplo, `valorDe({ nome: "Ana" }, "nome")` devolve `"Ana"`. Se a propriedade não existir, o resultado natural é `undefined`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o valor da propriedade cujo nome foi recebido em `chave`.',
+            'Se essa propriedade não existir, devolva `undefined`.',
+            'Exemplo: `valorDe({ nome: "Ana" }, "nome")` deve devolver `"Ana"`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -266,10 +281,14 @@ igual(valorDe({ x: 7 }, 'y'), undefined, 'valorDe({ x: 7 }, "y")')`,
     {
       titulo: 'Objeto com lista dentro',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `resumo(aluno)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Um aluno é um objeto como `{ nome: "Ana", notas: [7, 9] }`. Escreva a função `resumo(aluno)`, que devolve um objeto novo com o `nome` e a `media` das notas, como em `{ nome: "Ana", media: 8 }`. Sem notas, a média é `0`.',
+          tipo: 'lista',
+          itens: [
+            '`aluno` contém um nome e uma lista de notas, como `{ nome: "Ana", notas: [7, 9] }`.',
+            'Devolva um novo objeto com as propriedades `nome` e `media`.',
+            'Sem notas, use média `0`. Para o exemplo, devolva `{ nome: "Ana", media: 8 }`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -318,10 +337,13 @@ igual(valorDe({ x: 7 }, 'y'), undefined, 'valorDe({ x: 7 }, "y")')`,
     {
       titulo: 'Creditando uma conta',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `creditar(conta, valor)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `creditar(conta, valor)`, que soma valor à propriedade saldo e devolve o mesmo objeto conta. Neste exercício, a alteração do objeto recebido é intencional.',
+          tipo: 'lista',
+          itens: [
+            'Some `valor` à propriedade `saldo` da conta recebida.',
+            'Devolva o mesmo objeto `conta`, já atualizado.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -351,10 +373,14 @@ igual(valorDe({ x: 7 }, 'y'), undefined, 'valorDe({ x: 7 }, "y")')`,
     {
       titulo: 'Um endereço legível',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `enderecoCompleto(local)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `enderecoCompleto(local)`, que lê rua, numero e cidade do objeto e devolve um texto no formato `"Rua Azul, 12 - Recife"`. O número pode ser numérico; as outras propriedades são textos.',
+          tipo: 'lista',
+          itens: [
+            'Leia as propriedades `rua`, `numero` e `cidade`.',
+            'Devolva um texto no formato `"Rua Azul, 12 - Recife"`, mantendo vírgula, hífen e espaços.',
+            '`numero` pode ser um número; `rua` e `cidade` serão textos.',
+          ],
         },
       ],
       codigoInicial: linhas(

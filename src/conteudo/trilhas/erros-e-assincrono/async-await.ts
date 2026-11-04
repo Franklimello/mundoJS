@@ -103,13 +103,13 @@ export const asyncAwait: Licao = {
         {
           tipo: 'p',
           texto:
-            'A função `buscarUsuario(id)` já está pronta no código (é a da lição anterior; não mexa nela). Escreva duas funções `async` que a usam:',
+            'Complete as duas funções `async`, usando `buscarUsuario(id)`, que já está pronta e não deve ser alterada.',
         },
         {
           tipo: 'lista',
           itens: [
-            '`nomesDosUsuarios(ids)` devolve a lista com o `nome` de cada usuário, na mesma ordem dos `ids`. Faça as buscas **ao mesmo tempo** com `Promise.all`: o corretor confere o tempo.',
-            '`buscarOuPadrao(id)` devolve o usuário; se a busca for rejeitada, devolve `{ id: id, nome: "Desconhecido" }` em vez de deixar o erro subir.',
+            '`nomesDosUsuarios(ids)`: busque todos os usuários ao mesmo tempo com `Promise.all` e devolva seus nomes na ordem dos ids. O corretor verifica o tempo.',
+            '`buscarOuPadrao(id)`: devolva o usuário encontrado. Se a busca falhar, devolva `{ id: id, nome: "Desconhecido" }`.',
           ],
         },
       ],
@@ -211,10 +211,14 @@ verdadeiro(gasto < 70, 'As 10 buscas levaram ' + gasto + ' ms: faça todas ao me
     {
       titulo: 'Um passo depois do outro',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `somarDobros(a, b)`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `dobroDepois(n)` já está pronta: ela devolve uma promessa que, depois de 10 ms, se resolve com o dobro de `n` — ou é rejeitada com `Error("negativo")` se `n` for negativo. Escreva a função `async` `somarDobros(a, b)`, que **espera** o dobro de `a`, depois o dobro de `b`, e devolve a soma dos dois. Por exemplo, `somarDobros(1, 2)` devolve `6`.',
+          tipo: 'lista',
+          itens: [
+            '`dobroDepois(n)` já está pronta: resolve com o dobro após `10` milissegundos e rejeita com `Error("negativo")` para números negativos.',
+            'Espere o dobro de `a` e só depois espere o dobro de `b`. Devolva a soma.',
+            'Exemplo: `somarDobros(1, 2)` deve resolver com `6`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -288,10 +292,14 @@ igual(erro.message, 'negativo', 'A mensagem do erro')`,
     {
       titulo: 'Todas ao mesmo tempo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `somarTodos(ids)`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `buscarNumero(id)` já está pronta: leva 40 ms e se resolve com `id * 10`. Escreva a função `async` `somarTodos(ids)`, que busca **todos os ids ao mesmo tempo** e devolve a soma dos números. O corretor confere o tempo: cinco buscas não podem levar cinco vezes 40 ms.',
+          tipo: 'lista',
+          itens: [
+            '`buscarNumero(id)` já está pronta: leva `40` milissegundos e resolve com `id * 10`.',
+            'Inicie todas as buscas ao mesmo tempo e devolva a soma dos resultados.',
+            'O corretor verifica o tempo: cinco buscas não devem levar cinco vezes o tempo de uma busca.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -350,10 +358,14 @@ igual(await somarTodos([]), 0, 'somarTodos([])')`,
     {
       titulo: 'Insistir até conseguir',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `tentarAte(funcaoAsync, maximo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `async` `tentarAte(funcaoAsync, maximo)`. Ela chama a `funcaoAsync` (que devolve uma promessa) e **espera** o resultado. Se a promessa for rejeitada, tenta de novo, até `maximo` chamadas no total. Devolve o valor da primeira que der certo; se todas falharem, deixa subir o erro da **última** tentativa.',
+          tipo: 'lista',
+          itens: [
+            'Chame `funcaoAsync` e espere o resultado. Se ela falhar, tente novamente, até o máximo de chamadas no total.',
+            'Devolva o valor da primeira tentativa que funcionar.',
+            'Se todas falharem, deixe a função rejeitar com o erro da última tentativa.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -429,10 +441,14 @@ igual(await promessa, 1, 'O valor da promessa')`,
     {
       titulo: 'Um de cada vez, em ordem',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `processarEmOrdem(ids, registro)`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `processar(id, registro)` já está pronta: ela anota `"inicio " + id` na lista `registro`, espera 10 ms e anota `"fim " + id`. Escreva a função `async` `processarEmOrdem(ids, registro)`, que processa os ids **um de cada vez**: o seguinte só começa quando o anterior termina. Para `[1, 2]`, o registro fica `["inicio 1", "fim 1", "inicio 2", "fim 2"]`.',
+          tipo: 'lista',
+          itens: [
+            '`processar(id, registro)` já registra o início, espera `10` milissegundos e registra o fim.',
+            'Processe um id por vez: só comece o seguinte quando o anterior terminar.',
+            'Para `[1, 2]`, o registro deve ficar `["inicio 1", "fim 1", "inicio 2", "fim 2"]`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -510,10 +526,14 @@ igual(registro.length, 2, 'O registro logo depois de esperar a função')`,
     {
       titulo: 'Tempo limite com async',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comLimite(promessa, ms)` e devolva uma nova promessa.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comLimite(promessa, ms)`, que devolve uma promessa. Se a `promessa` terminar em até `ms` milissegundos, a nova termina do mesmo jeito (com o mesmo valor, ou rejeitada com o mesmo erro). Se **demorar mais**, a nova é rejeitada com `new Error("Tempo esgotado")`. Dica: faça uma corrida com `Promise.race` entre a promessa e uma promessa que se rejeita sozinha depois de `ms`.',
+          tipo: 'lista',
+          itens: [
+            'Se a promessa recebida terminar dentro do prazo, preserve seu resultado: o mesmo valor ou o mesmo erro.',
+            'Se o prazo de `ms` milissegundos acabar antes, rejeite com `new Error("Tempo esgotado")`.',
+            'Você pode usar `Promise.race` para disputar a promessa recebida com um temporizador.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -571,10 +591,14 @@ igual(erro.message, 'falhou', 'A mensagem do erro')`,
     {
       titulo: 'Selecionar depois da busca',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `buscarAtivos(buscar)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie a função async `buscarAtivos(buscar)`. A função buscar devolve uma promessa com pessoas que têm nome e ativo. Espere a busca e devolva os nomes das pessoas ativas, na ordem recebida. Não esconda erros da busca.',
+          tipo: 'lista',
+          itens: [
+            '`buscar()` devolve uma promessa com uma lista de pessoas que têm `nome` e `ativo`.',
+            'Espere a busca e devolva apenas os nomes das pessoas ativas, na ordem recebida.',
+            'Se a busca falhar, mantenha o erro.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -610,10 +634,14 @@ igual(erro.message, 'falhou', 'A mensagem do erro')`,
     {
       titulo: 'Fechar o recurso depois de usar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `usarRecurso(abrir, usar, fechar)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie a função async `usarRecurso(abrir, usar, fechar)`. Espere abrir() obter um recurso. Depois, espere usar(recurso) e devolva seu resultado. Após o uso, sempre espere fechar(recurso), mesmo se usar falhar. Se abrir falhar, não há recurso para fechar. Preserve os erros originais; considere que fechar sempre funciona.',
+          tipo: 'lista',
+          itens: [
+            'Espere `abrir()` obter o recurso. Depois, espere `usar(recurso)` e devolva seu resultado.',
+            'Após o uso, sempre espere `fechar(recurso)`, mesmo se `usar` falhar.',
+            'Se `abrir` falhar, não chame `fechar`. Preserve os erros originais; considere que `fechar` sempre funciona.',
+          ],
         },
       ],
       codigoInicial: linhas(

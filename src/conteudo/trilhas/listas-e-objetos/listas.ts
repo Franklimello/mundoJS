@@ -44,7 +44,10 @@ export const listas: Licao = {
   exercicios: [
     {
       titulo: 'O último item',
-      enunciado: [{ tipo: 'p', texto: 'Escreva a função `ultimo(lista)`, que devolve o último item da lista.' }],
+      enunciado: [
+        { tipo: 'p', texto: 'Complete `ultimo(lista)`.' },
+        { tipo: 'lista', itens: ['Devolva o último item da lista usando `return`.'] },
+      ],
       codigoInicial: linhas(
         'const lista = [1, 2, 3];',
         '',
@@ -73,10 +76,13 @@ export const listas: Licao = {
     {
       titulo: 'As duas pontas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `pontas(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `pontas(lista)`, que devolve uma **nova lista** com dois itens: o primeiro e o último da lista recebida. Por exemplo, `pontas([1, 2, 3])` devolve `[1, 3]`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com dois itens: o primeiro e o último da lista recebida.',
+            'Exemplo: `pontas([1, 2, 3])` deve devolver `[1, 3]`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -116,11 +122,12 @@ export const listas: Licao = {
     {
       titulo: 'A lista de compras',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize a lista `compras`, que já está no editor.' },
         {
           tipo: 'lista',
           itens: [
-            'Acrescente `"ovos"` e depois `"café"` ao fim da lista `compras`, com `push`.',
-            'Mostre quantos itens a lista tem agora.',
+            'Use `push` para acrescentar `"ovos"` e depois `"café"` ao final.',
+            'Mostre a quantidade de itens que a lista passou a ter.',
           ],
         },
       ],
@@ -151,10 +158,13 @@ export const listas: Licao = {
     {
       titulo: 'O item do meio',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `meio(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `meio(lista)`, que devolve o item do meio de uma lista de **tamanho ímpar**. Em `[10, 20, 30]`, o do meio é `20`. Dica: o índice do meio é metade do tamanho, arredondada para baixo.',
+          tipo: 'lista',
+          itens: [
+            'A lista terá uma quantidade ímpar de itens. Devolva o item que fica no meio.',
+            'Exemplo: para `[10, 20, 30]`, devolva `20`. O índice do meio é metade do tamanho, arredondada para baixo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -188,10 +198,14 @@ export const listas: Licao = {
     {
       titulo: 'Invertendo a lista',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `inverter(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `inverter(lista)`, que devolve uma **nova lista** com os mesmos itens em ordem contrária. Por exemplo, `inverter([1, 2, 3])` devolve `[3, 2, 1]`. A lista original **não** pode mudar.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma nova lista com os itens na ordem inversa.',
+            'Não altere a lista original.',
+            'Exemplo: `[1, 2, 3]` deve resultar em `[3, 2, 1]`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -248,10 +262,13 @@ igual(original, [1, 2, 3], 'A lista original')`,
     {
       titulo: 'Acrescentar e contar',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `colocarNoFim(lista, item)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `colocarNoFim(lista, item)`, que acrescenta item ao fim da própria lista com push e devolve o novo tamanho. A lista recebida deve ser modificada.',
+          tipo: 'lista',
+          itens: [
+            'Acrescente `item` ao final da lista recebida usando `push`.',
+            'Devolva o novo tamanho da lista. Neste exercício, a lista original deve ser alterada.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -281,10 +298,14 @@ igual(original, [1, 2, 3], 'A lista original')`,
     {
       titulo: 'Trocando as pontas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `trocarPontas(lista)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `trocarPontas(lista)`, que troca o primeiro item com o último e devolve a própria lista. Listas vazias ou com um item ficam como estão. Use índices e uma variável auxiliar, sem precisar percorrer a lista.',
+          tipo: 'lista',
+          itens: [
+            'Troque o primeiro item pelo último e devolva a própria lista alterada.',
+            'Se houver zero ou um item, devolva a lista sem mudanças.',
+            'Use índices e uma variável auxiliar; não é necessário percorrer a lista.',
+          ],
         },
       ],
       codigoInicial: linhas(

@@ -84,12 +84,12 @@ export const lancarErros: Licao = {
     {
       titulo: 'Dividir e validar idade',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções que **lançam erros**:' },
+        { tipo: 'p', texto: 'Complete as duas funções.' },
         {
           tipo: 'lista',
           itens: [
-            '`dividir(a, b)` devolve `a / b`. Se `b` for zero, lança um `Error` com a mensagem `"Não dá para dividir por zero."`.',
-            '`validarIdade(idade)` devolve a própria idade se ela for um **número inteiro de 0 a 130**. Em qualquer outro caso, lança um `Error` com uma mensagem sua.',
+            '`dividir(a, b)`: devolva a divisão. Se `b` for zero, lance um `Error` com a mensagem exata `"Não dá para dividir por zero."`.',
+            '`validarIdade(idade)`: devolva a idade se ela for um número inteiro de `0` a `130`, incluindo os limites. Em qualquer outro caso, lance um `Error` com uma mensagem sua.',
           ],
         },
       ],
@@ -171,10 +171,13 @@ verdadeiro(erro instanceof Error && erro.message.trim().length > 0, 'Escreva uma
     {
       titulo: 'Raiz quadrada segura',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `raiz(numero)` usando `Math.sqrt`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `raiz(numero)`, que devolve a raiz quadrada do número, com `Math.sqrt`. Para número **negativo**, lance um `Error` com a mensagem `"Não existe raiz quadrada de número negativo."`. O zero tem raiz.',
+          tipo: 'lista',
+          itens: [
+            'Para zero ou um número positivo, devolva a raiz quadrada.',
+            'Para um número negativo, lance um `Error` com a mensagem exata `"Não existe raiz quadrada de número negativo."`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -212,10 +215,15 @@ igual(erro.message, 'Não existe raiz quadrada de número negativo.', 'A mensage
     {
       titulo: 'Cada erro com o seu tipo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `validarEmail(email)` seguindo estas regras:' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `validarEmail(email)`. Ela devolve o e-mail sem espaços nas pontas se ele for um **texto** que contém `@`. Se o valor **não for um texto**, lança um `TypeError`. Se for um texto sem `@`, lança um `Error` comum. As duas com uma mensagem sua.',
+          tipo: 'lista',
+          itens: [
+            'Se o valor não for um texto, lance um `TypeError`.',
+            'Se for um texto sem `@`, lance um `Error` comum.',
+            'Se for um texto com `@`, retire os espaços das pontas e devolva o texto.',
+            'Escolha uma mensagem para cada erro. Neste exercício, não é preciso validar outros detalhes do endereço.',
+          ],
         },
         {
           tipo: 'nota',
@@ -283,10 +291,14 @@ verdadeiro(erro2 !== null && erro2.message.trim() !== '', 'O erro de um texto se
     {
       titulo: 'Tentar de novo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comTentativas(funcao, maximo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comTentativas(funcao, maximo)`. Ela chama a `funcao` e, se der erro, tenta de novo, até `maximo` chamadas no total. Devolve o resultado da primeira chamada que der certo. Se **todas** falharem, lança o erro da **última** tentativa.',
+          tipo: 'lista',
+          itens: [
+            'Execute a função. Se ela lançar um erro, tente novamente, respeitando o máximo de chamadas no total.',
+            'Devolva o resultado da primeira tentativa que funcionar.',
+            'Se todas falharem, lance o erro da última tentativa.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -362,10 +374,13 @@ igual(chamadas, 4, 'Quantas vezes a função foi chamada')`,
     {
       titulo: 'Uma mensagem que ajuda',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `buscarProduto(produtos, id)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `buscarProduto(produtos, id)`, que devolve o produto com aquele `id`. Se ele não existir, lança um `Error` cuja mensagem diz **qual** produto faltou, no formato `Produto 7 não encontrado.` (com o número do id pedido).',
+          tipo: 'lista',
+          itens: [
+            'Devolva o produto com o `id` informado.',
+            'Se não encontrar, lance um `Error` com o formato `Produto 7 não encontrado.`, substituindo `7` pelo id procurado.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -420,10 +435,14 @@ igual(erro.message, 'Produto 42 não encontrado.', 'A mensagem do erro')`,
     {
       titulo: 'O erro sobe do laço',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `converterTodos(textos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `converterTodos(textos)`, que converte cada texto da lista num número com `Number` e devolve a lista de números. Se algum texto **não for um número** (ou estiver vazio), lança um `Error` com a mensagem `"abc" não é um número.`, com o texto problemático entre aspas.',
+          tipo: 'lista',
+          itens: [
+            'Converta os textos em números usando `Number` e devolva a lista resultante.',
+            'Se algum texto estiver vazio ou não representar um número, lance um `Error`.',
+            'A mensagem deve incluir o texto entre aspas, como em `"abc" não é um número.`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -487,10 +506,14 @@ igual(erro.message, '"" não é um número.', 'A mensagem do erro')`,
     {
       titulo: 'Validar antes de vender',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `vender(estoque, quantidade)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `vender(estoque, quantidade)`. Quantidade menor ou igual a zero lança RangeError com mensagem `"Quantidade inválida."`. Quantidade maior que estoque lança Error com mensagem `"Estoque insuficiente."`. Caso contrário, devolva o estoque restante. Considere entradas inteiras e estoque não negativo.',
+          tipo: 'lista',
+          itens: [
+            'Se a quantidade for menor ou igual a `0`, lance `RangeError` com a mensagem `"Quantidade inválida."`.',
+            'Se ela superar o estoque, lance `Error` com a mensagem `"Estoque insuficiente."`.',
+            'Caso contrário, devolva o estoque restante. As entradas serão inteiras e o estoque não será negativo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -525,10 +548,14 @@ igual(erro.message, '"" não é um número.', 'A mensagem do erro')`,
     {
       titulo: 'Só um tipo de erro pode ser ignorado',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ignorarForaDaFaixa(acao)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `ignorarForaDaFaixa(acao)`. Execute a ação e devolva seu resultado. Capture RangeError e devolva null, mas relance qualquer outro erro, preservando o mesmo objeto de erro.',
+          tipo: 'lista',
+          itens: [
+            'Execute a ação e devolva seu resultado.',
+            'Se ela lançar `RangeError`, devolva `null`.',
+            'Para qualquer outro erro, lance novamente o mesmo objeto de erro.',
+          ],
         },
       ],
       codigoInicial: linhas(

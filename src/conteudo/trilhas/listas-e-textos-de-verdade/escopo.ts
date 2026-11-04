@@ -95,12 +95,12 @@ export const escopo: Licao = {
     {
       titulo: 'Contador e multiplicador',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções que **devolvem funções**:' },
+        { tipo: 'p', texto: 'Complete as duas funções. Cada uma deve devolver outra função.' },
         {
           tipo: 'lista',
           itens: [
-            '`criarContador()` devolve uma função. Cada vez que ela é chamada, devolve o próximo número, começando em `1`. Dois contadores criados separadamente não se misturam.',
-            '`criarMultiplicador(fator)` devolve uma função que multiplica o número recebido pelo `fator`.',
+            '`criarContador()`: a função devolvida conta `1`, `2`, `3` e assim por diante, um número a cada chamada. Contadores diferentes mantêm contagens separadas.',
+            '`criarMultiplicador(fator)`: a função devolvida recebe um número e devolve esse número multiplicado pelo fator guardado.',
           ],
         },
       ],
@@ -167,10 +167,14 @@ igual([dobro(5), triplo(5)], [10, 15], 'dobro(5) e triplo(5)')`,
     {
       titulo: 'Espiando o escopo',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre dois resultados para observar o escopo de `segredo`.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `calcular` guarda `segredo` **dentro** dela. Depois de mostrar o resultado da função, mostre também o `typeof` de `segredo` aqui fora. O resultado esperado é uma saída de duas linhas: `43` e `undefined`.',
+          tipo: 'lista',
+          itens: [
+            'Primeiro, mostre o resultado de `calcular()`, que deve ser `43`.',
+            'Fora da função, mostre `typeof segredo`, que deve ser `undefined`.',
+            'Não mova a variável `segredo` para fora de `calcular`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -209,10 +213,13 @@ igual([dobro(5), triplo(5)], [10, 15], 'dobro(5) e triplo(5)')`,
     {
       titulo: 'Saudação configurada',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarSaudacao(saudacao)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `criarSaudacao(saudacao)`, que devolve uma **função**. Essa função recebe um `nome` e devolve o texto `saudacao, nome!`. Por exemplo, `criarSaudacao("Oi")("Ana")` devolve `"Oi, Ana!"`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma função que receba `nome` e devolva um texto no formato `saudacao, nome!`.',
+            'Exemplo: `criarSaudacao("Oi")("Ana")` deve devolver `"Oi, Ana!"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -256,10 +263,14 @@ igual([oi('Bia'), bomDia('Bia')], ['Oi, Bia!', 'Bom dia, Bia!'], 'As duas sauda�
     {
       titulo: 'Limite de tentativas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarLimite(maximo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `criarLimite(maximo)`, que devolve uma função `tentar`. Cada chamada de `tentar()` devolve `true` enquanto o total de chamadas não passar de `maximo`, e `false` depois disso. Com `criarLimite(2)`, as chamadas devolvem `true`, `true`, `false`, `false`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma função chamada `tentar` que conte suas próprias chamadas.',
+            'Cada chamada devolve `true` até atingir o máximo permitido. Depois disso, devolve `false`.',
+            'Exemplo: com máximo `2`, as respostas são `true`, `true`, `false`, `false`.',
+          ],
         },
       ],
       codigoInicial: linhas('const maximo = 2;', '', 'function criarLimite(maximo) {', '', '}', ''),
@@ -305,10 +316,13 @@ igual(b(), true, 'A primeira chamada do segundo limite')`,
     {
       titulo: 'Acumulador',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarAcumulador()`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `criarAcumulador()`, que devolve uma função. Cada chamada recebe um número, soma-o ao total guardado e devolve o **total até agora**. Por exemplo: `acum(5)` devolve `5`; depois, `acum(10)` devolve `15`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma função que receba um número, some-o ao total guardado e devolva o novo total.',
+            'Exemplo: no mesmo acumulador, uma chamada com `5` devolve `5`; depois, uma chamada com `10` devolve `15`.',
+          ],
         },
       ],
       codigoInicial: linhas('const valores = [5, 10];', '', 'function criarAcumulador() {', '', '}', ''),
@@ -348,10 +362,14 @@ igual(b(1), 1, 'A primeira chamada do segundo acumulador')`,
     {
       titulo: 'O histórico protegido',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarHistorico()`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva `criarHistorico()`, que devolve um objeto com duas funções: `registrar(texto)`, que guarda um texto, e `todos()`, que devolve a lista dos textos registrados, na ordem. A lista guardada **só pode ser mudada pelo `registrar`**: quem receber a lista de `todos()` e mexer nela não deve alterar o histórico.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um objeto com duas funções: `registrar(texto)` guarda um texto; `todos()` devolve os textos registrados, na ordem.',
+            '`todos()` deve entregar uma cópia da lista.',
+            'Alterar essa cópia não pode mudar o histórico. Somente `registrar` pode acrescentar dados ao histórico guardado.',
+          ],
         },
         {
           tipo: 'nota',
@@ -410,10 +428,14 @@ igual(h.todos(), ['a'], 'h.todos() depois de mexer na cópia')`,
     {
       titulo: 'Gerador de etiquetas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarEtiquetador(prefixo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `criarEtiquetador(prefixo)`, que devolve uma função. Cada chamada dessa função produz um texto com prefixo, hífen e um contador começando em 1, como `"PED-1"`. Cada etiquetador mantém seu contador separado.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma função que gere um texto com o prefixo, um hífen e um contador iniciado em `1`.',
+            'A cada chamada, avance o contador. Exemplo com prefixo `"PED"`: `"PED-1"`, `"PED-2"` e assim por diante.',
+            'Etiquetadores diferentes devem manter contadores separados.',
+          ],
         },
       ],
       codigoInicial: linhas('const prefixo = "PED";', '', 'function criarEtiquetador(prefixo) {', '', '}', ''),
@@ -434,10 +456,14 @@ igual(h.todos(), ['a'], 'h.todos() depois de mexer na cópia')`,
     {
       titulo: 'Um interruptor com memória',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarInterruptor(inicial)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `criarInterruptor(inicial)`, que recebe um booleano e devolve uma função. Cada chamada inverte o estado e devolve o novo booleano. O estado deve ficar privado no escopo da função.',
+          tipo: 'lista',
+          itens: [
+            'Receba um booleano e devolva uma função que guarde esse estado.',
+            'A cada chamada, inverta o estado e devolva o novo booleano.',
+            'Mantenha o estado privado dentro da função.',
+          ],
         },
       ],
       codigoInicial: linhas('const inicial = false;', '', 'function criarInterruptor(inicial) {', '', '}', ''),

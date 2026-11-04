@@ -69,12 +69,12 @@ export const metodosDeTexto: Licao = {
     {
       titulo: 'Normalizar e procurar',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções:' },
+        { tipo: 'p', texto: 'Complete as duas funções.' },
         {
           tipo: 'lista',
           itens: [
-            '`normalizar(texto)` devolve o texto sem espaços nas pontas e todo em minúsculas.',
-            '`temPalavra(texto, palavra)` devolve `true` se o texto contém a palavra, sem ligar para maiúsculas e minúsculas.',
+            '`normalizar(texto)`: retire os espaços das pontas, converta para minúsculas e devolva o texto.',
+            '`temPalavra(texto, palavra)`: procure o trecho recebido em `palavra` dentro de `texto`, ignorando maiúsculas e minúsculas. Devolva `true` se encontrar e `false` se não encontrar.',
           ],
         },
       ],
@@ -133,10 +133,13 @@ export const metodosDeTexto: Licao = {
     {
       titulo: 'O domínio do e-mail',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `dominio(email)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `dominio(email)`, que devolve tudo o que vem **depois** do `@`. Por exemplo, `dominio("ana@exemplo.com")` devolve `"exemplo.com"`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o texto que aparece depois do `@`, sem incluir esse caractere.',
+            'Exemplo: `"ana@exemplo.com"` deve resultar em `"exemplo.com"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -172,10 +175,14 @@ export const metodosDeTexto: Licao = {
     {
       titulo: 'Limpando um código',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `limparCodigo(codigo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `limparCodigo(codigo)`, que tira os espaços das pontas, deixa tudo em maiúsculas e remove **todos** os traços. Por exemplo, `limparCodigo("  abc-12-34 ")` devolve `"ABC1234"`.',
+          tipo: 'lista',
+          itens: [
+            'Retire os espaços das pontas, converta para maiúsculas e remova todos os traços.',
+            'Devolva o texto final.',
+            'Exemplo: `"  abc-12-34 "` deve resultar em `"ABC1234"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -219,10 +226,14 @@ export const metodosDeTexto: Licao = {
     {
       titulo: 'É uma imagem?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ehImagem(nomeDoArquivo)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `ehImagem(nomeDoArquivo)`, que devolve `true` se o nome termina em `.png`, `.jpg` ou `.gif`, sem ligar para maiúsculas e minúsculas. Por exemplo, `ehImagem("Foto.PNG")` devolve `true` e `ehImagem("notas.pdf")` devolve `false`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva `true` se o nome terminar em `.png`, `.jpg` ou `.gif`, ignorando maiúsculas e minúsculas.',
+            'Para outras terminações, devolva `false`.',
+            'Exemplos: `"Foto.PNG"` → `true`; `"notas.pdf"` → `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -273,10 +284,14 @@ igual(ehImagem('b.gif'), true, "ehImagem('b.gif')")`,
     {
       titulo: 'Resumindo um texto longo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `resumir(texto, limite)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `resumir(texto, limite)`. Se o texto tem **mais** caracteres que o `limite`, devolva só os primeiros `limite` caracteres seguidos de `...`. Se não, devolva o texto inteiro. Por exemplo, `resumir("JavaScript", 4)` devolve `"Java..."`.',
+          tipo: 'lista',
+          itens: [
+            'Se o texto ultrapassar o limite de caracteres, devolva os primeiros `limite` caracteres seguidos de `...`.',
+            'Se não ultrapassar, devolva o texto inteiro, sem acrescentar nada.',
+            'Exemplo: `resumir("JavaScript", 4)` deve devolver `"Java..."`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -325,10 +340,14 @@ igual(ehImagem('b.gif'), true, "ehImagem('b.gif')")`,
     {
       titulo: 'Comparar nomes normalizados',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `mesmoNome(a, b)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `mesmoNome(a, b)`, que compara dois nomes ignorando espaços nas pontas e diferenças entre maiúsculas e minúsculas. Não remova acentos nem espaços do meio.',
+          tipo: 'lista',
+          itens: [
+            'Compare os nomes ignorando espaços nas pontas e diferenças entre maiúsculas e minúsculas.',
+            'Não retire acentos nem espaços do meio.',
+            'Devolva `true` se os nomes forem iguais após esse ajuste; caso contrário, `false`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -358,10 +377,14 @@ igual(ehImagem('b.gif'), true, "ehImagem('b.gif')")`,
     {
       titulo: 'Reconhecer a etiqueta do pedido',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ehEtiquetaPedido(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `ehEtiquetaPedido(texto)`. Depois de tirar espaços externos e converter para maiúsculas, a etiqueta deve começar com `"PED-"` e ter exatamente 8 caracteres no total. Neste exercício, confira apenas o prefixo e o tamanho, sem validar o tipo dos quatro caracteres finais.',
+          tipo: 'lista',
+          itens: [
+            'Retire os espaços das pontas e converta para maiúsculas.',
+            'Devolva `true` se o texto começar com `"PED-"` e tiver exatamente `8` caracteres no total. Caso contrário, devolva `false`.',
+            'Verifique apenas o início e o tamanho; os quatro caracteres finais não precisam ser números.',
+          ],
         },
       ],
       codigoInicial: linhas(

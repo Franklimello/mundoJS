@@ -87,12 +87,12 @@ export const tryCatch: Licao = {
     {
       titulo: 'JSON e nomes',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva duas funções, as duas com `try` e `catch`:' },
+        { tipo: 'p', texto: 'Complete as duas funções usando `try` e `catch`.' },
         {
           tipo: 'lista',
           itens: [
-            '`lerJson(texto)` devolve o objeto que o texto JSON descreve, ou `null` se o texto for inválido.',
-            '`nomeEmMaiusculas(pessoa)` devolve o `nome` da pessoa em maiúsculas. Se a pessoa não tiver nome (ou for `null`), devolve `"ANÔNIMO"`.',
+            '`lerJson(texto)`: converta o texto JSON e devolva o resultado. Se o JSON for inválido, devolva `null`.',
+            '`nomeEmMaiusculas(pessoa)`: devolva o nome em maiúsculas. Se não houver nome, ou se pessoa for `null`, devolva `"ANÔNIMO"`.',
           ],
         },
       ],
@@ -171,10 +171,14 @@ export const tryCatch: Licao = {
     {
       titulo: 'Qual foi o tipo do erro?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `tipoDoErro(funcao)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `tipoDoErro(funcao)`, que chama a `funcao` recebida e devolve o **nome do tipo** do erro que ela lançar (`erro.name`), como `"TypeError"` ou `"SyntaxError"`. Se a função não lançar nada, devolve `"nenhum"`.',
+          tipo: 'lista',
+          itens: [
+            'Execute a função recebida. Se ela lançar um erro, devolva o tipo dele, disponível em `erro.name`.',
+            'Se não houver erro, devolva `"nenhum"`.',
+            'Exemplos de tipos: `"TypeError"` e `"SyntaxError"`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -225,10 +229,14 @@ export const tryCatch: Licao = {
     {
       titulo: 'Valor de reserva',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `comReserva(funcao, reserva)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `comReserva(funcao, reserva)`, que devolve o resultado de `funcao()`. Se ela lançar um erro, devolve o valor de `reserva`. Por exemplo, `comReserva(() => JSON.parse("{"), null)` devolve `null`.',
+          tipo: 'lista',
+          itens: [
+            'Execute `funcao()` e devolva seu resultado.',
+            'Se ela lançar um erro, devolva o valor recebido em `reserva`.',
+            'Exemplo: `comReserva(() => JSON.parse("{"), null)` deve devolver `null`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -283,10 +291,14 @@ export const tryCatch: Licao = {
     {
       titulo: 'Quantos JSON são válidos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarJson(textos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarJson(textos)`, que tenta converter **cada** texto da lista com `JSON.parse` e devolve um objeto `{ validos, invalidos }` com a contagem dos que funcionaram e dos que deram erro. Um erro num texto **não pode** interromper os outros. Por exemplo, `["[1]", "{", "2", "x"]` dá `{ validos: 2, invalidos: 2 }`.',
+          tipo: 'lista',
+          itens: [
+            'Tente converter cada texto da lista usando `JSON.parse`. Um texto inválido não pode interromper os demais.',
+            'Devolva um objeto com as contagens `validos` e `invalidos`.',
+            'Exemplo: `["[1]", "{", "2", "x"]` deve resultar em `{ validos: 2, invalidos: 2 }`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -344,10 +356,13 @@ export const tryCatch: Licao = {
     {
       titulo: 'O finally sempre roda',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `usarERecolher(acao, recolher)` usando `finally`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `usarERecolher(acao, recolher)`. Ela chama `acao()` e devolve o resultado; se `acao` lançar um erro, devolve `null`. Em qualquer dos dois casos, a função `recolher()` precisa ser chamada **exatamente uma vez**, depois da ação. Use o `finally`.',
+          tipo: 'lista',
+          itens: [
+            'Execute `acao()` e devolva o resultado. Se a ação lançar um erro, devolva `null`.',
+            'Depois da ação, chame `recolher()` exatamente uma vez, tanto no sucesso quanto na falha.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -406,10 +421,13 @@ igual(ordem, ['acao', 'recolher'], 'A ordem das chamadas')`,
     {
       titulo: 'Quantos itens vieram no JSON?',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `quantosItensJson(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `quantosItensJson(texto)`, que tenta ler o JSON e devolve o tamanho quando o resultado é uma lista. Para JSON inválido ou um valor que não seja lista, devolva 0.',
+          tipo: 'lista',
+          itens: [
+            'Converta o JSON. Se o resultado for uma lista, devolva a quantidade de itens.',
+            'Se o JSON for inválido ou o resultado não for uma lista, devolva `0`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -444,10 +462,13 @@ igual(ordem, ['acao', 'recolher'], 'A ordem das chamadas')`,
     {
       titulo: 'Resultado ou mensagem de erro',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `tentarExecutar(acao)`. A ação recebida é síncrona.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `tentarExecutar(acao)`. Se a função recebida funcionar, devolva `{ ok: true, valor }`. Se ela lançar um Error, devolva `{ ok: false, erro: mensagem }`, usando a mensagem original. A ação é síncrona.',
+          tipo: 'lista',
+          itens: [
+            'Se ela funcionar, devolva `{ ok: true, valor }`, com o resultado da ação em `valor`.',
+            'Se ela lançar um `Error`, devolva `{ ok: false, erro: mensagem }`, com a mensagem original do erro.',
+          ],
         },
       ],
       codigoInicial: linhas(

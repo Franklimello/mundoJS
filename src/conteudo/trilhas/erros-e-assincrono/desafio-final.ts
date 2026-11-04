@@ -45,10 +45,14 @@ export const desafioFinal: Licao = {
     {
       titulo: 'Sucessos e falhas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a função `async` `carregar(ids)`, usando `buscarUsuario`, que já está pronta.' },
         {
-          tipo: 'p',
-          texto:
-            'A função `buscarUsuario` já está pronta. Escreva a função `async` `carregar(ids)`, que busca **todos os ids ao mesmo tempo** e devolve um objeto `{ usuarios, falhas }`: `usuarios` é a lista dos **nomes** dos usuários encontrados, e `falhas` é a lista dos **ids** que falharam, ambas na ordem dos ids recebidos. Uma falha não pode derrubar as outras buscas.',
+          tipo: 'lista',
+          itens: [
+            'Faça todas as buscas ao mesmo tempo. Uma falha não pode interromper as demais.',
+            'Devolva `{ usuarios, falhas }`: `usuarios` contém os nomes encontrados; `falhas` contém os ids que falharam.',
+            'Nas duas listas, mantenha a ordem dos ids recebidos.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -143,7 +147,15 @@ verdadeiro(gasto < 70, 'As 10 buscas levaram ' + gasto + ' ms: comece todas junt
         {
           tipo: 'p',
           texto:
-            'A função `esperar(ms)` já está pronta. Escreva a função `async` `buscarComTentativas(funcaoAsync, maximo, pausaMs)`. Ela chama a `funcaoAsync` e, se a promessa for rejeitada, **espera `pausaMs`** e tenta de novo, até `maximo` chamadas no total. Devolve o valor da primeira que der certo. Se todas falharem, deixa subir o erro da última. **Sem pausa depois da última falha** nem quando dá certo.',
+            'Complete a função `async` `buscarComTentativas(funcaoAsync, maximo, pausaMs)`. A função `esperar(ms)` já está pronta.',
+        },
+        {
+          tipo: 'lista',
+          itens: [
+            'Tente executar `funcaoAsync` até o máximo de chamadas no total. Devolva o primeiro resultado que funcionar.',
+            'Após uma falha, espere `pausaMs` antes da próxima tentativa.',
+            'Se todas falharem, mantenha o erro da última. Não espere depois da última falha nem depois de um sucesso.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -238,10 +250,14 @@ igual(await promessa, 7, 'O valor da promessa')`,
     {
       titulo: 'Não buscar duas vezes',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `criarCache(buscar)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Buscar o mesmo dado de novo é desperdício. Escreva a função `criarCache(buscar)`, que recebe uma função `buscar(id)` (que devolve uma promessa) e devolve **outra função**, com o mesmo uso. Na primeira vez que um `id` é pedido, ela chama `buscar(id)` e guarda a promessa; nas vezes seguintes com o mesmo `id`, devolve **a mesma promessa**, sem chamar `buscar` de novo. Ids diferentes não se misturam.',
+          tipo: 'lista',
+          itens: [
+            'Receba uma função `buscar(id)` que devolve uma promessa. Devolva outra função que também receba um id.',
+            'Na primeira chamada de cada id, execute `buscar(id)` e guarde a promessa.',
+            'Nas chamadas seguintes do mesmo id, devolva a mesma promessa, sem buscar de novo. Mantenha ids diferentes separados.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -314,10 +330,14 @@ igual(chamadas, 1, 'Quantas vezes buscar foi chamada')`,
     {
       titulo: 'O relatório do carregamento',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `relatorio({ usuarios, falhas })`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `relatorio({ usuarios, falhas })`, que monta um texto com o resultado de um carregamento, no formato `Carregados: Usuário 1, Usuário 2. Falhas: 0, -3.`. Quando uma das listas está vazia, escreva `nenhum` (para os carregados) ou `nenhuma` (para as falhas) no lugar dela.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um texto no formato `Carregados: Usuário 1, Usuário 2. Falhas: 0, -3.`.',
+            'Se `usuarios` estiver vazio, escreva `nenhum` no lugar dos nomes.',
+            'Se `falhas` estiver vazio, escreva `nenhuma` no lugar dos ids. Mantenha a pontuação e os espaços do formato.',
+          ],
         },
       ],
       codigoInicial: linhas(

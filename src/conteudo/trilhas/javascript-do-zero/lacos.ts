@@ -44,10 +44,13 @@ export const lacos: Licao = {
     {
       titulo: 'Soma até n',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somaAte(n)` usando um laço `for`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `somaAte(n)`, que devolve a soma de todos os números de 1 até `n`. Por exemplo, `somaAte(4)` devolve `10`, porque 1 + 2 + 3 + 4 = 10. Use um laço `for`.',
+          tipo: 'lista',
+          itens: [
+            'Some os números de `1` até `n`, incluindo `n`, e devolva o total.',
+            'Exemplo: `somaAte(4)` deve devolver `10`.',
+          ],
         },
       ],
       codigoInicial: linhas('const n = 4;', '', 'function somaAte(n) {', '', '}', '', 'console.log(somaAte(n));', ''),
@@ -79,10 +82,10 @@ export const lacos: Licao = {
     {
       titulo: 'Contagem regressiva',
       enunciado: [
+        { tipo: 'p', texto: 'Faça uma contagem regressiva usando `for`.' },
         {
-          tipo: 'p',
-          texto:
-            'Com um laço `for`, mostre os números de `5` até `1`, um por linha, nesta ordem. Depois do laço, mostre o texto `Já!`.',
+          tipo: 'lista',
+          itens: ['Mostre os números `5`, `4`, `3`, `2` e `1`, um por linha.', 'Depois do laço, mostre o texto `Já!`.'],
         },
         {
           tipo: 'nota',
@@ -110,10 +113,13 @@ export const lacos: Licao = {
     {
       titulo: 'Tabuada do 7',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre a tabuada do `7`, de `1` até `10`.' },
         {
-          tipo: 'p',
-          texto:
-            'Mostre a tabuada do 7, de 1 a 10, uma conta por linha, no formato `7 x 1 = 7`, `7 x 2 = 14` e assim por diante, até `7 x 10 = 70`.',
+          tipo: 'lista',
+          itens: [
+            'Use uma linha para cada multiplicação.',
+            'Siga este formato: `7 x 1 = 7`, `7 x 2 = 14` e assim por diante, até `7 x 10 = 70`.',
+          ],
         },
       ],
       codigoInicial: linhas('const numero = 7;', ''),
@@ -146,10 +152,14 @@ export const lacos: Licao = {
     {
       titulo: 'Fatorial',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `fatorial(n)`.' },
         {
-          tipo: 'p',
-          texto:
-            'O fatorial de um número é o produto de todos os inteiros de 1 até ele: o de 5 é 1 × 2 × 3 × 4 × 5 = 120. Escreva a função `fatorial(n)`, que devolve esse valor. O fatorial de 0 é 1.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o produto dos inteiros de `1` até `n`.',
+            'Para `0`, devolva `1`.',
+            'Exemplo: `fatorial(5)` deve devolver `120`.',
+          ],
         },
       ],
       codigoInicial: linhas('const n = 5;', '', 'function fatorial(n) {', '', '}', '', 'console.log(fatorial(n));', ''),
@@ -180,10 +190,14 @@ export const lacos: Licao = {
     {
       titulo: 'Contando uma letra',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarLetra(texto, letra)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarLetra(texto, letra)`, que devolve quantas vezes `letra` aparece em `texto`. A comparação diferencia maiúsculas de minúsculas. Por exemplo, `contarLetra("banana", "a")` devolve `3`.',
+          tipo: 'lista',
+          itens: [
+            'Percorra o texto e conte quantas vezes a letra recebida aparece.',
+            'Diferencie maiúsculas de minúsculas e devolva a contagem.',
+            'Exemplo: `contarLetra("banana", "a")` deve devolver `3`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -248,10 +262,13 @@ export const lacos: Licao = {
     {
       titulo: 'Somando múltiplos',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somarMultiplos(limite, divisor)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `somarMultiplos(limite, divisor)`, que soma os números de 1 até limite, incluindo limite, que são divisíveis por divisor. Considere limite inteiro não negativo e divisor inteiro positivo.',
+          tipo: 'lista',
+          itens: [
+            'Some os números de `1` até `limite`, incluindo o limite, que sejam divisíveis por `divisor`.',
+            'Devolva a soma. O limite é um inteiro não negativo e o divisor é um inteiro positivo.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -282,10 +299,10 @@ export const lacos: Licao = {
     {
       titulo: 'A última volta que faltava',
       enunciado: [
+        { tipo: 'p', texto: 'Corrija o limite do `for` em `contarPassos(n)`.' },
         {
-          tipo: 'p',
-          texto:
-            'O laço de `contarPassos(n)` deveria contar de 1 até n, incluindo n, mas termina cedo. Corrija o limite do for. Considere n inteiro positivo.',
+          tipo: 'lista',
+          itens: ['O laço deve contar de `1` até `n`, incluindo o último número.', '`n` será um inteiro positivo.'],
         },
       ],
       codigoInicial: linhas(

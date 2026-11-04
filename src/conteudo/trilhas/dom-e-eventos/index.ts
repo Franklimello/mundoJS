@@ -37,9 +37,13 @@ const selecionar: Licao = {
     {
       titulo: 'Um novo título',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize o título da página usando JavaScript.' },
         {
-          tipo: 'p',
-          texto: 'Selecione `#titulo` e troque seu texto para `"Olá, DOM!"`. Preserve o elemento original.',
+          tipo: 'lista',
+          itens: [
+            'Selecione o elemento `#titulo` e mude seu texto para `"Olá, DOM!"`.',
+            'Altere o elemento existente, sem removê-lo ou substituí-lo.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -80,10 +84,13 @@ const varios: Licao = {
     {
       titulo: 'Três avisos',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize os três avisos da página.' },
         {
-          tipo: 'p',
-          texto:
-            'Encontre todos os elementos `.item` e mude o texto de cada um para `"Pronto para estudar"`. Não remova nenhum dos três itens.',
+          tipo: 'lista',
+          itens: [
+            'Selecione todos os elementos com a classe `.item` e troque o texto de cada um para `"Pronto para estudar"`.',
+            'Mantenha os três elementos na página.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -128,10 +135,14 @@ const atributos: Licao = {
     {
       titulo: 'Aviso acessível',
       enunciado: [
+        { tipo: 'p', texto: 'Faça três alterações no elemento `#aviso`.' },
         {
-          tipo: 'p',
-          texto:
-            'Em `#aviso`, escreva `"Salvo com sucesso"`, defina `style.color` como `"green"` e o atributo `role` como `"status"`.',
+          tipo: 'lista',
+          itens: [
+            'Troque o texto para `"Salvo com sucesso"`.',
+            'Defina `style.color` como `"green"`.',
+            'Defina o atributo `role` como `"status"`.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -181,10 +192,13 @@ const classes: Licao = {
     {
       titulo: 'Destaque do cartão',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize as classes de `#cartao`.' },
         {
-          tipo: 'p',
-          texto:
-            'Adicione a classe `destaque` a `#cartao` e remova a classe `apagado`. Preserve a classe `cartao` que já existe.',
+          tipo: 'lista',
+          itens: [
+            'Adicione a classe `destaque` e remova a classe `apagado`.',
+            'Mantenha a classe `cartao`, que já existe.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -229,10 +243,13 @@ const criar: Licao = {
     {
       titulo: 'Mais um assunto',
       enunciado: [
+        { tipo: 'p', texto: 'Acrescente um assunto à lista da página.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie um novo `li` com o texto `"Eventos"` e acrescente-o ao final de `#assuntos`, preservando os dois itens existentes.',
+          tipo: 'lista',
+          itens: [
+            'Crie um novo elemento `li` com o texto `"Eventos"`.',
+            'Adicione-o ao final de `#assuntos`, sem remover ou alterar os dois itens existentes.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -275,10 +292,13 @@ const cliques: Licao = {
     {
       titulo: 'Contador de cliques',
       enunciado: [
+        { tipo: 'p', texto: 'Faça o botão `#somar` aumentar um contador.' },
         {
-          tipo: 'p',
-          texto:
-            'A cada clique em `#somar`, aumente um contador em 1 e mostre o valor em `#total`. Comece em 0 e aceite vários cliques seguidos.',
+          tipo: 'lista',
+          itens: [
+            'Comece o contador em `0` e, a cada clique, acrescente `1`.',
+            'Mostre o valor atualizado em `#total`. O botão deve funcionar em vários cliques seguidos.',
+          ],
         },
       ],
       codigoInicial: linhas('let cliques = 0;', ''),
@@ -323,10 +343,14 @@ const formularios: Licao = {
     {
       titulo: 'Uma saudação com validação',
       enunciado: [
+        { tipo: 'p', texto: 'Mostre uma saudação ao enviar o formulário `#cadastro`.' },
         {
-          tipo: 'p',
-          texto:
-            'No envio de `#cadastro`, impeça a navegação. Leia `#nome`, retire espaços das pontas e escreva em `#mensagem`: `"Digite seu nome."` quando estiver vazio, ou `"Olá, Ana!"` se a entrada for `" Ana "` (adaptando o nome informado).',
+          tipo: 'lista',
+          itens: [
+            'Impeça a navegação ou o recarregamento da página no envio.',
+            'Leia `#nome` e retire os espaços das pontas.',
+            'Em `#mensagem`, mostre `"Digite seu nome."` se o campo ficar vazio. Caso contrário, mostre a saudação com o nome: a entrada `" Ana "` deve resultar em `"Olá, Ana!"`.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -380,10 +404,15 @@ const desafio: Licao = {
     {
       titulo: 'Lista interativa',
       enunciado: [
+        { tipo: 'p', texto: 'Complete a lista de tarefas usando o formulário `#formulario`.' },
         {
-          tipo: 'p',
-          texto:
-            'Em `#formulario`, leia `#tarefa` no envio e acrescente um `li` a `#tarefas`. O primeiro nó do item deve ser o texto limpo da tarefa; depois, adicione um botão `Remover` que exclui esse item. Atualize `#quantidade` com o número de tarefas, limpe o campo após adicionar e ignore entradas vazias. Use `textContent` para a entrada da pessoa.',
+          tipo: 'lista',
+          itens: [
+            'No envio, impeça o recarregamento da página. Leia `#tarefa`, retire os espaços das pontas e ignore entradas vazias.',
+            'Crie um `li` em `#tarefas`. Coloque o texto da tarefa diretamente no item, antes do botão, sem envolver esse texto em outra tag.',
+            'Acrescente ao mesmo item um botão `Remover` que exclua essa tarefa.',
+            'Use `textContent` para inserir o texto digitado. Atualize `#quantidade` ao adicionar e ao remover uma tarefa. Limpe o campo após adicionar.',
+          ],
         },
       ],
       codigoInicial: '',

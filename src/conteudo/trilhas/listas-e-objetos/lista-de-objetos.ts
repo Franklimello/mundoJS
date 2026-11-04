@@ -42,15 +42,12 @@ export const listaDeObjetos: Licao = {
     {
       titulo: 'Carrinho de compras',
       enunciado: [
-        {
-          tipo: 'p',
-          texto: 'Cada item de um carrinho é um objeto `{ nome, preco, quantidade }`. Escreva duas funções:',
-        },
+        { tipo: 'p', texto: 'Complete as duas funções. Cada item tem o formato `{ nome, preco, quantidade }`.' },
         {
           tipo: 'lista',
           itens: [
-            '`totalDoCarrinho(itens)` devolve a soma de `preco * quantidade` de todos os itens (e `0` para um carrinho vazio).',
-            '`nomesBaratos(itens, limite)` devolve uma lista com o nome dos itens cujo `preco` é **menor ou igual** ao `limite`.',
+            '`totalDoCarrinho(itens)`: devolva a soma de preço vezes quantidade de todos os itens. Para um carrinho vazio, devolva `0`.',
+            '`nomesBaratos(itens, limite)`: devolva uma lista com os nomes dos itens cujo preço é menor ou igual ao limite.',
           ],
         },
       ],
@@ -122,10 +119,13 @@ igual(nomesBaratos(itens, 1), [], 'nomesBaratos(itens, 1)')`,
     {
       titulo: 'Os adultos da lista',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `nomesDosAdultos(pessoas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `nomesDosAdultos(pessoas)`, que recebe uma lista de objetos `{ nome, idade }` e devolve só os **nomes** de quem tem 18 anos ou mais, na mesma ordem.',
+          tipo: 'lista',
+          itens: [
+            'Cada pessoa tem as propriedades `nome` e `idade`.',
+            'Devolva apenas os nomes das pessoas com `18` anos ou mais, na ordem recebida.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -182,10 +182,14 @@ igual(nomesDosAdultos(pessoas), ['Zeca', 'Ana'], 'A ordem dos nomes')`,
     {
       titulo: 'Achando pelo código',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `acharPorId(lista, id)` usando um laço.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `acharPorId(lista, id)`. Cada item da lista é um objeto com uma propriedade `id`. A função devolve o **objeto inteiro** cujo `id` é igual ao pedido, ou `undefined` se não houver nenhum. Use um laço, e devolva assim que achar.',
+          tipo: 'lista',
+          itens: [
+            'Cada objeto da lista tem uma propriedade `id`.',
+            'Devolva o objeto inteiro com o `id` procurado assim que o encontrar.',
+            'Se não existir, devolva `undefined`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -247,10 +251,14 @@ igual(acharPorId([], 5), undefined, 'acharPorId([], 5)')`,
     {
       titulo: 'Total de um cliente',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `totalDoCliente(pedidos, cliente)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Uma lista de pedidos tem objetos como `{ cliente: "Ana", valor: 30 }`. Escreva a função `totalDoCliente(pedidos, cliente)`, que soma o `valor` de todos os pedidos daquele cliente. Quem não tem pedidos soma `0`.',
+          tipo: 'lista',
+          itens: [
+            'Cada pedido tem as propriedades `cliente` e `valor`.',
+            'Some os valores dos pedidos do cliente informado e devolva o total.',
+            'Se ele não tiver pedidos, devolva `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -311,10 +319,13 @@ igual(totalDoCliente(pedidos, 'Bia'), 50, "totalDoCliente(pedidos, 'Bia')")`,
     {
       titulo: 'O produto mais caro',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `maisCaro(produtos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `maisCaro(produtos)`, que devolve o **objeto inteiro** do produto de maior `preco` (a lista nunca está vazia). Se houver empate, devolva o primeiro deles.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o objeto inteiro do produto com maior `preco`. A lista não estará vazia.',
+            'Em caso de empate, devolva o primeiro desses produtos.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -375,10 +386,14 @@ igual(maisCaro(produtos), { nome: 'A', preco: 8 }, 'O primeiro dos empatados')`,
     {
       titulo: 'Reajuste sem mexer no original',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `reajustar(produtos, percentual)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `reajustar(produtos, percentual)`, que devolve uma **lista nova** de produtos `{ nome, preco }` com o preço aumentado pelo percentual. Por exemplo, com `10`, um preço de `100` passa a `110`. Os objetos da lista original **não podem mudar**.',
+          tipo: 'lista',
+          itens: [
+            'Cada produto tem `nome` e `preco`. Aumente o preço pelo percentual recebido.',
+            'Devolva uma nova lista com novos objetos. Não altere os produtos originais.',
+            'Exemplo: com percentual `10`, um preço de `100` passa a `110`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -439,10 +454,14 @@ igual(produtos, [{ nome: 'Caneta', preco: 100 }], 'A lista original')`,
     {
       titulo: 'Códigos disponíveis para venda',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `codigosDisponiveis(produtos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `codigosDisponiveis(produtos)`. Cada produto tem codigo e quantidade. Devolva uma lista dos códigos com quantidade maior que zero, na ordem de entrada. Não modifique os produtos.',
+          tipo: 'lista',
+          itens: [
+            'Cada produto tem `codigo` e `quantidade`.',
+            'Devolva apenas os códigos dos produtos com quantidade maior que `0`, na ordem recebida.',
+            'Não altere os produtos.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -476,10 +495,14 @@ igual(produtos, [{ nome: 'Caneta', preco: 100 }], 'A lista original')`,
     {
       titulo: 'Resumo das tarefas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `resumirTarefas(tarefas)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `resumirTarefas(tarefas)`, que devolve um objeto com as contagens feitas e pendentes. Cada tarefa tem a propriedade booleana concluida. Uma lista vazia deve resultar nas duas contagens zeradas.',
+          tipo: 'lista',
+          itens: [
+            'Cada tarefa tem a propriedade booleana `concluida`.',
+            'Devolva um objeto com `feitas` e `pendentes`, contendo a quantidade de tarefas em cada grupo.',
+            'Para uma lista vazia, as duas contagens devem ser `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(

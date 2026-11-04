@@ -38,14 +38,13 @@ export const desafioFinal: Licao = {
     {
       titulo: 'FizzBuzz',
       enunciado: [
-        { tipo: 'p', texto: 'Escreva a função `fizzBuzz(n)`, que devolve:' },
+        { tipo: 'p', texto: 'Complete `fizzBuzz(n)` seguindo estas regras:' },
         {
           tipo: 'lista',
           itens: [
-            '`"FizzBuzz"` se `n` é divisível por 3 **e** por 5;',
-            '`"Fizz"` se é divisível só por 3;',
-            '`"Buzz"` se é divisível só por 5;',
-            'o próprio número `n`, nos demais casos.',
+            'Devolva `"FizzBuzz"` se `n` for divisível por `3` e por `5`.',
+            'Devolva `"Fizz"` se for divisível apenas por `3`, ou `"Buzz"` se for divisível apenas por `5`.',
+            'Se nenhuma regra se aplicar, devolva o próprio número `n`.',
           ],
         },
       ],
@@ -78,10 +77,13 @@ export const desafioFinal: Licao = {
     {
       titulo: 'Número primo',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `ehPrimo(n)` e devolva `true` ou `false`.' },
         {
-          tipo: 'p',
-          texto:
-            'Um número é **primo** quando é maior que 1 e só é divisível por 1 e por ele mesmo: 2, 3, 5, 7, 11... Escreva a função `ehPrimo(n)`, que devolve `true` ou `false`. O 1, o 0 e os negativos não são primos.',
+          tipo: 'lista',
+          itens: [
+            'Um número primo é maior que `1` e só é divisível por `1` e por ele mesmo.',
+            '`1`, `0` e números negativos não são primos. Exemplos de primos: `2`, `3`, `5` e `7`.',
+          ],
         },
       ],
       codigoInicial: linhas('const n = 2;', '', 'function ehPrimo(n) {', '', '}', '', 'console.log(ehPrimo(n));', ''),
@@ -132,10 +134,14 @@ igual(ehPrimo(0), false, 'ehPrimo(0)')`,
     {
       titulo: 'Sequência de Fibonacci',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `fibonacci(n)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Na sequência de Fibonacci, cada número é a soma dos dois anteriores: `0, 1, 1, 2, 3, 5, 8, 13...`. Escreva a função `fibonacci(n)`, que devolve o número da **posição** `n`, começando a contar do zero: `fibonacci(0)` é `0`, `fibonacci(1)` é `1`, `fibonacci(6)` é `8`.',
+          tipo: 'lista',
+          itens: [
+            'A sequência começa com `0` e `1`. Cada próximo número é a soma dos dois anteriores.',
+            'Devolva o valor da posição `n`, contando as posições a partir de `0`.',
+            'Exemplos: posição `0` → `0`; posição `1` → `1`; posição `6` → `8`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -177,10 +183,14 @@ igual(ehPrimo(0), false, 'ehPrimo(0)')`,
     {
       titulo: 'Contando vogais',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarVogais(texto)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contarVogais(texto)`, que devolve quantas vogais (`a`, `e`, `i`, `o`, `u`) o texto tem, **sem ligar para maiúsculas**. Ignore as vogais com acento. Por exemplo, `contarVogais("JavaScript")` devolve `3`.',
+          tipo: 'lista',
+          itens: [
+            'Conte apenas as vogais `a`, `e`, `i`, `o` e `u`, tanto maiúsculas quanto minúsculas.',
+            'Não conte vogais com acento. Devolva a quantidade encontrada.',
+            'Exemplo: `contarVogais("JavaScript")` deve devolver `3`.',
+          ],
         },
         {
           tipo: 'nota',
@@ -238,10 +248,14 @@ igual(ehPrimo(0), false, 'ehPrimo(0)')`,
     {
       titulo: 'O troco em notas',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contarNotas(valor)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Existem notas de `100`, `50`, `20`, `10`, `5` e `1`. Escreva a função `contarNotas(valor)`, que devolve **quantas notas, no mínimo,** são necessárias para formar o valor inteiro. A estratégia é pegar sempre a maior nota possível. Por exemplo, `contarNotas(187)` devolve `7`: 100 + 50 + 20 + 10 + 5 + 1 + 1.',
+          tipo: 'lista',
+          itens: [
+            'Use notas de `100`, `50`, `20`, `10`, `5` e `1` para formar o valor inteiro recebido.',
+            'Escolha sempre a maior nota possível e devolva a menor quantidade total de notas.',
+            'Exemplo: para `187`, o resultado é `7`: `100 + 50 + 20 + 10 + 5 + 1 + 1`.',
+          ],
         },
         {
           tipo: 'nota',

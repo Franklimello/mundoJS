@@ -42,13 +42,13 @@ export const variaveis: Licao = {
     {
       titulo: 'Nome e pontos',
       enunciado: [
+        { tipo: 'p', texto: 'Crie e atualize duas variáveis.' },
         {
           tipo: 'lista',
           itens: [
-            'Crie, com `const`, uma variável `nome` guardando o seu nome entre aspas.',
-            'Crie, com `let`, uma variável `pontos` que começa em `0`.',
-            'Some `10` a `pontos`.',
-            'Mostre `pontos` com `console.log`.',
+            'Declare `nome` com `const` e guarde seu nome como texto.',
+            'Declare `pontos` com `let`, começando em `0`.',
+            'Some `10` a `pontos` e mostre o valor com `console.log`.',
           ],
         },
       ],
@@ -78,10 +78,10 @@ igual(pontos, 10, 'pontos')`,
     {
       titulo: 'Trocando o valor',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize a variável `temperatura`, que já vale `20`.' },
         {
-          tipo: 'p',
-          texto:
-            'A variável `temperatura` começa valendo 20. Mude o valor dela para `31`, **sem criar outra variável**, e mostre-a.',
+          tipo: 'lista',
+          itens: ['Mude seu valor para `31`, sem declarar outra variável.', 'Mostre o novo valor com `console.log`.'],
         },
       ],
       codigoInicial: linhas('let temperatura = 20;', ''),
@@ -108,10 +108,13 @@ verdadeiro(
     {
       titulo: 'A troca',
       enunciado: [
+        { tipo: 'p', texto: 'Troque os valores de `a` e `b`.' },
         {
-          tipo: 'p',
-          texto:
-            'As variáveis `a` e `b` guardam duas palavras. Troque os valores: no fim, `a` deve valer `"segundo"` e `b`, `"primeiro"`.',
+          tipo: 'lista',
+          itens: [
+            'Ao terminar, `a` deve conter `"segundo"` e `b`, `"primeiro"`.',
+            'Use uma variável auxiliar para guardar um dos valores durante a troca.',
+          ],
         },
         {
           tipo: 'nota',
@@ -141,10 +144,14 @@ verdadeiro(
     {
       titulo: 'Contador de visitas',
       enunciado: [
+        { tipo: 'p', texto: 'Crie um contador de visitas.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `visitas` com `let`, começando em `0`. Some 1 a ela **três vezes**, uma linha para cada, e mostre o valor no final.',
+          tipo: 'lista',
+          itens: [
+            'Declare `visitas` com `let` e valor inicial `0`.',
+            'Some `1` três vezes, em três linhas separadas.',
+            'Mostre o valor final de `visitas`.',
+          ],
         },
       ],
       codigoInicial: '',
@@ -177,10 +184,14 @@ verdadeiro(
     {
       titulo: 'O saldo da carteira',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize `saldo` para registrar duas movimentações.' },
         {
-          tipo: 'p',
-          texto:
-            'A carteira começa com 30 reais. Atualize `saldo` para receber 20 reais e, depois, gastar 15. Use o valor anterior em cada atualização e mostre o saldo final.',
+          tipo: 'lista',
+          itens: [
+            'O saldo inicial é `30` reais.',
+            'Primeiro, acrescente `20`. Depois, retire `15`, usando o saldo atualizado.',
+            'Mostre o saldo final com `console.log`.',
+          ],
         },
       ],
       codigoInicial: linhas('let saldo = 30;', ''),
@@ -198,10 +209,14 @@ verdadeiro(
     {
       titulo: 'Uma informação que muda',
       enunciado: [
+        { tipo: 'p', texto: 'Atualize a cidade de Rafa para `"Natal"`.' },
         {
-          tipo: 'p',
-          texto:
-            'Rafa mudou de Recife para Natal. Mantenha `nome` como constante, troque a declaração de `cidade` para permitir atualização, atribua `"Natal"` e mostre nome e cidade no mesmo comando.',
+          tipo: 'lista',
+          itens: [
+            'Mantenha `nome` declarado com `const`.',
+            'Mude a declaração de `cidade` para permitir a troca de valor.',
+            'Mostre `nome` e `cidade`, nessa ordem, no mesmo `console.log`.',
+          ],
         },
       ],
       codigoInicial: linhas('const nome = "Rafa";', 'const cidade = "Recife";', ''),

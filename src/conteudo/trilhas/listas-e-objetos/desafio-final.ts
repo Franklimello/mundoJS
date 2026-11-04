@@ -35,10 +35,13 @@ export const desafioFinal: Licao = {
     {
       titulo: 'Quanto vale o estoque',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `valorEmEstoque(produtos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `valorEmEstoque(produtos)`, que soma `preco * quantidade` de todos os produtos. Uma lista vazia vale `0`.',
+          tipo: 'lista',
+          itens: [
+            'Some o preço vezes a quantidade de cada produto e devolva o total.',
+            'Para uma lista vazia, devolva `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -93,10 +96,13 @@ igual(valorEmEstoque(produtos), 70, 'valorEmEstoque(produtos)')`,
     {
       titulo: 'O que acabou',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `semEstoque(produtos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `semEstoque(produtos)`, que devolve uma lista com os **nomes** dos produtos cuja `quantidade` é `0`, na mesma ordem em que aparecem.',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma lista com os nomes dos produtos cuja `quantidade` é `0`.',
+            'Mantenha a ordem em que aparecem na lista recebida.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -145,10 +151,14 @@ igual(semEstoque(produtos), ['Caderno', 'Lápis'], 'semEstoque(produtos)')`,
     {
       titulo: 'Repor um produto',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `repor(produtos, nome, quantidade)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `repor(produtos, nome, quantidade)`. Ela devolve uma **lista nova**, igual à original, mas em que o produto com aquele `nome` tem a `quantidade` somada ao estoque. Os outros produtos ficam como estão, e a lista original **não pode mudar**.',
+          tipo: 'lista',
+          itens: [
+            'Encontre o produto pelo nome e acrescente a quantidade recebida ao estoque dele.',
+            'Devolva uma nova lista. Os demais produtos devem manter seus dados.',
+            'Não altere a lista original nem o produto que ela contém.',
+          ],
         },
         {
           tipo: 'nota',
@@ -226,10 +236,13 @@ igual(repor(produtos, 'B', 10).map((p) => p.quantidade), [1, 12, 3], 'As quantid
     {
       titulo: 'Relatório do estoque',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `relatorio(produtos)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `relatorio(produtos)`, que devolve uma lista de textos, um por produto e na mesma ordem, no formato `Caneta: 10 un.` (o nome, dois-pontos, a quantidade, um espaço e `un.`).',
+          tipo: 'lista',
+          itens: [
+            'Devolva uma lista de textos, um por produto, na ordem recebida.',
+            'Use o formato `Caneta: 10 un.`: nome, dois-pontos, espaço, quantidade, espaço e `un.`.',
+          ],
         },
       ],
       codigoInicial: linhas(

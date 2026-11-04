@@ -21,7 +21,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Encontre o maior número',
     enunciado:
-      'Receba um array não vazio de números e devolva o maior valor. Compare os elementos com um laço, sem Math.max ou ordenação.',
+      'Crie encontrarMaior(lista). Receba uma lista não vazia de números e devolva o maior valor com return. Use um laço, sem Math.max e sem ordenar a lista.',
     dados: 'const numeros = [12, 5, 24, 8, 19, 3, 16, 10];',
     passos: [
       ['Crie o array.', 'Copie os 8 números do exemplo para uma variável numeros.'],
@@ -45,7 +45,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'Arrays',
     modo: 'javascript',
     titulo: 'Some os números do array',
-    enunciado: 'Crie uma função que receba uma lista de números e devolva a soma de todos eles usando um laço.',
+    enunciado:
+      'Crie somarNumeros(lista). Some todos os números da lista usando um laço e devolva o total com return. Uma lista vazia deve devolver 0.',
     dados: 'const numeros = [10, 20, 5, 15];',
     passos: [
       ['Prepare os números.', 'Crie numeros com os 4 valores do exemplo.'],
@@ -63,7 +64,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Separe os números pares',
     enunciado:
-      'Receba um array e devolva um novo array contendo apenas os números pares, sem alterar a lista original.',
+      'Crie selecionarPares(lista). Devolva uma nova lista apenas com os números pares, na ordem recebida. Não altere a lista original.',
     dados: 'const numeros = [3, 8, 11, 14, 0, 7, -2];',
     passos: [
       ['Crie os dados.', 'Use o array numeros do exemplo.'],
@@ -81,7 +82,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'Arrays',
     modo: 'javascript',
     titulo: 'Calcule a média das notas',
-    enunciado: 'Crie uma função que receba um array não vazio de notas e devolva a média aritmética.',
+    enunciado:
+      'Crie calcularMedia(lista). Receba uma lista não vazia de notas e devolva a média: a soma das notas dividida pela quantidade de itens.',
     dados: 'const notas = [7, 8, 6, 9];',
     passos: [
       ['Prepare as notas.', 'Crie o array notas com os valores do exemplo.'],
@@ -99,7 +101,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'Textos',
     modo: 'javascript',
     titulo: 'Inverta uma palavra',
-    enunciado: 'Receba uma palavra e devolva seus caracteres na ordem inversa. Para praticar laços, não use reverse.',
+    enunciado:
+      'Crie inverterTexto(texto). Devolva a palavra com os caracteres na ordem inversa. Use um laço, sem usar reverse.',
     dados: 'const palavra = "javascript";',
     passos: [
       ['Crie o texto.', 'Declare palavra com o texto do exemplo.'],
@@ -120,7 +123,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Conte as vogais',
     enunciado:
-      'Conte quantas vogais a, e, i, o, u existem em um texto sem acentos. Considere letras maiúsculas e minúsculas.',
+      'Crie contarVogais(frase). Conte as letras a, e, i, o e u e devolva a quantidade. Considere maiúsculas e minúsculas; a entrada não terá acentos.',
     dados: 'const texto = "Aprender JavaScript";',
     passos: [
       ['Prepare a frase.', 'Crie texto com o exemplo.'],
@@ -138,7 +141,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'Números e laços',
     modo: 'javascript',
     titulo: 'Monte uma tabuada',
-    enunciado: 'Receba um número e devolva um array com os resultados de sua multiplicação por 1 até 10.',
+    enunciado:
+      'Crie gerarTabuada(valor). Devolva uma lista com os resultados de valor multiplicado por 1 até 10, nessa ordem. A lista deve ter 10 números.',
     dados: 'const numero = 7;',
     passos: [
       ['Escolha o número.', 'Declare numero com o valor 7.'],
@@ -156,7 +160,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Calcule o fatorial',
     enunciado:
-      'Receba um inteiro entre 0 e 10 e devolva o produto dos inteiros de 1 até ele. Lembre que o fatorial de 0 é 1.',
+      'Crie calcularFatorial(valor). Receba um inteiro de 0 a 10 e devolva o produto dos números de 1 até ele. Para 0, devolva 1.',
     dados: 'const numero = 5;',
     passos: [
       ['Crie a entrada.', 'Declare numero com o valor 5.'],
@@ -174,7 +178,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Some o total do carrinho',
     enunciado:
-      'Receba uma lista de produtos e calcule o valor total, levando em conta o preço e a quantidade de cada item.',
+      'Crie totalDoCarrinho(itens). Cada item tem preco e quantidade. Devolva a soma de preço vezes quantidade de todos os itens. Um carrinho vazio deve devolver 0.',
     dados:
       'const carrinho = [\n  { nome: "Caderno", preco: 15, quantidade: 2 },\n  { nome: "Caneta", preco: 3, quantidade: 4 }\n];',
     passos: [
@@ -192,7 +196,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'Objetos',
     modo: 'javascript',
     titulo: 'Liste os alunos aprovados',
-    enunciado: 'Receba uma lista de alunos e devolva apenas os nomes daqueles com nota maior ou igual a 7.',
+    enunciado:
+      'Crie listarAprovados(turma). Cada aluno tem nome e nota. Devolva uma lista apenas com os nomes de quem tem nota maior ou igual a 7, na ordem recebida.',
     dados:
       'const alunos = [\n  { nome: "Ana", nota: 8 },\n  { nome: "Bruno", nota: 5 },\n  { nome: "Carla", nota: 7 }\n];',
     passos: [
@@ -211,7 +216,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Busque um produto pelo código',
     enunciado:
-      'Receba uma lista de produtos e um código. Devolva o objeto correspondente ou null quando o código não existir.',
+      'Crie buscarProduto(lista, codigo). Devolva o objeto inteiro do produto com o código informado. Se não existir, devolva null.',
     dados:
       'const produtos = [\n  { codigo: 101, nome: "Teclado" },\n  { codigo: 102, nome: "Mouse" }\n];\nconst codigoProcurado = 102;',
     passos: [
@@ -234,7 +239,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'javascript',
     titulo: 'Identifique o estoque baixo',
     enunciado:
-      'Receba produtos e um limite de estoque. Devolva os nomes dos produtos com quantidade menor que o limite.',
+      'Crie listarEstoqueBaixo(produtos, minimo). Devolva os nomes dos produtos com quantidade menor que minimo. Produtos com quantidade igual ao limite não entram.',
     dados:
       'const estoque = [\n  { nome: "Lápis", quantidade: 2 },\n  { nome: "Caderno", quantidade: 10 },\n  { nome: "Borracha", quantidade: 0 }\n];\nconst limite = 5;',
     passos: [
@@ -252,7 +257,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'DOM e eventos',
     modo: 'web',
     titulo: 'Crie um contador de cliques',
-    enunciado: 'Monte uma página com um número e um botão. Cada clique deve aumentar o número mostrado na tela.',
+    enunciado:
+      'Crie uma página com um contador iniciado em 0 e um botão. A cada clique, some 1 e atualize o número mostrado. O botão deve aceitar vários cliques seguidos.',
     dados: '<p id="contador">0</p>\n<button id="somar" type="button">Somar 1</button>',
     passos: [
       ['Prepare o HTML.', 'Na aba HTML, crie o parágrafo e o botão do exemplo.'],
@@ -270,7 +276,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'DOM e eventos',
     modo: 'web',
     titulo: 'Adicione tarefas a uma lista',
-    enunciado: 'Crie um campo de texto, um botão e uma lista. Ao clicar no botão, adicione a tarefa digitada à lista.',
+    enunciado:
+      'Crie uma página com um campo de texto, um botão e uma lista. Ao clicar, acrescente a tarefa digitada à lista e limpe o campo. Ignore entradas vazias ou só com espaços.',
     dados:
       '<label for="tarefa">Nova tarefa</label>\n<input id="tarefa" type="text">\n<button id="adicionar" type="button">Adicionar</button>\n<ul id="tarefas"></ul>',
     passos: [
@@ -293,7 +300,7 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     modo: 'web',
     titulo: 'Mostre e esconda uma senha',
     enunciado:
-      'Crie um campo de senha e um botão que alterne entre mostrar e esconder seu conteúdo. Use apenas uma senha fictícia.',
+      'Crie um campo de senha e um botão para alternar entre mostrar e esconder os caracteres. Atualize o texto do botão para indicar a próxima ação. Use apenas a senha fictícia do exemplo.',
     dados:
       '<label for="senha">Senha de exemplo</label>\n<input id="senha" type="password" value="exemplo123">\n<button id="alternar" type="button" aria-pressed="false">Mostrar senha</button>',
     passos: [
@@ -315,7 +322,8 @@ export const DESAFIOS_RASCUNHO: DesafioRascunho[] = [
     categoria: 'DOM e eventos',
     modo: 'web',
     titulo: 'Exiba uma saudação personalizada',
-    enunciado: 'Crie um formulário que leia um nome e mostre uma saudação sem recarregar a página.',
+    enunciado:
+      'Crie um formulário com um campo de nome. Ao enviar, mostre uma saudação sem recarregar a página. Retire os espaços das pontas e peça um nome se o campo estiver vazio.',
     dados:
       '<form id="formulario">\n  <label for="nome">Seu nome</label>\n  <input id="nome" type="text">\n  <button type="submit">Cumprimentar</button>\n</form>\n<p id="mensagem" aria-live="polite"></p>',
     passos: [

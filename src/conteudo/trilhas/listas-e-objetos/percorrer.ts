@@ -37,10 +37,13 @@ export const percorrer: Licao = {
     {
       titulo: 'Média de uma lista',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `media(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `media(numeros)`, que devolve a média dos números da lista. Se a lista estiver vazia, devolva `0` — dividir por zero daria um resultado sem sentido.',
+          tipo: 'lista',
+          itens: [
+            'Some os valores e divida pela quantidade de itens. Devolva a média com `return`.',
+            'Se a lista estiver vazia, devolva `0`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -79,10 +82,14 @@ export const percorrer: Licao = {
     {
       titulo: 'Soma dos pares',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `somaDosPares(numeros)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `somaDosPares(numeros)`, que soma só os números **pares** da lista. Em `[1, 2, 3, 4]`, são o 2 e o 4: a soma é `6`. Sem números pares, devolva `0`.',
+          tipo: 'lista',
+          itens: [
+            'Some apenas os números pares da lista e devolva o total.',
+            'Se não houver pares, devolva `0`.',
+            'Exemplo: `[1, 2, 3, 4]` deve resultar em `6`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -130,10 +137,13 @@ export const percorrer: Licao = {
     {
       titulo: 'O maior da lista',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `maiorDaLista(numeros)` usando um laço.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `maiorDaLista(numeros)`, que devolve o maior número de uma lista **que não está vazia**. Resolva com um laço, guardando "o maior até agora".',
+          tipo: 'lista',
+          itens: [
+            'A lista não estará vazia. Devolva o maior número encontrado.',
+            'Guarde o maior valor durante o percurso. Comece pelo primeiro item para aceitar listas só com negativos.',
+          ],
         },
         {
           tipo: 'nota',
@@ -194,10 +204,13 @@ export const percorrer: Licao = {
     {
       titulo: 'Quantas vezes aparece',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `contar(lista, valor)`.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `contar(lista, valor)`, que devolve quantas vezes `valor` aparece na lista. Por exemplo, `contar([1, 2, 1, 3, 1], 1)` devolve `3`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva quantas vezes `valor` aparece na lista.',
+            'Exemplo: `contar([1, 2, 1, 3, 1], 1)` deve devolver `3`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -246,10 +259,14 @@ export const percorrer: Licao = {
     {
       titulo: 'Nomes separados por vírgula',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `listaEmTexto(nomes)` usando um laço.' },
         {
-          tipo: 'p',
-          texto:
-            'Escreva a função `listaEmTexto(nomes)`, que devolve os nomes num texto só, separados por `", "` (vírgula e espaço): `["Ana", "Bia", "Caio"]` vira `"Ana, Bia, Caio"`. Uma lista de um nome devolve só o nome, e uma lista vazia devolve `""`.',
+          tipo: 'lista',
+          itens: [
+            'Devolva um texto com os nomes separados por vírgula e espaço: `", "`.',
+            'Não deixe separadores no começo ou no final. Não use `join` neste exercício.',
+            'Uma lista vazia deve devolver `""`. Com um nome, devolva apenas esse nome.',
+          ],
         },
         {
           tipo: 'nota',
@@ -309,10 +326,13 @@ export const percorrer: Licao = {
     {
       titulo: 'O primeiro acima do limite',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `primeiroAcima(lista, limite)` usando um laço.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `primeiroAcima(lista, limite)`, que percorre os números e devolve o primeiro valor maior que limite, na ordem da lista. Se nenhum servir, devolva null. Resolva com um laço.',
+          tipo: 'lista',
+          itens: [
+            'Devolva o primeiro número maior que `limite`, respeitando a ordem da lista.',
+            'Se nenhum número atender à regra, devolva `null`.',
+          ],
         },
       ],
       codigoInicial: linhas(
@@ -343,10 +363,10 @@ export const percorrer: Licao = {
     {
       titulo: 'Multiplicando os valores',
       enunciado: [
+        { tipo: 'p', texto: 'Complete `multiplicarValores(lista)` usando um laço e um acumulador.' },
         {
-          tipo: 'p',
-          texto:
-            'Crie `multiplicarValores(lista)`, que multiplica todos os números da lista e devolve o produto. Para uma lista vazia, devolva 1. Use um acumulador em um laço.',
+          tipo: 'lista',
+          itens: ['Multiplique todos os números da lista e devolva o produto.', 'Para uma lista vazia, devolva `1`.'],
         },
       ],
       codigoInicial: linhas(
