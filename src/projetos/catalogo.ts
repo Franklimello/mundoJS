@@ -39,7 +39,7 @@ export const catalogoProjetos = [
       'Combinar funções em uma sequência que produz um relatório.',
     ],
     demonstracao:
-      'console.log(limparNome(nome));\nconsole.log(totalPorJogador(eventos));\nconsole.log(ranking(totais));\nconsole.log(textoDoRanking(lista));\n\n// Depois de implementar todas as etapas:\n// console.log(textoDoRanking(ranking(totalPorJogador(eventos))));',
+      'console.log(limparNome(nome));\nconsole.log(totalPorJogador(eventos));\nconsole.log(ranking(totais));\nconsole.log(textoDoRanking(lista));',
     dadosIniciais:
       'const nome = " aNA ";\nconst eventos = [\n  { jogador: "ana", pontos: 10 },\n  { jogador: " Ana ", pontos: 5 },\n  { jogador: "BIA", pontos: 20 },\n];\nconst totais = { Ana: 18, Bia: 12 };\nconst lista = [{ jogador: "Caio", total: 30 }, { jogador: "Ana", total: 18 }];',
   },
@@ -53,7 +53,7 @@ export const catalogoProjetos = [
       'Adicionar novas tentativas, cache e um relatório de carregamento.',
     ],
     demonstracao:
-      'console.log(await carregar(ids));\nconsole.log(await buscarComTentativas(funcaoAsync, maximo, pausaMs));\nconsole.log(relatorio(dados));\n\n// Depois de implementar o cache:\n// const comCache = criarCache(buscar);\n// console.log(await comCache(1));\n// console.log(await comCache(1));',
+      'console.log(await carregar(ids));\nconsole.log(await buscarComTentativas(funcaoAsync, maximo, pausaMs));\nconsole.log(relatorio(dados));',
     dadosIniciais:
       'const ids = [1, 2, 0];\nconst funcaoAsync = async () => "ok";\nconst maximo = 3;\nconst pausaMs = 10;\nconst buscar = (id) => Promise.resolve("item " + id);\nconst dados = { usuarios: ["Usuário 1"], falhas: [0] };',
   },
@@ -67,7 +67,7 @@ export function buscarProjeto(slug: string) {
     .map((exercicio, indice) => {
       // Na lição isolada, esta etapa já fornece limparNome; no projeto o aluno a constrói uma vez.
       if (meta.trilha === 'listas-e-textos-de-verdade' && indice === 1)
-        return 'function totalPorJogador(eventos) {\n  // some os pontos de cada jogador, usando limparNome\n}\n';
+        return 'function totalPorJogador(eventos) {\n}\n';
       // Os exemplos de cada exercício têm variáveis próprias. No projeto,
       // reunimos as funções e fornecemos um conjunto de dados compartilhado.
       const programa = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
@@ -82,7 +82,7 @@ export function buscarProjeto(slug: string) {
     nomeTrilha: origem.trilha.titulo,
     etapas: origem.licao.exercicios,
     introducao: origem.licao.conteudo,
-    codigoInicial: `// Dados de exemplo: altere os valores para experimentar.\n${meta.dadosIniciais}\n\n${codigoInicial}\n\n// Rode para experimentar suas funções.\n${meta.demonstracao}\n`,
+    codigoInicial: `${meta.dadosIniciais}\n\n${codigoInicial}\n\n${meta.demonstracao}\n`,
     testes: origem.licao.exercicios.flatMap((exercicio) =>
       exercicio.testes.map((teste) => ({ ...teste, descricao: `${exercicio.titulo}: ${teste.descricao}` })),
     ),

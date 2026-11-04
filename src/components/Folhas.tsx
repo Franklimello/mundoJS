@@ -13,13 +13,7 @@ const JAVASCRIPT_WEB =
 
 /** As folhas fora das lições: a livre e a da vitrine. A da lição está em `LicaoInterativa.tsx`. */
 
-const CODIGO_DO_RASCUNHO = [
-  '// Aqui você escreve e roda o que quiser.',
-  '// Aperte Ctrl + Enter para ver o resultado.',
-  '',
-  'console.log("Olá, MundoJS!");',
-  '',
-].join('\n');
+const CODIGO_DO_RASCUNHO = 'console.log("Olá, MundoJS!");\n';
 
 export function FolhaDoRascunho() {
   const [web, setWeb] = useState(false);
