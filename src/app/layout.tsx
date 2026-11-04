@@ -14,13 +14,18 @@ export const metadata: Metadata = {
   title: { default: 'MundoJS — aprenda JavaScript escrevendo código', template: '%s · MundoJS' },
   description:
     'Lições curtas de JavaScript com um editor que roda no navegador e um corretor que confere cada exercício na hora. Sem instalar nada.',
+  other: { google: 'notranslate' },
 };
 
 export const viewport: Viewport = { themeColor: '#fcfdff' };
 
 export default function LayoutRaiz({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${titulos.variable} ${textos.variable} ${codigos.variable}`}>
+    <html
+      lang="pt-BR"
+      translate="no"
+      className={`notranslate ${titulos.variable} ${textos.variable} ${codigos.variable}`}
+    >
       <body>
         <a className="pular" href="#conteudo">
           Pular para o conteúdo
