@@ -25,7 +25,7 @@ import {
 } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { bracketMatching, HighlightStyle, indentOnInput, indentUnit, syntaxHighlighting } from '@codemirror/language';
-import { EditorSelection, EditorState, StateEffect, StateField } from '@codemirror/state';
+import { Annotation, EditorSelection, EditorState, StateEffect, StateField } from '@codemirror/state';
 import {
   Decoration,
   type DecorationSet,
@@ -95,6 +95,7 @@ const ACOES_MOVEIS = [
  */
 
 const definirLinhaComErro = StateEffect.define<number | null>();
+const textoAtualizadoDeFora = Annotation.define<boolean>();
 
 /** Marca a linha do erro. Qualquer edição apaga a marca: ela já pode não valer mais. */
 const campoDaLinhaComErro = StateField.define<DecorationSet>({
@@ -303,7 +304,8 @@ export default function EditorCodigo({
           tema,
           EditorView.updateListener.of((atualizacao) => {
             setTemCampos(hasNextSnippetField(atualizacao.state));
-            if (atualizacao.docChanged) acoes.current.onChange(atualizacao.state.doc.toString());
+            if (atualizacao.docChanged && !atualizacao.transactions.every((tr) => tr.annotation(textoAtualizadoDeFora)))
+              acoes.current.onChange(atualizacao.state.doc.toString());
           }),
         ],
       }),
@@ -323,7 +325,11 @@ export default function EditorCodigo({
     const view = visao.current;
     if (!view) return;
     const atual = view.state.doc.toString();
-    if (atual !== valor) view.dispatch({ changes: { from: 0, to: atual.length, insert: valor } });
+    if (atual !== valor)
+      view.dispatch({
+        changes: { from: 0, to: atual.length, insert: valor },
+        annotations: textoAtualizadoDeFora.of(true),
+      });
   }, [valor]);
 
   useEffect(() => {
