@@ -61,8 +61,12 @@ export function Saida({
           )}
         </div>
       )}
-      {resultado.investigacoes && resultado.investigacoes.length > 0 && (
-        <Investigador acessos={resultado.investigacoes} aoIrParaLinha={aoIrParaLinha} />
+      {Boolean(resultado.investigacoes?.length || resultado.investigacoesObjetos?.length) && (
+        <Investigador
+          acessos={resultado.investigacoes ?? []}
+          propriedades={resultado.investigacoesObjetos}
+          aoIrParaLinha={aoIrParaLinha}
+        />
       )}
     </>
   );

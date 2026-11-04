@@ -97,7 +97,7 @@ interface Insercao {
 }
 
 /** Só transforma leituras: alvos de escrita, chamadas e cadeias opcionais ficam intactos. */
-function investigacoesDeIndice(programa: NoGenerico, aberturas: Map<number, number>) {
+function investigacoesDeIndice(programa: NoGenerico, aberturas: Map<number, number>, pontos: Map<number, number>) {
   const nomes = new Set<string>();
   visitar(programa, (no) => {
     if (no.type === 'Identifier') nomes.add(no['name'] as string);
@@ -108,9 +108,11 @@ function investigacoesDeIndice(programa: NoGenerico, aberturas: Map<number, numb
   function percorrer(no: NoGenerico) {
     if (no.type === 'ChainExpression') return;
     const objeto = no['object'];
-    if (no.type === 'MemberExpression' && no['computed'] && ehNo(objeto) && objeto.type === 'Identifier') {
+    if (no.type === 'MemberExpression' && ehNo(objeto) && objeto.type === 'Identifier') {
       const abre = aberturas.get(objeto.end);
-      if (abre !== undefined && no.start === objeto.start) {
+      const ponto = pontos.get(objeto.end);
+      const propriedade = no['property'];
+      if (no['computed'] && abre !== undefined && no.start === objeto.start) {
         insercoes.push(
           { posicao: no.start, texto: `${nome}(` },
           { posicao: abre, remover: 1, texto: ', (' },
@@ -118,6 +120,22 @@ function investigacoesDeIndice(programa: NoGenerico, aberturas: Map<number, numb
             posicao: no.end - 1,
             remover: 1,
             texto: `), ${no.loc!.start.line}, ${no.loc!.start.column + 1}, ${JSON.stringify(objeto['name'])})`,
+          },
+        );
+      } else if (
+        !no['computed'] &&
+        ponto !== undefined &&
+        no.start === objeto.start &&
+        ehNo(propriedade) &&
+        propriedade.type === 'Identifier'
+      ) {
+        insercoes.push(
+          { posicao: no.start, texto: `${nome}(` },
+          { posicao: ponto, remover: 1, texto: ', ' },
+          {
+            posicao: propriedade.start,
+            remover: propriedade.end - propriedade.start,
+            texto: `${JSON.stringify(propriedade['name'])}, ${no.loc!.start.line}, ${no.loc!.start.column + 1}, ${JSON.stringify(objeto['name'])}, true)`,
           },
         );
       }
@@ -180,10 +198,12 @@ export function analisar(codigo: string): Analise {
   let ultimoTipo = '';
   let ultimoFim = -1;
   const aberturasDeIndice = new Map<number, number>();
+  const pontosDeAcesso = new Map<number, number>();
   const acompanharDelimitador = (token: Token) => {
     const simbolo = token.type.label;
     ultimoTipo = simbolo;
     if (simbolo === '[') aberturasDeIndice.set(ultimoFim, token.start);
+    if (simbolo === '.') pontosDeAcesso.set(ultimoFim, token.start);
     ultimoFim = token.end;
     const fecha = pares[simbolo];
     if (fecha) abertos.push({ abre: simbolo, fecha, linha: token.loc?.start.line ?? 1 });
@@ -227,7 +247,7 @@ export function analisar(codigo: string): Analise {
     };
   }
 
-  const investigacao = investigacoesDeIndice(programa, aberturasDeIndice);
+  const investigacao = investigacoesDeIndice(programa, aberturasDeIndice, pontosDeAcesso);
   return {
     ok: true,
     codigo: aplicarInsercoes(codigo, [...protecoesDeLaco(programa), ...investigacao.insercoes]),

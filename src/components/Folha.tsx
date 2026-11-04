@@ -669,6 +669,10 @@ export function Folha({
                     ...item,
                     itens: item.itens.slice(0, 3),
                   })),
+                  investigacoesObjetos: execucao.dados.investigacoesObjetos?.slice(0, 1).map((item) => ({
+                    ...item,
+                    propriedades: item.propriedades.slice(0, 3),
+                  })),
                 }).slice(0, 3000)
               : 'O código atual ainda não foi executado. Peça ao aluno para usar Rodar ou Conferir se precisar de um diagnóstico.'
           }

@@ -39,13 +39,14 @@ frutas.push('uva');`);
     expect(resultado.investigacoes?.[0]?.itens.map((item) => item.valor)).toEqual(["'laranja'", "'mamão'"]);
   });
 
-  it('não confunde valores undefined válidos, posições vazias, objetos ou ramos não executados', async () => {
+  it('não confunde valores undefined válidos, posições vazias e propriedades de objetos com índices fora do array', async () => {
     const resultado = await executarCodigo(`const lista = [undefined, , 3];
 const objeto = {};
 console.log(lista[0], lista[1], objeto[4]);
 if (false) console.log(lista[10]);`);
     expect(resultado.erro).toBeNull();
     expect(resultado.investigacoes).toBeUndefined();
+    expect(resultado.investigacoesObjetos?.[0]).toMatchObject({ objeto: 'objeto', propriedade: '4' });
   });
 
   it('trata arrays vazios, índices negativos e índices numéricos em texto', async () => {

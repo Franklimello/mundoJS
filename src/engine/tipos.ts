@@ -48,12 +48,23 @@ export interface InvestigacaoIndice {
   itens: { indice: number; valor: string }[];
 }
 
+export interface InvestigacaoPropriedade {
+  objeto: string;
+  propriedade: string;
+  acesso: string;
+  linha: number;
+  coluna: number;
+  propriedades: { nome: string; valor: string }[];
+  haMais: boolean;
+}
+
 export interface ResultadoExecucao {
   saida: LinhaSaida[];
   erro: ErroExecucao | null;
   testes: ResultadoTeste[];
   duracaoMs: number;
   investigacoes?: InvestigacaoIndice[];
+  investigacoesObjetos?: InvestigacaoPropriedade[];
 }
 
 /** O que a página entrega ao executor, depois de analisar o código. */
@@ -64,7 +75,7 @@ export interface PedidoBruto {
   codigoOriginal: string;
   /** Nomes declarados no nível de cima, que os testes enxergam. */
   nomes: string[];
-  /** Nome livre de colisões do observador de leituras de índices. */
+  /** Nome livre de colisões do observador de leituras de índices e propriedades. */
   investigador?: string;
   testes: TesteDefinicao[];
   /** Quanto tempo esperar por `setTimeout`/`setInterval` antes de encerrar. */
@@ -100,4 +111,5 @@ export interface ResultadoBruto {
   testes: TesteBruto[];
   duracaoMs: number;
   investigacoes?: InvestigacaoIndice[];
+  investigacoesObjetos?: InvestigacaoPropriedade[];
 }
