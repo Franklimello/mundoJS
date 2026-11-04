@@ -1,4 +1,12 @@
-import type { ErroBruto, LinhaSaida, PedidoBruto, ResultadoBruto, TesteBruto, TipoLinha } from './tipos';
+import type {
+  ErroBruto,
+  InvestigacaoIndice,
+  LinhaSaida,
+  PedidoBruto,
+  ResultadoBruto,
+  TesteBruto,
+  TipoLinha,
+} from './tipos';
 
 /**
  * O executor: roda o código do aluno e os testes da lição.
@@ -269,6 +277,50 @@ export function criarExecutor() {
     let voltas = 0;
     const temporizadores = new Set<number>();
     const repeticoes = new Set<number>();
+    const investigacoes: InvestigacaoIndice[] = [];
+    let observando = true;
+
+    function lerIndice(
+      objeto: Record<PropertyKey, unknown>,
+      chave: PropertyKey,
+      linha: number,
+      coluna: number,
+      nome: string,
+    ) {
+      // A leitura real acontece uma única vez, antes da observação.
+      const valor = objeto[chave];
+      if (!observando || valor !== undefined || investigacoes.length >= 3) return valor;
+      try {
+        if (!Array.isArray(objeto) || !['number', 'string'].includes(typeof chave)) return valor;
+        const indice = Number(chave);
+        if (!Number.isSafeInteger(indice) || String(indice) !== String(chave)) return valor;
+        const tamanho = objeto.length;
+        if (indice >= 0 && indice < tamanho) return valor;
+        if (investigacoes.some((item) => item.linha === linha && item.coluna === coluna && item.indice === indice))
+          return valor;
+        const itens: InvestigacaoIndice['itens'] = [];
+        for (let i = 0; i < Math.min(tamanho, 8); i++) {
+          const descricao = Object.getOwnPropertyDescriptor(objeto, String(i));
+          const item = descricao?.value;
+          const texto = !descricao
+            ? '(posição vazia)'
+            : !('value' in descricao)
+              ? '(acessor: valor não lido)'
+              : item !== null && (typeof item === 'object' || typeof item === 'function')
+                ? Array.isArray(item)
+                  ? '[array]'
+                  : typeof item === 'function'
+                    ? '[função]'
+                    : '[objeto]'
+                : formatar(item, 0, [], true);
+          itens.push({ indice: i, valor: texto.slice(0, 120) });
+        }
+        investigacoes.push({ array: nome.slice(0, 80), indice, tamanho, linha, coluna, itens });
+      } catch {
+        // Um observador nunca transforma uma leitura válida em erro.
+      }
+      return valor;
+    }
 
     function emitir(tipo: TipoLinha, texto: string) {
       if (cortada) return;
@@ -382,7 +434,7 @@ export function criarExecutor() {
 
     try {
       const fonte =
-        `(async (console, setTimeout, setInterval, clearTimeout, clearInterval, alert, prompt, confirm, ${NOME_DA_PROTECAO}) => { 'use strict';\n` +
+        `(async (console, setTimeout, setInterval, clearTimeout, clearInterval, alert, prompt, confirm, ${NOME_DA_PROTECAO}${pedido.investigador ? `, ${pedido.investigador}` : ''}) => { 'use strict';\n` +
         `${pedido.codigo}\n;return {${nomesDoAluno.join(', ')}};\n})\n//# sourceURL=${ARQUIVO_DO_ALUNO}`;
       const funcao = (0, eval)(fonte) as (...a: unknown[]) => Promise<Record<string, unknown>>;
       escopo = await funcao(
@@ -395,6 +447,7 @@ export function criarExecutor() {
         avisar('prompt'),
         avisar('confirm'),
         protecao,
+        lerIndice,
       );
       rodouSemErro = true;
     } catch (erro) {
@@ -417,6 +470,7 @@ export function criarExecutor() {
     }
 
     // --------------------------------------------------------------- os testes
+    observando = false;
     const testes: TesteBruto[] = [];
     if (pedido.testes.length > 0) {
       const textoDaSaida = saida.filter((l) => l.tipo === 'log' || l.tipo === 'info').map((l) => l.texto);
@@ -503,6 +557,12 @@ export function criarExecutor() {
     repeticoes.clear();
 
     global.removeEventListener?.('unhandledrejection', aoRejeitar);
-    return { saida, erro: primeiroErro, testes, duracaoMs: Date.now() - inicio };
+    return {
+      saida,
+      erro: primeiroErro,
+      testes,
+      duracaoMs: Date.now() - inicio,
+      ...(investigacoes.length && { investigacoes }),
+    };
   };
 }

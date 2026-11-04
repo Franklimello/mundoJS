@@ -49,6 +49,7 @@ export function finalizar(bruto: ResultadoBruto): ResultadoExecucao {
     erro: bruto.erro ? traduzirErroDeExecucao(bruto.erro) : null,
     testes: bruto.testes.map(traduzirTeste),
     duracaoMs: bruto.duracaoMs,
+    ...(bruto.investigacoes?.length && { investigacoes: bruto.investigacoes }),
   };
 }
 
@@ -87,6 +88,7 @@ export async function rodar(
     codigo: analise.codigo,
     codigoOriginal: codigo,
     nomes: analise.nomes,
+    ...(analise.investigador && { investigador: analise.investigador }),
     testes,
     esperaMaximaMs: opcoes.esperaMaximaMs ?? ESPERA_MAXIMA_MS,
     limiteDeVoltas: opcoes.limiteDeVoltas ?? LIMITE_DE_VOLTAS,

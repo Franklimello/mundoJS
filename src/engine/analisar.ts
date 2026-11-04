@@ -19,7 +19,8 @@ import type { ErroExecucao } from './tipos';
 /** Nome da função de proteção; o executor a entrega ao código do aluno. */
 export const NOME_DA_PROTECAO = '__volta';
 
-export type Analise = { ok: true; codigo: string; nomes: string[] } | { ok: false; erro: ErroExecucao };
+export type Analise =
+  { ok: true; codigo: string; nomes: string[]; investigador?: string } | { ok: false; erro: ErroExecucao };
 
 type NoGenerico = Node & Record<string, unknown>;
 
@@ -92,6 +93,52 @@ function declaracoesDoNivelDeCima(programa: NoGenerico): string[] {
 interface Insercao {
   posicao: number;
   texto: string;
+  remover?: number;
+}
+
+/** Só transforma leituras: alvos de escrita, chamadas e cadeias opcionais ficam intactos. */
+function investigacoesDeIndice(programa: NoGenerico, aberturas: Map<number, number>) {
+  const nomes = new Set<string>();
+  visitar(programa, (no) => {
+    if (no.type === 'Identifier') nomes.add(no['name'] as string);
+  });
+  let nome = '__mundojsLerIndice';
+  while (nomes.has(nome)) nome += '_';
+  const insercoes: Insercao[] = [];
+  function percorrer(no: NoGenerico) {
+    if (no.type === 'ChainExpression') return;
+    const objeto = no['object'];
+    if (no.type === 'MemberExpression' && no['computed'] && ehNo(objeto) && objeto.type === 'Identifier') {
+      const abre = aberturas.get(objeto.end);
+      if (abre !== undefined && no.start === objeto.start) {
+        insercoes.push(
+          { posicao: no.start, texto: `${nome}(` },
+          { posicao: abre, remover: 1, texto: ', (' },
+          {
+            posicao: no.end - 1,
+            remover: 1,
+            texto: `), ${no.loc!.start.line}, ${no.loc!.start.column + 1}, ${JSON.stringify(objeto['name'])})`,
+          },
+        );
+      }
+    }
+    for (const [chave, valor] of Object.entries(no)) {
+      if (
+        ((no.type === 'AssignmentExpression' || no.type === 'ForInStatement' || no.type === 'ForOfStatement') &&
+          chave === 'left') ||
+        ((no.type === 'UpdateExpression' || (no.type === 'UnaryExpression' && no['operator'] === 'delete')) &&
+          chave === 'argument') ||
+        ((no.type === 'CallExpression' || no.type === 'NewExpression') && chave === 'callee') ||
+        (no.type === 'TaggedTemplateExpression' && chave === 'tag')
+      )
+        continue;
+      if (Array.isArray(valor)) {
+        for (const item of valor) if (ehNo(item)) percorrer(item);
+      } else if (ehNo(valor)) percorrer(valor);
+    }
+  }
+  percorrer(programa);
+  return { insercoes, ...(insercoes.length > 0 && { nome }) };
 }
 
 function protecoesDeLaco(programa: NoGenerico): Insercao[] {
@@ -120,8 +167,8 @@ function aplicarInsercoes(codigo: string, insercoes: Insercao[]): string {
     .map((insercao, indice) => ({ ...insercao, indice }))
     .sort((a, b) => b.posicao - a.posicao || b.indice - a.indice);
   let resultado = codigo;
-  for (const { posicao, texto } of ordenadas) {
-    resultado = resultado.slice(0, posicao) + texto + resultado.slice(posicao);
+  for (const { posicao, texto, remover = 0 } of ordenadas) {
+    resultado = resultado.slice(0, posicao) + texto + resultado.slice(posicao + remover);
   }
   return resultado;
 }
@@ -131,9 +178,13 @@ export function analisar(codigo: string): Analise {
   const abertos: { abre: string; fecha: string; linha: number }[] = [];
   const pares: Record<string, string> = { '(': ')', '[': ']', '{': '}', '${': '}' };
   let ultimoTipo = '';
+  let ultimoFim = -1;
+  const aberturasDeIndice = new Map<number, number>();
   const acompanharDelimitador = (token: Token) => {
     const simbolo = token.type.label;
     ultimoTipo = simbolo;
+    if (simbolo === '[') aberturasDeIndice.set(ultimoFim, token.start);
+    ultimoFim = token.end;
     const fecha = pares[simbolo];
     if (fecha) abertos.push({ abre: simbolo, fecha, linha: token.loc?.start.line ?? 1 });
     else if (simbolo === ')' || simbolo === ']' || simbolo === '}') {
@@ -176,9 +227,11 @@ export function analisar(codigo: string): Analise {
     };
   }
 
+  const investigacao = investigacoesDeIndice(programa, aberturasDeIndice);
   return {
     ok: true,
-    codigo: aplicarInsercoes(codigo, protecoesDeLaco(programa)),
+    codigo: aplicarInsercoes(codigo, [...protecoesDeLaco(programa), ...investigacao.insercoes]),
     nomes: declaracoesDoNivelDeCima(programa),
+    ...(investigacao.nome && { investigador: investigacao.nome }),
   };
 }

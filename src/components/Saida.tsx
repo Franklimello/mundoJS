@@ -1,4 +1,5 @@
 import type { ResultadoExecucao } from '@/engine/tipos';
+import { Investigador } from './Investigador';
 
 /** O que o código mostrou, e o erro que o interrompeu, se houve. */
 export function Saida({
@@ -59,6 +60,9 @@ export function Saida({
             </button>
           )}
         </div>
+      )}
+      {resultado.investigacoes && resultado.investigacoes.length > 0 && (
+        <Investigador acessos={resultado.investigacoes} aoIrParaLinha={aoIrParaLinha} />
       )}
     </>
   );
