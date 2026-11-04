@@ -108,7 +108,7 @@ const campoDaLinhaComErro = StateField.define<DecorationSet>({
 });
 
 const tema = EditorView.theme({
-  '&': { color: 'var(--tinta)', backgroundColor: 'transparent', fontSize: '1rem' },
+  '&': { color: 'var(--tinta)', backgroundColor: 'transparent', fontSize: 'var(--fonte-editor, 1rem)' },
   '&.cm-focused': { outline: 'none' },
   '.cm-scroller': {
     fontFamily: 'var(--fonte-codigo)',
