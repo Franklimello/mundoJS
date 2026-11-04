@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { parse } from 'acorn';
 import { Window } from 'happy-dom';
 import { montarDocumento, type DocumentoWeb } from '@/engine/documento';
 import { analisar } from '@/engine/analisar';
@@ -166,6 +167,43 @@ describe('os exemplos de cada lição imprimem o que o texto diz', () => {
 });
 
 describe('os exercícios', () => {
+  it('as funções incompletas com parâmetros já têm dados de entrada no editor', () => {
+    for (const [nome, exercicio] of porExercicio) {
+      const arvore = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
+      const incompletas = arvore.body.filter(
+        (no) => no.type === 'FunctionDeclaration' && no.params.length > 0 && no.body.body.length === 0,
+      );
+      if (!incompletas.length) continue;
+      const primeiro = incompletas[0]!;
+      const dados = arvore.body.filter((no) => no.type === 'VariableDeclaration' && no.start < primeiro.start);
+      expect(dados.length, `faltam dados de entrada em ${nome}`).toBeGreaterThan(0);
+    }
+  });
+
+  it.each(porExercicio.filter(([, e]) => e.codigoInicial.startsWith('// Dados de exemplo:')))(
+    '%s: os dados e as chamadas de exemplo funcionam com a implementação correta',
+    async (_nome, exercicio) => {
+      const arvore = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
+      const funcoes = arvore.body.filter((no) => no.type === 'FunctionDeclaration');
+      let codigo = exercicio.codigoInicial;
+      for (const funcao of [...funcoes].reverse()) codigo = codigo.slice(0, funcao.start) + codigo.slice(funcao.end);
+      const inicio = funcoes[0]!.start;
+      codigo = codigo.slice(0, inicio) + exercicio.solucao + '\n' + codigo.slice(inicio);
+      // Chamadas de funções que devolvem outras funções ficam comentadas no ponto
+      // de partida, pois a implementação ainda não existe. Aqui validamos seu uso.
+      const rodape = codigo.search(/\/\/ (Depois de implementar, descomente|Rode para experimentar)/);
+      if (rodape >= 0)
+        codigo =
+          codigo.slice(0, rodape) +
+          codigo.slice(rodape).replace(/^\/\/ (?=(?:const |let |console\.|await |\w+\.\w+\())/gm, '');
+      const resultado = await rodarLocal(codigo, exercicio.testes, exercicio.documentoInicial);
+      expect(resultado.erro, 'os dados de exemplo não podem quebrar a solução').toBeNull();
+      expect(
+        resultado.testes.filter((teste) => !teste.passou).map((teste) => `${teste.descricao}: ${teste.mensagem}`),
+      ).toEqual([]);
+    },
+  );
+
   it.each(porExercicio)('%s: a solução passa em todos os testes', async (_nome, exercicio) => {
     const resultado = await rodarLocal(exercicio.solucao, exercicio.testes, exercicio.documentoInicial);
     expect(resultado.erro, 'a solução deu erro').toBeNull();
