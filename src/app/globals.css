@@ -586,6 +586,10 @@ pre {
   max-width: 44rem;
 }
 
+.primeira-retomada {
+  margin-bottom: 1.5rem;
+}
+
 .primeira-intro > * + *,
 .primeira-retomada > * + *,
 .primeira-orientacao > * + *,
