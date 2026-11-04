@@ -2,7 +2,7 @@
 
 Lista retomada da avaliação do produto e atualizada conforme as entregas.
 
-- [x] Preparar dados de entrada e chamadas de exemplo nos exercícios que recebem listas, objetos, textos, valores, promessas ou callbacks, preservando os desafios e rascunhos existentes.
+- [x] Preparar dados de entrada e chamadas de exemplo nos exercícios e projetos que recebem listas, objetos, textos, valores, promessas ou callbacks, preservando os desafios e rascunhos existentes.
 
 - [x] Emitir certificados privados por trilha concluída, com nome confirmado, registro único e download direto em PDF.
 - [x] Reunir próximo exercício, progresso por trilha, prática dos últimos sete dias e certificados no painel Meu aprendizado, respeitando o plano da conta.

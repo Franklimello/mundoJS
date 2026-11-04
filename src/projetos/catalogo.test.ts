@@ -25,6 +25,13 @@ describe('projetos integrados', () => {
       expect(resultado.erro).toBeNull();
       expect(resultado.testes.filter((teste) => !teste.passou)).toEqual([]);
       expect(resultado.testes.length).toBe(projeto.testes.length);
+      const comDados = await rodar(
+        `${projeto.dadosIniciais}\n${solucao}\n${projeto.demonstracao}`,
+        projeto.testes,
+        executor,
+      );
+      expect(comDados.erro, 'os dados do projeto não podem quebrar as funções corretas').toBeNull();
+      expect(comDados.testes.filter((teste) => !teste.passou)).toEqual([]);
     },
   );
   it('não aceita projetos desconhecidos como rascunhos', () => {

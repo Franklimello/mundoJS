@@ -1,4 +1,5 @@
 import { buscarLicao } from '@/conteudo';
+import { parse } from 'acorn';
 
 export const catalogoProjetos = [
   {
@@ -11,7 +12,8 @@ export const catalogoProjetos = [
       'Testar sua lógica com situações diferentes.',
     ],
     demonstracao:
-      '// Experimente depois de implementar:\n// console.log(contarVogais("Aprendendo JavaScript"));\n// console.log(contarNotas(187));',
+      'console.log(fizzBuzz(numero));\nconsole.log(ehPrimo(numero));\nconsole.log(fibonacci(numero));\nconsole.log(contarVogais(texto));\nconsole.log(contarNotas(valor));',
+    dadosIniciais: 'const numero = 15;\nconst texto = "Aprendendo JavaScript";\nconst valor = 187;',
   },
   {
     trilha: 'listas-e-objetos',
@@ -23,7 +25,9 @@ export const catalogoProjetos = [
       'Montar um relatório útil a partir dos produtos.',
     ],
     demonstracao:
-      '// Experimente depois de implementar:\n// const produtos = [{ nome: "Caderno", preco: 12, quantidade: 3 }];\n// console.log(relatorio(produtos));',
+      'console.log(valorEmEstoque(produtos));\nconsole.log(semEstoque(produtos));\nconsole.log(repor(produtos, nome, quantidade));\nconsole.log(relatorio(produtos));',
+    dadosIniciais:
+      'const produtos = [\n  { nome: "Caneta", preco: 3, quantidade: 10 },\n  { nome: "Caderno", preco: 20, quantidade: 0 },\n  { nome: "Lápis", preco: 2, quantidade: 4 },\n];\nconst nome = "Caderno";\nconst quantidade = 5;',
   },
   {
     trilha: 'listas-e-textos-de-verdade',
@@ -35,7 +39,9 @@ export const catalogoProjetos = [
       'Combinar funções em uma sequência que produz um relatório.',
     ],
     demonstracao:
-      '// Experimente depois de implementar:\n// const eventos = [{ jogador: " aNA ", pontos: 10 }, { jogador: "Ana", pontos: 5 }];\n// console.log(textoDoRanking(ranking(totalPorJogador(eventos))));',
+      'console.log(limparNome(nome));\nconsole.log(totalPorJogador(eventos));\nconsole.log(ranking(totais));\nconsole.log(textoDoRanking(lista));\n\n// Depois de implementar todas as etapas:\n// console.log(textoDoRanking(ranking(totalPorJogador(eventos))));',
+    dadosIniciais:
+      'const nome = " aNA ";\nconst eventos = [\n  { jogador: "ana", pontos: 10 },\n  { jogador: " Ana ", pontos: 5 },\n  { jogador: "BIA", pontos: 20 },\n];\nconst totais = { Ana: 18, Bia: 12 };\nconst lista = [{ jogador: "Caio", total: 30 }, { jogador: "Ana", total: 18 }];',
   },
   {
     trilha: 'erros-e-assincrono',
@@ -47,7 +53,9 @@ export const catalogoProjetos = [
       'Adicionar novas tentativas, cache e um relatório de carregamento.',
     ],
     demonstracao:
-      '// Experimente depois de implementar:\n// const resultado = await carregar([1, 2, 0]);\n// console.log(relatorio(resultado));',
+      'console.log(await carregar(ids));\nconsole.log(await buscarComTentativas(funcaoAsync, maximo, pausaMs));\nconsole.log(relatorio(dados));\n\n// Depois de implementar o cache:\n// const comCache = criarCache(buscar);\n// console.log(await comCache(1));\n// console.log(await comCache(1));',
+    dadosIniciais:
+      'const ids = [1, 2, 0];\nconst funcaoAsync = async () => "ok";\nconst maximo = 3;\nconst pausaMs = 10;\nconst buscar = (id) => Promise.resolve("item " + id);\nconst dados = { usuarios: ["Usuário 1"], falhas: [0] };',
   },
 ] as const;
 
@@ -60,7 +68,13 @@ export function buscarProjeto(slug: string) {
       // Na lição isolada, esta etapa já fornece limparNome; no projeto o aluno a constrói uma vez.
       if (meta.trilha === 'listas-e-textos-de-verdade' && indice === 1)
         return 'function totalPorJogador(eventos) {\n  // some os pontos de cada jogador, usando limparNome\n}\n';
-      return exercicio.codigoInicial;
+      // Os exemplos de cada exercício têm variáveis próprias. No projeto,
+      // reunimos as funções e fornecemos um conjunto de dados compartilhado.
+      const programa = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
+      return programa.body
+        .filter((no) => no.type === 'FunctionDeclaration')
+        .map((no) => exercicio.codigoInicial.slice(no.start, no.end))
+        .join('\n\n');
     })
     .join('\n');
   return {
@@ -68,7 +82,7 @@ export function buscarProjeto(slug: string) {
     nomeTrilha: origem.trilha.titulo,
     etapas: origem.licao.exercicios,
     introducao: origem.licao.conteudo,
-    codigoInicial: `${codigoInicial}\n${meta.demonstracao}\n`,
+    codigoInicial: `// Dados de exemplo: altere os valores para experimentar.\n${meta.dadosIniciais}\n\n${codigoInicial}\n\n// Rode para experimentar suas funções.\n${meta.demonstracao}\n`,
     testes: origem.licao.exercicios.flatMap((exercicio) =>
       exercicio.testes.map((teste) => ({ ...teste, descricao: `${exercicio.titulo}: ${teste.descricao}` })),
     ),

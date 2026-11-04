@@ -260,6 +260,8 @@ Exercícios que recebem dados devem trazer exemplos utilizáveis em `codigoInici
 
 Os testes conferem que o ponto de partida não entrega acertos e que os dados e chamadas funcionam junto da solução correta. Atividades cujo objetivo é criar variáveis ou estruturas mantêm essa parte como tarefa do aluno. Rascunhos salvos têm prioridade sobre o modelo inicial; **Recomeçar** carrega o modelo atual após a confirmação, substituindo o código daquela folha.
 
+Os quatro projetos integrados têm seus próprios dados compartilhados. Ao reunir as etapas, o catálogo reaproveita as declarações de função e evita concatenar variáveis de exemplo repetidas entre exercícios.
+
 ## Publicando no Vercel
 
 ### Verificações automáticas
