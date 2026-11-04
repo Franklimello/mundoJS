@@ -1,5 +1,6 @@
 import { chaveDaLicao, chaveDoExercicio, licaoConcluida, type Progresso } from '@/progresso/tipos';
 import type { LicaoParaRetomar, PosicaoEstudo } from './tipos';
+import { PRIMEIRA_ATIVIDADE } from './inicio';
 
 export function escolherRetomada(catalogo: LicaoParaRetomar[], progresso: Progresso, ultima?: PosicaoEstudo | null) {
   const pendente = (licao: LicaoParaRetomar) => {
@@ -37,4 +38,14 @@ export function escolherRetomada(catalogo: LicaoParaRetomar[], progresso: Progre
     feitos,
     total: catalogo.reduce((soma, l) => soma + l.total, 0),
   };
+}
+
+export function hrefDaRetomada(retomada: ReturnType<typeof escolherRetomada> | null): string {
+  if (!retomada) return '/comecar';
+  if (!retomada.licao) return '/trilhas';
+  const { trilha, licao } = retomada.licao;
+  if (trilha === PRIMEIRA_ATIVIDADE.trilha && licao === PRIMEIRA_ATIVIDADE.licao && retomada.indice === 0) {
+    return '/comecar';
+  }
+  return `/trilhas/${trilha}/${licao}`;
 }

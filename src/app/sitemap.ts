@@ -7,6 +7,7 @@ import { URL_DO_SITE } from '@/seo/site';
 export default function sitemap(): MetadataRoute.Sitemap {
   const caminhos = [
     '',
+    '/comecar',
     '/trilhas',
     '/projetos',
     '/planos',

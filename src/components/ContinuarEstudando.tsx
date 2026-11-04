@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { escolherRetomada } from '@/estudo/retomar';
+import { escolherRetomada, hrefDaRetomada } from '@/estudo/retomar';
 import type { LicaoParaRetomar } from '@/estudo/tipos';
 import { carregarDados, type DadosSalvos } from '@/progresso/api';
 
@@ -27,12 +27,12 @@ export function ContinuarEstudando({ catalogo }: { catalogo: LicaoParaRetomar[] 
   const retomada = dados ? escolherRetomada(catalogo, dados.progresso, dados.ultimaAtividade) : null;
   const proxima = retomada?.licao ?? catalogo[0];
   const completa = retomada && !retomada.licao;
-  const href = completa || !proxima ? '/trilhas' : `/trilhas/${proxima.trilha}/${proxima.licao}`;
+  const href = hrefDaRetomada(retomada);
 
   return (
     <div className="continuar-estudando">
       <Link className="botao botao-principal botao-grande" href={href}>
-        {completa ? 'Revisar as trilhas' : retomada?.iniciada ? 'Continuar estudando' : 'Começar a primeira lição'}
+        {completa ? 'Revisar as trilhas' : retomada?.iniciada ? 'Continuar estudando' : 'Começar do zero'}
       </Link>
       {retomada?.iniciada && (
         <div className="continuar-detalhes" aria-live="polite">

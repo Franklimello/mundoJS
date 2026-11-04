@@ -15,10 +15,10 @@ export default function Inicio() {
       <MedirVisita />
       <section className="pagina heroi">
         <div className="heroi-texto">
-          <h1>Escreva um código. Veja ele rodar.</h1>
+          <h1>Aprenda JavaScript, um passo de cada vez.</h1>
           <p className="heroi-apoio">
-            Lições curtas de JavaScript, um editor que roda direto no navegador e um corretor que confere cada exercício
-            na hora. Não precisa instalar nada.
+            Pratique pelo celular ou computador, com lições curtas e ajuda em cada etapa. Comece com uma atividade
+            guiada e veja seu primeiro código funcionar. Não precisa instalar nada.
           </p>
           <div className="heroi-acoes">
             <ContinuarEstudando
