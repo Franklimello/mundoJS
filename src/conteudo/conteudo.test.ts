@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parse } from 'acorn';
+import { parse, type Comment } from 'acorn';
 import { Window } from 'happy-dom';
 import { montarDocumento, type DocumentoWeb } from '@/engine/documento';
 import { analisar } from '@/engine/analisar';
@@ -83,13 +83,17 @@ describe('estrutura do conteúdo', () => {
       expect(new Set(titulos).size, 'títulos de exercício repetidos').toBe(titulos.length);
     }
     // Dois exercícios com o mesmo ponto de partida ou a mesma solução são um copia-e-cola esquecido.
-    const iniciais = licao.exercicios.map((e) => e.codigoInicial);
+    // Exercícios de escrita livre podem começar vazios; modelos com código continuam distintos.
+    const iniciais = licao.exercicios.map((e) => e.codigoInicial).filter((codigo) => codigo.trim());
     const solucoes = licao.exercicios.map((e) => e.solucao);
     expect(new Set(iniciais).size, 'código inicial repetido entre exercícios').toBe(iniciais.length);
     expect(new Set(solucoes).size, 'solução repetida entre exercícios').toBe(solucoes.length);
   });
 
   it.each(porExercicio)('%s está completo', (_nome, exercicio) => {
+    const comentarios: Comment[] = [];
+    parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true, onComment: comentarios });
+    expect(comentarios, 'instruções devem ficar fora do editor').toEqual([]);
     expect(exercicio.enunciado.length).toBeGreaterThan(0);
     expect(exercicio.testes.length).toBeGreaterThan(0);
     expect(exercicio.dicas.length).toBeGreaterThan(0);
@@ -180,29 +184,27 @@ describe('os exercícios', () => {
     }
   });
 
-  it.each(porExercicio.filter(([, e]) => e.codigoInicial.startsWith('// Dados de exemplo:')))(
-    '%s: os dados e as chamadas de exemplo funcionam com a implementação correta',
-    async (_nome, exercicio) => {
-      const arvore = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
-      const funcoes = arvore.body.filter((no) => no.type === 'FunctionDeclaration');
-      let codigo = exercicio.codigoInicial;
-      for (const funcao of [...funcoes].reverse()) codigo = codigo.slice(0, funcao.start) + codigo.slice(funcao.end);
-      const inicio = funcoes[0]!.start;
-      codigo = codigo.slice(0, inicio) + exercicio.solucao + '\n' + codigo.slice(inicio);
-      // Chamadas de funções que devolvem outras funções ficam comentadas no ponto
-      // de partida, pois a implementação ainda não existe. Aqui validamos seu uso.
-      const rodape = codigo.search(/\/\/ (Depois de implementar, descomente|Rode para experimentar)/);
-      if (rodape >= 0)
-        codigo =
-          codigo.slice(0, rodape) +
-          codigo.slice(rodape).replace(/^\/\/ (?=(?:const |let |console\.|await |\w+\.\w+\())/gm, '');
-      const resultado = await rodarLocal(codigo, exercicio.testes, exercicio.documentoInicial);
-      expect(resultado.erro, 'os dados de exemplo não podem quebrar a solução').toBeNull();
-      expect(
-        resultado.testes.filter((teste) => !teste.passou).map((teste) => `${teste.descricao}: ${teste.mensagem}`),
-      ).toEqual([]);
-    },
-  );
+  it.each(
+    porExercicio.filter(([, e]) => {
+      const arvore = parse(e.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
+      return (
+        arvore.body.some((no) => no.type === 'FunctionDeclaration') &&
+        arvore.body.some((no) => no.type === 'VariableDeclaration')
+      );
+    }),
+  )('%s: os dados e as chamadas de exemplo funcionam com a implementação correta', async (_nome, exercicio) => {
+    const arvore = parse(exercicio.codigoInicial, { ecmaVersion: 'latest', allowAwaitOutsideFunction: true });
+    const funcoes = arvore.body.filter((no) => no.type === 'FunctionDeclaration');
+    let codigo = exercicio.codigoInicial;
+    for (const funcao of [...funcoes].reverse()) codigo = codigo.slice(0, funcao.start) + codigo.slice(funcao.end);
+    const inicio = funcoes[0]!.start;
+    codigo = codigo.slice(0, inicio) + exercicio.solucao + '\n' + codigo.slice(inicio);
+    const resultado = await rodarLocal(codigo, exercicio.testes, exercicio.documentoInicial);
+    expect(resultado.erro, 'os dados de exemplo não podem quebrar a solução').toBeNull();
+    expect(
+      resultado.testes.filter((teste) => !teste.passou).map((teste) => `${teste.descricao}: ${teste.mensagem}`),
+    ).toEqual([]);
+  });
 
   it.each(porExercicio)('%s: a solução passa em todos os testes', async (_nome, exercicio) => {
     const resultado = await rodarLocal(exercicio.solucao, exercicio.testes, exercicio.documentoInicial);

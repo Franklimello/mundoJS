@@ -51,7 +51,7 @@ export const olaMundo: Licao = {
             'Faça o programa mostrar duas linhas: primeiro `Olá, mundo!` e, depois, uma frase sua sobre o que você quer aprender.',
         },
       ],
-      codigoInicial: linhas('// Escreva seus console.log abaixo', ''),
+      codigoInicial: '',
       testes: [
         {
           descricao: 'A primeira linha é “Olá, mundo!”',
@@ -78,7 +78,7 @@ igual(saida[0], 'Olá, mundo!', 'A primeira linha')`,
             'Mostre, em duas linhas, o número `2026` e depois o texto `Bem-vindo!`. Lembre: **número não leva aspas**; texto leva.',
         },
       ],
-      codigoInicial: linhas('// Mostre o número 2026 e, na linha de baixo, o texto Bem-vindo!', ''),
+      codigoInicial: '',
       testes: [
         {
           descricao: 'Mostra 2026 e, depois, “Bem-vindo!”',
@@ -106,7 +106,7 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
             'Faça o programa desenhar uma escadinha de asteriscos, com **exatamente** estas 3 linhas, uma abaixo da outra: `*`, depois `**`, depois `***`.',
         },
       ],
-      codigoInicial: linhas('// Mostre as três linhas da escadinha', ''),
+      codigoInicial: '',
       testes: [
         {
           descricao: 'Mostra as três linhas da escadinha',
@@ -128,7 +128,7 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
             'Com **um único** `console.log` de três valores, mostre uma linha só: `Olá 2026 Ana`. O primeiro e o terceiro são textos; o do meio é um número.',
         },
       ],
-      codigoInicial: linhas('// Um só console.log, com três valores separados por vírgula', ''),
+      codigoInicial: '',
       testes: [
         {
           descricao: 'Mostra “Olá 2026 Ana” numa linha só',
@@ -180,7 +180,7 @@ verdadeiro(!/["']2026["']/.test(codigoDoAluno), 'O número não leva aspas: escr
             'Mostre uma etiqueta em três linhas: `Produto: Caderno`, `Preço: 12` e `Quantidade: 2`. Em cada comando, separe o rótulo e o valor com vírgula. Os valores 12 e 2 devem ser números.',
         },
       ],
-      codigoInicial: '// Monte a etiqueta com três console.log\n',
+      codigoInicial: '',
       testes: [
         {
           descricao: 'A etiqueta tem rótulos e valores corretos',

@@ -52,13 +52,7 @@ export const textos: Licao = {
             'Com `nome` e `idade` já criados, monte a variável `mensagem` usando um template literal, para ela valer exatamente `Ana tem 25 anos.`. Depois, mostre-a.',
         },
       ],
-      codigoInicial: linhas(
-        'const nome = "Ana";',
-        'const idade = 25;',
-        '',
-        '// Monte a mensagem com crases e ${ }',
-        '',
-      ),
+      codigoInicial: linhas('const nome = "Ana";', 'const idade = 25;', ''),
       testes: [
         {
           descricao: 'A mensagem é “Ana tem 25 anos.”',
@@ -96,7 +90,7 @@ igual(mensagem, 'Ana tem 25 anos.', 'mensagem')`,
             'Com `nome` já criado, monte `saudacao` juntando textos com o `+`, para ela valer `Olá, Bia!`. Depois, mostre-a.',
         },
       ],
-      codigoInicial: linhas('const nome = "Bia";', '', '// Junte "Olá, ", o nome e "!" com o operador de soma', ''),
+      codigoInicial: linhas('const nome = "Bia";', ''),
       testes: [
         {
           descricao: 'saudacao vale “Olá, Bia!”',
@@ -131,7 +125,7 @@ verdadeiro(
             'Crie `tamanho` com a quantidade de caracteres da constante `palavra` e mostre-a. Deixe o computador contar: não digite o número.',
         },
       ],
-      codigoInicial: linhas('const palavra = "desenvolvimento";', '', '// Descubra o tamanho da palavra e mostre', ''),
+      codigoInicial: linhas('const palavra = "desenvolvimento";', ''),
       testes: [
         { descricao: 'tamanho vale 15', codigo: js`igual(tamanho, 15, 'tamanho')` },
         {
@@ -166,16 +160,7 @@ verdadeiro(
           ],
         },
       ],
-      codigoInicial: linhas(
-        'const frase = "cuidado com o degrau";',
-        '',
-        '// 1. grito: a frase em maiúsculas',
-        '',
-        '// 2. inicial: o primeiro caractere',
-        '',
-        '// 3. Mostre grito e inicial',
-        '',
-      ),
+      codigoInicial: linhas('const frase = "cuidado com o degrau";', ''),
       testes: [
         { descricao: 'grito vale “CUIDADO COM O DEGRAU”', codigo: js`igual(grito, 'CUIDADO COM O DEGRAU', 'grito')` },
         { descricao: 'inicial vale “c”', codigo: js`igual(inicial, 'c', 'inicial')` },
@@ -213,7 +198,7 @@ verdadeiro(
             'Crie `ultima` com a última letra de `palavra`, usando o tamanho do texto. Mostre o tamanho na primeira linha e a última letra na segunda.',
         },
       ],
-      codigoInicial: 'const palavra = "estudar";\n// Encontre a última posição sem contar as letras à mão\n',
+      codigoInicial: linhas('const palavra = "estudar";', ''),
       testes: [
         { descricao: 'A última letra é r', codigo: js`igual(ultima, 'r', 'ultima')` },
         {

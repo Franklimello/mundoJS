@@ -1,3 +1,4 @@
+import { linhas } from '../../ajudantes';
 import type { DocumentoWeb } from '@/engine/documento';
 import type { Licao, Trilha } from '../../tipos';
 
@@ -41,7 +42,7 @@ const selecionar: Licao = {
           texto: 'Selecione `#titulo` e troque seu texto para `"Olá, DOM!"`. Preserve o elemento original.',
         },
       ],
-      codigoInicial: '// Encontre o título e altere seu textContent.\n',
+      codigoInicial: '',
       documentoInicial: pagina('<h1 id="titulo">Minha página</h1><p>Esta é sua primeira alteração no DOM.</p>'),
       testes: [
         {
@@ -85,7 +86,7 @@ const varios: Licao = {
             'Encontre todos os elementos `.item` e mude o texto de cada um para `"Pronto para estudar"`. Não remova nenhum dos três itens.',
         },
       ],
-      codigoInicial: '// Percorra os elementos que têm a classe item.\n',
+      codigoInicial: '',
       documentoInicial: pagina(
         '<ul><li class="item">HTML</li><li class="item">CSS</li><li class="item">JavaScript</li></ul>',
       ),
@@ -133,7 +134,7 @@ const atributos: Licao = {
             'Em `#aviso`, escreva `"Salvo com sucesso"`, defina `style.color` como `"green"` e o atributo `role` como `"status"`.',
         },
       ],
-      codigoInicial: '// Atualize o texto, a cor e o papel do aviso.\n',
+      codigoInicial: '',
       documentoInicial: pagina('<p id="aviso">Ainda não salvo</p>'),
       testes: [
         {
@@ -186,7 +187,7 @@ const classes: Licao = {
             'Adicione a classe `destaque` a `#cartao` e remova a classe `apagado`. Preserve a classe `cartao` que já existe.',
         },
       ],
-      codigoInicial: '// Use classList para ajustar as classes do cartão.\n',
+      codigoInicial: '',
       documentoInicial: pagina(
         '<article id="cartao" class="cartao apagado"><h2>Estudar DOM</h2><p>Uma pequena conquista por dia.</p></article>',
       ),
@@ -234,7 +235,7 @@ const criar: Licao = {
             'Crie um novo `li` com o texto `"Eventos"` e acrescente-o ao final de `#assuntos`, preservando os dois itens existentes.',
         },
       ],
-      codigoInicial: '// Crie o novo item e acrescente-o à lista.\n',
+      codigoInicial: '',
       documentoInicial: pagina('<ul id="assuntos"><li>HTML</li><li>DOM</li></ul>'),
       testes: [
         {
@@ -280,7 +281,7 @@ const cliques: Licao = {
             'A cada clique em `#somar`, aumente um contador em 1 e mostre o valor em `#total`. Comece em 0 e aceite vários cliques seguidos.',
         },
       ],
-      codigoInicial: 'let cliques = 0;\n// Registre o evento do botão e atualize o total.\n',
+      codigoInicial: linhas('let cliques = 0;', ''),
       documentoInicial: pagina(
         '<h2>Seu contador</h2><output id="total">0</output><br><button id="somar" type="button">Somar 1</button>',
       ),
@@ -328,7 +329,7 @@ const formularios: Licao = {
             'No envio de `#cadastro`, impeça a navegação. Leia `#nome`, retire espaços das pontas e escreva em `#mensagem`: `"Digite seu nome."` quando estiver vazio, ou `"Olá, Ana!"` se a entrada for `" Ana "` (adaptando o nome informado).',
         },
       ],
-      codigoInicial: '// Ouça o submit do formulário e valide o nome.\n',
+      codigoInicial: '',
       documentoInicial: pagina(
         '<form id="cadastro"><label for="nome">Seu nome</label><br><input id="nome" name="nome"><button type="submit">Enviar</button></form><p id="mensagem" role="status"></p>',
       ),
@@ -385,7 +386,7 @@ const desafio: Licao = {
             'Em `#formulario`, leia `#tarefa` no envio e acrescente um `li` a `#tarefas`. O primeiro nó do item deve ser o texto limpo da tarefa; depois, adicione um botão `Remover` que exclui esse item. Atualize `#quantidade` com o número de tarefas, limpe o campo após adicionar e ignore entradas vazias. Use `textContent` para a entrada da pessoa.',
         },
       ],
-      codigoInicial: '// Monte sua lista interativa usando os elementos do HTML.\n',
+      codigoInicial: '',
       documentoInicial: pagina(
         '<h1>Minhas tarefas</h1><form id="formulario"><label for="tarefa">Nova tarefa</label><br><input id="tarefa" name="tarefa"><button type="submit">Adicionar</button></form><p>Tarefas: <output id="quantidade">0</output></p><ul id="tarefas"></ul>',
       ),

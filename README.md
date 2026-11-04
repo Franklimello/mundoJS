@@ -256,7 +256,7 @@ Os testes usam Stripe simulado e assinaturas de webhook geradas localmente; com 
 
 ### Dados no código inicial dos exercícios
 
-Exercícios que recebem dados devem trazer exemplos utilizáveis em `codigoInicial`: listas, objetos, textos, números ou funções simuladas, conforme o desafio. Mantenha a implementação que o aluno precisa escrever incompleta e inclua chamadas de exemplo. Chamadas que dependem de uma função ainda não implementada devolver outra função ficam comentadas, com orientação para experimentar depois.
+Exercícios que recebem dados devem trazer exemplos utilizáveis em `codigoInicial`: listas, objetos, textos, números ou funções simuladas, conforme o desafio. Mantenha a implementação que o aluno precisa escrever incompleta e inclua apenas chamadas que possam rodar antes de implementá-la. Os modelos do editor não contêm comentários: instruções e dicas ficam fora do código. Exercícios de escrita livre podem começar vazios.
 
 Os testes conferem que o ponto de partida não entrega acertos e que os dados e chamadas funcionam junto da solução correta. Atividades cujo objetivo é criar variáveis ou estruturas mantêm essa parte como tarefa do aluno. Rascunhos salvos têm prioridade sobre o modelo inicial; **Recomeçar** carrega o modelo atual após a confirmação, substituindo o código daquela folha.
 

@@ -52,16 +52,7 @@ export const variaveis: Licao = {
           ],
         },
       ],
-      codigoInicial: linhas(
-        '// 1. Crie a const nome',
-        '',
-        '// 2. Crie o let pontos, começando em 0',
-        '',
-        '// 3. Some 10 a pontos',
-        '',
-        '// 4. Mostre pontos com console.log',
-        '',
-      ),
+      codigoInicial: '',
       testes: [
         {
           descricao: 'Existe uma const nome com o seu nome',
@@ -93,7 +84,7 @@ igual(pontos, 10, 'pontos')`,
             'A variável `temperatura` começa valendo 20. Mude o valor dela para `31`, **sem criar outra variável**, e mostre-a.',
         },
       ],
-      codigoInicial: linhas('let temperatura = 20;', '', '// Mude o valor de temperatura para 31 e mostre-o', ''),
+      codigoInicial: linhas('let temperatura = 20;', ''),
       testes: [
         {
           descricao: 'temperatura passou a valer 31, sem uma segunda variável',
@@ -129,7 +120,7 @@ verdadeiro(
           tom: 'cuidado',
         },
       ],
-      codigoInicial: linhas('let a = "primeiro";', 'let b = "segundo";', '', '// Troque os valores de a e b', ''),
+      codigoInicial: linhas('let a = "primeiro";', 'let b = "segundo";', ''),
       testes: [
         { descricao: 'a passou a valer “segundo”', codigo: js`igual(a, 'segundo', 'a')` },
         { descricao: 'b passou a valer “primeiro”', codigo: js`igual(b, 'primeiro', 'b')` },
@@ -156,14 +147,7 @@ verdadeiro(
             'Crie `visitas` com `let`, começando em `0`. Some 1 a ela **três vezes**, uma linha para cada, e mostre o valor no final.',
         },
       ],
-      codigoInicial: linhas(
-        '// 1. Crie visitas, começando em 0',
-        '',
-        '// 2. Some 1 três vezes, uma linha para cada',
-        '',
-        '// 3. Mostre visitas',
-        '',
-      ),
+      codigoInicial: '',
       testes: [
         { descricao: 'visitas termina valendo 3', codigo: js`igual(visitas, 3, 'visitas')` },
         {
@@ -199,7 +183,7 @@ verdadeiro(
             'A carteira começa com 30 reais. Atualize `saldo` para receber 20 reais e, depois, gastar 15. Use o valor anterior em cada atualização e mostre o saldo final.',
         },
       ],
-      codigoInicial: 'let saldo = 30;\n// Receba 20, gaste 15 e mostre o que sobrou\n',
+      codigoInicial: linhas('let saldo = 30;', ''),
       testes: [
         { descricao: 'O saldo final é 35', codigo: js`igual(saldo, 35, 'saldo')` },
         { descricao: 'A saída mostra o saldo atualizado', codigo: js`igual(saida, ['35'], 'O saldo mostrado')` },
@@ -220,7 +204,7 @@ verdadeiro(
             'Rafa mudou de Recife para Natal. Mantenha `nome` como constante, troque a declaração de `cidade` para permitir atualização, atribua `"Natal"` e mostre nome e cidade no mesmo comando.',
         },
       ],
-      codigoInicial: 'const nome = "Rafa";\nconst cidade = "Recife";\n// Prepare cidade para mudar de valor\n',
+      codigoInicial: linhas('const nome = "Rafa";', 'const cidade = "Recife";', ''),
       testes: [
         { descricao: 'A cidade foi atualizada para Natal', codigo: js`igual(cidade, 'Natal', 'cidade')` },
         { descricao: 'Mostra Rafa e Natal juntos', codigo: js`igual(saida, ['Rafa Natal'], 'A apresentação')` },

@@ -46,14 +46,7 @@ export const contas: Licao = {
             'Uma loja vende itens a `preco` cada, o cliente leva `quantidade` e ganha um `desconto` em reais. Crie a variável `total` com a conta (preço vezes quantidade, menos o desconto) e mostre-a.',
         },
       ],
-      codigoInicial: linhas(
-        'const preco = 12;',
-        'const quantidade = 3;',
-        'const desconto = 5;',
-        '',
-        '// Calcule o total aqui e mostre com console.log',
-        '',
-      ),
+      codigoInicial: linhas('const preco = 12;', 'const quantidade = 3;', 'const desconto = 5;', ''),
       testes: [
         {
           descricao: 'Existe a variável total, com um número',
@@ -94,12 +87,7 @@ verdadeiro(
           texto: 'A constante `numero` vale 17. Crie `resto` com o **resto** da divisão de `numero` por 5 e mostre-o.',
         },
       ],
-      codigoInicial: linhas(
-        'const numero = 17;',
-        '',
-        '// Crie resto com o resto da divisão de numero por 5 e mostre',
-        '',
-      ),
+      codigoInicial: linhas('const numero = 17;', ''),
       testes: [
         { descricao: 'resto vale 2', codigo: js`igual(resto, 2, 'resto')` },
         {
@@ -123,7 +111,7 @@ verdadeiro(
             'Faça `resultado` valer `20` usando **apenas** os números 2, 3 e 4, com uma soma e uma multiplicação. Sem parênteses a conta dá outro valor: descubra onde eles precisam entrar.',
         },
       ],
-      codigoInicial: linhas('// Crie resultado, valendo 20, com os números 2, 3 e 4', ''),
+      codigoInicial: '',
       testes: [
         { descricao: 'resultado vale 20', codigo: js`igual(resultado, 20, 'resultado')` },
         {
@@ -154,13 +142,7 @@ verdadeiro(
           tom: 'cuidado',
         },
       ],
-      codigoInicial: linhas(
-        'const nota1 = 7;',
-        'const nota2 = 9;',
-        '',
-        '// Calcule a média e mostre com console.log',
-        '',
-      ),
+      codigoInicial: linhas('const nota1 = 7;', 'const nota2 = 9;', ''),
       testes: [
         { descricao: 'media vale 8', codigo: js`igual(media, 8, 'media')` },
         {
@@ -194,7 +176,7 @@ verdadeiro(linha.includes('nota1') && linha.includes('nota2'), 'Calcule a média
             'Uma atividade durou `minutos` minutos. Crie `restantes` com o resto da divisão por 60 e `horas` com a quantidade de horas completas. Mostre os dois valores nessa ordem: horas e minutos restantes.',
         },
       ],
-      codigoInicial: 'const minutos = 137;\n// Separe horas completas e minutos restantes\n',
+      codigoInicial: linhas('const minutos = 137;', ''),
       testes: [
         {
           descricao: '137 minutos equivalem a 2 horas e 17 minutos',
