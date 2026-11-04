@@ -116,6 +116,14 @@ Perguntas só são enviadas quando a pessoa escolhe **Enviar pergunta**. A inter
 
 Sem chave, quota disponível ou conexão, o tutor apresenta uma mensagem com opção de tentar novamente; o editor e o corretor continuam funcionando. Os testes do provedor usam respostas simuladas, sem consumir a API. Os limites também têm teste de concorrência com Postgres quando `TEST_DATABASE_URL` está configurada.
 
+## Investigador de erros
+
+Ao rodar um acesso como `numeros[3]` com `numeros = [10, 20, 30]`, o console mantém `undefined` e o investigador oferece **Por que apareceu undefined?**. A explicação mostra o índice, o tamanho e uma fotografia das posições naquele instante, uma pergunta para orientar a correção, uma pista opcional e o botão para revisar a linha. O aluno continua responsável por escolher e testar a mudança.
+
+Esta primeira versão observa leituras com colchetes sobre um nome (`lista[indice]`), inclusive em funções e laços, quando o índice inteiro está fora do intervalo e a leitura devolve `undefined`. Não interpreta todo `undefined` como erro: posições vazias ou com valor `undefined` dentro do intervalo e propriedades de objetos não geram esse diagnóstico. Escritas, chamadas por índice, cadeias opcionais e acessos produzidos somente pelos testes ficam fora da investigação. Não é um depurador passo a passo nem um avaliador de domínio.
+
+A observação acontece no mesmo iframe isolado da execução, sem uma segunda avaliação das expressões. São exibidos até três acessos distintos e as primeiras oito posições de cada array, com textos limitados; objetos aninhados e acessores não são percorridos para montar a tabela. A fotografia fica na memória da página, sem gravação nas métricas ou no progresso. Ao enviar uma pergunta ao tutor, a primeira observação pode acompanhar o diagnóstico e o código atual já compartilhados com o Gemini. As observações não reprovam testes nem alteram conclusões.
+
 ## Como o código do aluno roda
 
 O código do aluno **nunca roda na página do MundoJS**. Cada execução cria um `iframe` novo (`src/engine/sandbox.ts`):

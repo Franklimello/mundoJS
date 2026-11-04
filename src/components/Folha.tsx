@@ -665,6 +665,10 @@ export function Folha({
                   erro: execucao.dados.erro,
                   testes: execucao.dados.testes,
                   saida: execucao.dados.saida.slice(0, 5),
+                  investigacoes: execucao.dados.investigacoes?.slice(0, 1).map((item) => ({
+                    ...item,
+                    itens: item.itens.slice(0, 3),
+                  })),
                 }).slice(0, 3000)
               : 'O código atual ainda não foi executado. Peça ao aluno para usar Rodar ou Conferir se precisar de um diagnóstico.'
           }

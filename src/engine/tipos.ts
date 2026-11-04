@@ -38,11 +38,22 @@ export interface ResultadoTeste {
   mensagem?: string;
 }
 
+/** Fotografia limitada de um acesso observado durante a execução, sem avaliar o código outra vez. */
+export interface InvestigacaoIndice {
+  array: string;
+  indice: number;
+  tamanho: number;
+  linha: number;
+  coluna: number;
+  itens: { indice: number; valor: string }[];
+}
+
 export interface ResultadoExecucao {
   saida: LinhaSaida[];
   erro: ErroExecucao | null;
   testes: ResultadoTeste[];
   duracaoMs: number;
+  investigacoes?: InvestigacaoIndice[];
 }
 
 /** O que a página entrega ao executor, depois de analisar o código. */
@@ -53,6 +64,8 @@ export interface PedidoBruto {
   codigoOriginal: string;
   /** Nomes declarados no nível de cima, que os testes enxergam. */
   nomes: string[];
+  /** Nome livre de colisões do observador de leituras de índices. */
+  investigador?: string;
   testes: TesteDefinicao[];
   /** Quanto tempo esperar por `setTimeout`/`setInterval` antes de encerrar. */
   esperaMaximaMs: number;
@@ -86,4 +99,5 @@ export interface ResultadoBruto {
   erro: ErroBruto | null;
   testes: TesteBruto[];
   duracaoMs: number;
+  investigacoes?: InvestigacaoIndice[];
 }

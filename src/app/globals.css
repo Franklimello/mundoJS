@@ -1944,6 +1944,84 @@ pre {
   accent-color: var(--verde);
 }
 
+/* ---------------------------------------------------------- investigador */
+.investigador {
+  min-width: 0;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--cor-traco);
+  border-inline-start: 4px solid var(--tinta);
+  border-radius: 6px;
+  background: var(--fundo-suave);
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.investigador-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tinta-forte);
+  font-weight: 700;
+}
+.investigador > p + p {
+  margin-top: 0.5rem;
+}
+.investigador summary {
+  min-height: 44px;
+  padding-block: 0.75rem;
+  color: var(--tinta-forte);
+  cursor: pointer;
+  font-weight: 700;
+}
+.investigador summary:hover {
+  text-decoration: underline;
+}
+.investigador-acesso {
+  margin-top: 0.75rem;
+  border-block: 1px solid var(--cor-traco);
+}
+.investigador-conteudo {
+  display: grid;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+}
+.investigador .botao {
+  min-height: 44px;
+}
+.investigador table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: var(--papel);
+}
+.investigador caption {
+  padding-block: 0.5rem;
+  text-align: start;
+  color: var(--lapis);
+}
+.investigador th,
+.investigador td {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-traco);
+  text-align: start;
+  vertical-align: top;
+}
+.investigador th:first-child {
+  width: 5rem;
+}
+.investigador code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.investigador-pergunta {
+  color: var(--tinta-forte);
+}
+.investigador-nota {
+  margin-top: 0.75rem;
+  color: var(--lapis);
+  font-size: 0.875rem;
+}
+
 /* -------------------------------------------------------------- projetos */
 .resultado-trilha,
 .projeto-cartao,

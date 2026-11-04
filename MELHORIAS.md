@@ -2,6 +2,21 @@
 
 Lista retomada da avaliação do produto e atualizada conforme as entregas.
 
+## Aprender a raciocinar — próxima sequência
+
+- [x] Testar funções com diferentes entradas e apresentar o resultado de cada teste.
+- [x] Dar ajuda contextual com Gemini em níveis de pista, conceito e exemplo parecido.
+- [x] Oferecer projetos com etapas e correção automática, incluindo a calculadora de compras.
+- [x] Investigar acessos fora dos limites de arrays: fotografia dos índices, explicação, pergunta de reflexão e pista opcional, preservando a tentativa do aluno.
+- [ ] Ampliar o investigador com outros diagnósticos comprovados pela execução, começando por propriedades de objetos; cada diagnóstico precisa distinguir uso intencional e falha.
+- [ ] Prototipar execução passo a passo para um subconjunto explícito de JavaScript, com variáveis, iterações e saída. Validar a compreensão com alunos antes de ampliar a linguagem suportada.
+- [ ] Construir um mapa de aprendizagem com evidências de tentativas e revisão posterior. Separar conclusão de aula de domínio, evitando percentuais de competência sem critério validado.
+- [ ] Criar desafio diário e sequência de prática; avaliar retorno e conclusão antes de acrescentar competição.
+- [ ] Oferecer revisão de código após o acerto, com sugestões justificadas e opcionais.
+- [ ] Avaliar ranking, arena e entrevistas após ter validação de resultados adequada à comparação entre alunos.
+
+## Entregas e operação
+
 - [x] Preparar dados de entrada e chamadas de exemplo nos exercícios e projetos que recebem listas, objetos, textos, valores, promessas ou callbacks, preservando os desafios e rascunhos existentes.
 
 - [x] Emitir certificados privados por trilha concluída, com nome confirmado, registro único e download direto em PDF.
