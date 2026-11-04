@@ -1,5 +1,6 @@
 import { errosEAssincrono } from './trilhas/erros-e-assincrono';
 import { domEEventos } from './trilhas/dom-e-eventos';
+import { ferramentasDoJavascript } from './trilhas/ferramentas-do-javascript';
 import { javascriptDoZero } from './trilhas/javascript-do-zero';
 import { listasEObjetos } from './trilhas/listas-e-objetos';
 import { listasETextosDeVerdade } from './trilhas/listas-e-textos-de-verdade';
@@ -10,6 +11,7 @@ export const trilhas: Trilha[] = [
   javascriptDoZero,
   listasEObjetos,
   listasETextosDeVerdade,
+  ferramentasDoJavascript,
   errosEAssincrono,
   domEEventos,
 ];

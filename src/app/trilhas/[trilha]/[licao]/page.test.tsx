@@ -28,4 +28,24 @@ describe('página de lição protegida no servidor', () => {
     expect(pro.type).toBe(LicaoInterativa);
     expect(pro.props.exercicios.length).toBeGreaterThan(0);
   });
+  it('integra Math, JSON e Date ao mesmo acesso, rascunho e corretor das demais trilhas', async () => {
+    for (const licao of [
+      'math-arredondamentos',
+      'math-valores',
+      'math-sorteios',
+      'json-dados-e-textos',
+      'date-datas-e-prazos',
+    ]) {
+      const fechado = await Pagina(pedido('ferramentas-do-javascript', licao));
+      expect(fechado.type).toBe(ConteudoPro);
+      expect(fechado.props).not.toHaveProperty('exercicios');
+    }
+    mocks.pro.mockResolvedValue(true);
+    const aberto = await Pagina(pedido('ferramentas-do-javascript', 'math-arredondamentos'));
+    const fonte = buscarLicao('ferramentas-do-javascript', 'math-arredondamentos')!.licao;
+    expect(aberto.type).toBe(LicaoInterativa);
+    expect(aberto.props.exercicios[0].codigoInicial).toBe(fonte.exercicios[0]!.codigoInicial);
+    expect(aberto.props.exercicios[0].testes).toEqual(fonte.exercicios[0]!.testes);
+    expect(aberto.props.proxima.href).toBe('/trilhas/ferramentas-do-javascript/math-valores');
+  });
 });

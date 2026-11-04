@@ -4,6 +4,13 @@ import { chaveDoDesafio, DESAFIOS_RASCUNHO } from '@/conteudo/desafios-rascunho'
 
 const data = '2026-11-03T10:00:00.000Z';
 describe('dados recebidos pela API', () => {
+  it('aceita progresso e rascunhos da nova trilha de ferramentas', () => {
+    const base = 'ferramentas-do-javascript/math-arredondamentos';
+    expect(rascunhoValido(base, 'const notas = [7.2, 7.5];')).toBe(true);
+    expect(rascunhoValido(`${base}#3`, 'function parteInteira(numero) {}')).toBe(true);
+    expect(rascunhoValido(`${base}#4`, 'fora da lição')).toBe(false);
+    expect(progressoValido({ versao: 1, concluidas: {}, exerciciosConcluidos: { [`${base}#0`]: data } })).toBe(true);
+  });
   it('aceita rascunhos separados somente para desafios e modos cadastrados', () => {
     const chaves = DESAFIOS_RASCUNHO.map(chaveDoDesafio);
     expect(new Set(chaves).size).toBe(16);

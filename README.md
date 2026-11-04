@@ -145,7 +145,9 @@ src/
 
 ## Quantidade de exercícios
 
-O curso reúne **213 exercícios**: 63 em JavaScript do zero, 42 em Listas e objetos, 57 em Listas e textos de verdade, 43 em Erros e código assíncrono e 8 em DOM e eventos. A trilha DOM tem oito lições, com seleção de elementos, textos, estilos, classes, criação de elementos, cliques, formulários e uma lista de tarefas como desafio final. Ela segue o acesso Pro das trilhas avançadas.
+O curso reúne **229 exercícios**: 63 em JavaScript do zero, 42 em Listas e objetos, 57 em Listas e textos de verdade, 16 em Math, JSON e Date, 43 em Erros e código assíncrono e 8 em DOM e eventos. As trilhas adicionais seguem o acesso Pro.
+
+A trilha **Math, JSON e Date** apresenta ferramentas nativas, sem instalar dependências: três lições de Math (arredondamentos, valores e medidas, sorteios), uma de JSON e uma de Date. Os 16 exercícios têm dados no editor, dicas, narração e correção. Os testes de sorteios controlam Math.random e restauram a função ao terminar; os exercícios de datas usam UTC e entradas fixas. Referências: [Math e Date na especificação ECMAScript](https://tc39.es/ecma262/multipage/numbers-and-dates.html) e [JSON](https://tc39.es/ecma262/multipage/structured-data.html#sec-json-object).
 
 As atividades DOM têm abas HTML, CSS e JavaScript e uma prévia interativa. Rodar recria a página; Conferir também simula as interações descritas nos testes. HTML, CSS e JavaScript são salvos juntos no mesmo rascunho Postgres, sem mudar as chaves dos exercícios antigos. O rascunho livre oferece um modo de página web separado (`rascunho-web`), preservando o rascunho JavaScript existente.
 
@@ -223,7 +225,7 @@ Em `/planos`, o lançamento tem duas opções:
 | Plano              | Preço       | Tutor                                | Conteúdo                                      |
 | ------------------ | ----------- | ------------------------------------ | --------------------------------------------- |
 | Gratuito com conta | R$ 0        | 3 perguntas por mês calendário (UTC) | JavaScript do zero completa e rascunho livre  |
-| MundoJS Pro        | R$ 9,99/mês | 100 perguntas por ciclo mensal pago  | Todas as trilhas, 213 exercícios e 4 projetos |
+| MundoJS Pro        | R$ 9,99/mês | 100 perguntas por ciclo mensal pago  | Todas as trilhas, 229 exercícios e 4 projetos |
 
 Visitantes sem conta experimentam 1 pergunta por mês neste navegador. Cada envio ao tutor conta, inclusive explicações e exemplos. Falhas conhecidas do serviço devolvem a pergunta à franquia. A reserva é atômica no Postgres; uma interrupção abrupta do processo depois da reserva pode consumir a tentativa. Perguntas não acumulam. Os limites por hora e o teto diário global continuam como proteção de custo; não há promessa de uso ilimitado. A franquia da conta é a mesma em todos os dispositivos. A redução do gratuito preserva o uso já registrado, sem reiniciar a franquia.
 

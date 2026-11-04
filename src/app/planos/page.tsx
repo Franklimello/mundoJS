@@ -54,7 +54,7 @@ export default function Planos() {
           <ul>
             <li>Tudo do plano gratuito</li>
             <li>
-              <strong>Todas as trilhas e os {totalExercicios} exercícios, incluindo DOM e eventos</strong>
+              <strong>Todas as trilhas e os {totalExercicios} exercícios, incluindo Math, JSON, Date e DOM</strong>
             </li>
             <li>4 projetos práticos para construir e compartilhar</li>
             <li>
