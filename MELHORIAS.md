@@ -8,7 +8,7 @@ Lista retomada da avaliação do produto e atualizada conforme as entregas.
 - [x] Dar ajuda contextual com Gemini em níveis de pista, conceito e exemplo parecido.
 - [x] Oferecer projetos com etapas e correção automática, incluindo a calculadora de compras.
 - [x] Investigar acessos fora dos limites de arrays: fotografia dos índices, explicação, pergunta de reflexão e pista opcional, preservando a tentativa do aluno.
-- [ ] Ampliar o investigador com outros diagnósticos comprovados pela execução, começando por propriedades de objetos; cada diagnóstico precisa distinguir uso intencional e falha.
+- [x] Ampliar o investigador para propriedades ausentes de objetos, por ponto ou colchetes, diferenciando ausência de valores `undefined` existentes e oferecendo fotografia, reflexão e pista.
 - [ ] Prototipar execução passo a passo para um subconjunto explícito de JavaScript, com variáveis, iterações e saída. Validar a compreensão com alunos antes de ampliar a linguagem suportada.
 - [ ] Construir um mapa de aprendizagem com evidências de tentativas e revisão posterior. Separar conclusão de aula de domínio, evitando percentuais de competência sem critério validado.
 - [ ] Criar desafio diário e sequência de prática; avaliar retorno e conclusão antes de acrescentar competição.

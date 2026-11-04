@@ -50,6 +50,7 @@ export function finalizar(bruto: ResultadoBruto): ResultadoExecucao {
     testes: bruto.testes.map(traduzirTeste),
     duracaoMs: bruto.duracaoMs,
     ...(bruto.investigacoes?.length && { investigacoes: bruto.investigacoes }),
+    ...(bruto.investigacoesObjetos?.length && { investigacoesObjetos: bruto.investigacoesObjetos }),
   };
 }
 

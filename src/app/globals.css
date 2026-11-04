@@ -2009,6 +2009,9 @@ pre {
 .investigador th:first-child {
   width: 5rem;
 }
+.investigador-objeto th:first-child {
+  width: 45%;
+}
 .investigador code {
   white-space: pre-wrap;
   word-break: break-word;

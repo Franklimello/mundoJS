@@ -1,11 +1,14 @@
 import { FiSearch } from 'react-icons/fi';
-import type { InvestigacaoIndice } from '@/engine/tipos';
+import type { InvestigacaoIndice, InvestigacaoPropriedade } from '@/engine/tipos';
+import { InvestigadorObjeto } from './InvestigadorObjeto';
 
 export function Investigador({
   acessos,
+  propriedades = [],
   aoIrParaLinha,
 }: {
   acessos: InvestigacaoIndice[];
+  propriedades?: InvestigacaoPropriedade[];
   aoIrParaLinha?: (linha: number) => void;
 }) {
   return (
@@ -14,7 +17,7 @@ export function Investigador({
         <FiSearch aria-hidden="true" /> Investigador de erros
       </p>
       <p role="status">
-        Um acesso ao array devolveu <code>undefined</code>. Isso pode ser intencional; confira o índice.
+        Um acesso devolveu <code>undefined</code>. Isso pode ser intencional; confira o índice ou o nome da propriedade.
       </p>
       {acessos.map((acesso, numero) => (
         <details className="investigador-acesso" key={`${acesso.linha}:${acesso.coluna}:${acesso.indice}:${numero}`}>
@@ -80,6 +83,13 @@ export function Investigador({
             )}
           </div>
         </details>
+      ))}
+      {propriedades.map((acesso, indice) => (
+        <InvestigadorObjeto
+          key={`${acesso.linha}:${acesso.coluna}:${indice}`}
+          acesso={acesso}
+          aoIrParaLinha={aoIrParaLinha}
+        />
       ))}
       <p className="investigador-nota">
         Observação desta execução. Ela não altera seu código nem o resultado dos testes.

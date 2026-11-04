@@ -1,6 +1,7 @@
 import type {
   ErroBruto,
   InvestigacaoIndice,
+  InvestigacaoPropriedade,
   LinhaSaida,
   PedidoBruto,
   ResultadoBruto,
@@ -278,6 +279,8 @@ export function criarExecutor() {
     const temporizadores = new Set<number>();
     const repeticoes = new Set<number>();
     const investigacoes: InvestigacaoIndice[] = [];
+    const investigacoesObjetos: InvestigacaoPropriedade[] = [];
+    const propriedadesObservadas = new Set<string>();
     let observando = true;
 
     function lerIndice(
@@ -286,12 +289,52 @@ export function criarExecutor() {
       linha: number,
       coluna: number,
       nome: string,
+      porPonto = false,
     ) {
       // A leitura real acontece uma única vez, antes da observação.
       const valor = objeto[chave];
-      if (!observando || valor !== undefined || investigacoes.length >= 3) return valor;
+      if (!observando || valor !== undefined || investigacoes.length + investigacoesObjetos.length >= 3) return valor;
       try {
-        if (!Array.isArray(objeto) || !['number', 'string'].includes(typeof chave)) return valor;
+        if (!['number', 'string'].includes(typeof chave)) return valor;
+        if (!Array.isArray(objeto)) {
+          if (typeof objeto !== 'object' || objeto === null) return valor;
+          const prototipo = Object.getPrototypeOf(objeto);
+          if (prototipo !== Object.prototype && prototipo !== null) return valor;
+          const propriedade = String(chave);
+          if (propriedade in objeto) return valor;
+          const chaveDaObservacao = `${linha}:${coluna}:${propriedade}`;
+          if (propriedadesObservadas.has(chaveDaObservacao)) return valor;
+          const propriedades: InvestigacaoPropriedade['propriedades'] = [];
+          const chaves = Object.getOwnPropertyNames(objeto);
+          for (const chaveAtual of chaves.slice(0, 8)) {
+            const descricao = Object.getOwnPropertyDescriptor(objeto, chaveAtual);
+            if (!descricao) continue;
+            const item = descricao.value;
+            const texto = !('value' in descricao)
+              ? '(acessor: valor não lido)'
+              : item !== null && (typeof item === 'object' || typeof item === 'function')
+                ? Array.isArray(item)
+                  ? '[array]'
+                  : typeof item === 'function'
+                    ? '[função]'
+                    : '[objeto]'
+                : formatar(item, 0, [], true);
+            propriedades.push({ nome: chaveAtual.slice(0, 120), valor: texto.slice(0, 120) });
+          }
+          const rotulo = nome.slice(0, 80);
+          const propriedadeResumida = propriedade.length > 120 ? propriedade.slice(0, 119) + '…' : propriedade;
+          investigacoesObjetos.push({
+            objeto: rotulo,
+            propriedade: propriedadeResumida,
+            acesso: porPonto ? `${rotulo}.${propriedadeResumida}` : `${rotulo}[${JSON.stringify(propriedadeResumida)}]`,
+            linha,
+            coluna,
+            propriedades,
+            haMais: chaves.length > 8,
+          });
+          propriedadesObservadas.add(chaveDaObservacao);
+          return valor;
+        }
         const indice = Number(chave);
         if (!Number.isSafeInteger(indice) || String(indice) !== String(chave)) return valor;
         const tamanho = objeto.length;
@@ -563,6 +606,7 @@ export function criarExecutor() {
       testes,
       duracaoMs: Date.now() - inicio,
       ...(investigacoes.length && { investigacoes }),
+      ...(investigacoesObjetos.length && { investigacoesObjetos }),
     };
   };
 }
