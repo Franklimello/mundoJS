@@ -232,6 +232,7 @@ export function LicaoInterativa({
           <p role="status">Carregando seu próximo exercício…</p>
         ) : (
           <Folha
+            enunciado={exercicio.enunciado}
             tutorRef={tutor}
             aoPraticar={() => focarRegiao(pratica.current)}
             key={atual}

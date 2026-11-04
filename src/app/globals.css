@@ -1281,6 +1281,172 @@ pre {
   display: none;
 }
 
+.folha-mobile,
+.folha-mobile-resumo,
+.folha-enunciado-mobile {
+  display: none;
+}
+
+@media (max-width: 62rem), (pointer: coarse) {
+  .licao .licao-atalhos,
+  .licao .folha-barra,
+  .editor-atalhos {
+    position: static;
+  }
+
+  .folha-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--cor-traco);
+    background: var(--papel);
+  }
+
+  .folha-mobile-paineis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .folha-mobile button {
+    min-height: 44px;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--cor-traco);
+    border-radius: 0.3rem;
+    background: var(--papel);
+    color: var(--tinta-forte);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .folha-mobile button[aria-pressed='true'] {
+    background: var(--tinta);
+    color: var(--papel);
+  }
+
+  .folha[data-painel='resultado'] > .folha-edicao,
+  .folha[data-painel='enunciado'] > .folha-edicao,
+  .folha:not([data-painel='resultado']) > .folha-retorno-mobile,
+  .folha-teclado {
+    display: none;
+  }
+
+  .folha[data-painel='enunciado'] > .folha-enunciado-mobile {
+    display: block;
+    padding: 1rem;
+  }
+
+  .folha-mobile-resumo {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--cor-traco);
+    background: var(--fundo-suave);
+  }
+
+  .folha-retorno-mobile {
+    scroll-margin-top: 1rem;
+  }
+}
+
+.folha.folha-foco {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--topo-foco, 0px);
+  height: var(--altura-foco, 100dvh);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.folha-foco .folha-mobile {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.folha.folha-foco[data-painel='resultado'] > .folha-edicao,
+.folha.folha-foco[data-painel='enunciado'] > .folha-edicao,
+.folha.folha-foco:not([data-painel='resultado']) > .folha-retorno-mobile {
+  display: none;
+}
+
+.folha.folha-foco[data-painel='enunciado'] > .folha-enunciado-mobile,
+.folha-foco .folha-mobile-resumo {
+  display: block;
+}
+
+.folha-foco > .folha-edicao {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.folha-foco .folha-barra {
+  position: static;
+  flex: 0 0 auto;
+  padding: 0.35rem 0.5rem;
+}
+
+.folha-foco .folha-titulo {
+  display: none;
+}
+
+.folha-foco .papel:not([hidden]),
+.folha-foco .editor-com-atalhos {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.folha-foco .editor {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.folha-foco .cm-editor {
+  height: 100%;
+}
+
+.folha-foco .editor-atalhos {
+  position: static;
+  flex: 0 0 auto;
+}
+
+.folha-foco .editor-atalhos-ajuda,
+.folha-foco > .tutor,
+.folha-foco > .solucao,
+.folha-foco > .folha-teclado {
+  display: none;
+}
+
+.folha-foco .folha-retorno-mobile,
+.folha-foco .folha-enunciado-mobile {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.folha-foco .folha-edicao > [role='tabpanel']:not(.papel):not([hidden]) {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.folha-foco .web-editor {
+  height: 100%;
+  min-height: 8rem;
+}
+
 @media (max-width: 896px), (pointer: coarse) {
   .editor-com-atalhos {
     min-width: 0;
