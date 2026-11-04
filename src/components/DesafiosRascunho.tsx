@@ -5,10 +5,12 @@ import { DESAFIOS_RASCUNHO, type DesafioRascunho } from '@/conteudo/desafios-ras
 
 export function DesafiosRascunho({ modo }: { modo: DesafioRascunho['modo'] }) {
   const desafios = DESAFIOS_RASCUNHO.filter((desafio) => desafio.modo === modo);
-  const [escolhido, setEscolhido] = useState(desafios[0].id);
+  const [escolhido, setEscolhido] = useState(desafios[0]?.id ?? '');
   const desafio = desafios.find((item) => item.id === escolhido) ?? desafios[0];
   const id = useId();
   const categorias = [...new Set(desafios.map((item) => item.categoria))];
+
+  if (!desafio) return null;
 
   return (
     <section className="rascunho-desafio" aria-labelledby={`${id}-titulo`}>
