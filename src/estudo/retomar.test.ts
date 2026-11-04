@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PROGRESSO_VAZIO } from '@/progresso/tipos';
-import { escolherRetomada } from './retomar';
+import { escolherRetomada, hrefDaRetomada } from './retomar';
 
 const catalogo = [
   { trilha: 't', licao: 'a', titulo: 'A', tituloTrilha: 'T', total: 2 },
@@ -60,5 +60,35 @@ describe('próximo passo do aluno', () => {
     expect(escolherRetomada(catalogo, PROGRESSO_VAZIO, { trilha: 't', licao: 'removida', indice: 0 }).licao).toBe(
       catalogo[0],
     );
+  });
+});
+
+describe('entrada na atividade guiada', () => {
+  const inicio = [{ trilha: 'javascript-do-zero', licao: 'ola-mundo', titulo: 'Início', tituloTrilha: 'JS', total: 6 }];
+
+  it('envia novos alunos e tentativas incompletas da primeira atividade para o guia', () => {
+    expect(hrefDaRetomada(null)).toBe('/comecar');
+    expect(hrefDaRetomada(escolherRetomada(inicio, PROGRESSO_VAZIO))).toBe('/comecar');
+    expect(
+      hrefDaRetomada(
+        escolherRetomada(inicio, PROGRESSO_VAZIO, { trilha: 'javascript-do-zero', licao: 'ola-mundo', indice: 0 }),
+      ),
+    ).toBe('/comecar');
+  });
+
+  it('segue para a lição assim que o primeiro exercício estiver concluído', () => {
+    const progresso = { ...PROGRESSO_VAZIO, exerciciosConcluidos: { 'javascript-do-zero/ola-mundo#0': '2026-11-04' } };
+    expect(hrefDaRetomada(escolherRetomada(inicio, progresso))).toBe('/trilhas/javascript-do-zero/ola-mundo');
+  });
+
+  it('preserva a retomada de outras lições e a revisão do curso completo', () => {
+    expect(hrefDaRetomada(escolherRetomada(catalogo, PROGRESSO_VAZIO, { trilha: 't', licao: 'b', indice: 0 }))).toBe(
+      '/trilhas/t/b',
+    );
+    expect(
+      hrefDaRetomada(
+        escolherRetomada(inicio, { ...PROGRESSO_VAZIO, concluidas: { 'javascript-do-zero/ola-mundo': '2026-11-04' } }),
+      ),
+    ).toBe('/trilhas');
   });
 });
