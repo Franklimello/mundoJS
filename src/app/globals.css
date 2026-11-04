@@ -626,11 +626,14 @@ pre {
 
 @media (max-width: 24rem) {
   .primeira-etapas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     font-size: 0.8rem;
     gap: 0.5rem;
   }
 
   .primeira-etapas li {
+    flex-direction: column;
     gap: 0.25rem;
   }
 }
