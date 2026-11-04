@@ -63,6 +63,8 @@ describe('calculadora com prévia interativa', () => {
     expect(texto('estado')).toContain('desconto de 0 a 100%');
     alterar('desconto', '0');
     expect(texto('total')?.replace(/\s/g, ' ')).toBe('R$ 124,50');
+    alterar('desconto', '12.5');
+    expect(texto('total')?.replace(/\s/g, ' ')).toBe('R$ 108,94');
     alterar('quantidade-0', '-1');
     expect(texto('total')).toBe('—');
     alterar('quantidade-0', '2');

@@ -109,7 +109,7 @@ export const desafioCompras: Licao = {
       testes: [
         {
           descricao: 'Desconta a porcentagem e arredonda o total em centavos',
-          codigo: js`igual(aplicarDesconto(3550, 10), 3195); igual(aplicarDesconto(999, 15), 849); igual(aplicarDesconto(5, 50), 3); igual(aplicarDesconto(1200, 0), 1200); igual(aplicarDesconto(1200, 100), 0); igual(aplicarDesconto(0, 10), 0);`,
+          codigo: js`igual(aplicarDesconto(3550, 10), 3195); igual(aplicarDesconto(999, 15), 849); igual(aplicarDesconto(5, 50), 3); igual(aplicarDesconto(1000, 12.5), 875); igual(aplicarDesconto(1200, 0), 1200); igual(aplicarDesconto(1200, 100), 0); igual(aplicarDesconto(0, 10), 0);`,
         },
       ],
       dicas: [
