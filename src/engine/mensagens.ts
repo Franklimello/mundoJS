@@ -10,23 +10,48 @@ import type { ErroBruto, ErroExecucao } from './tipos';
 interface Traducao {
   mensagem: string;
   dica?: string;
+  exemplo?: ErroExecucao['exemplo'];
 }
 
 type Regra = [RegExp, (achado: RegExpMatchArray) => Traducao];
 
 const REGRAS_DE_EXECUCAO: Regra[] = [
   [
-    /^(\w+) is not defined$/,
-    (m) => ({
-      mensagem: `Não existe nada chamado “${m[1]}”.`,
-      dica: 'Confira se escreveu o nome igual ao que declarou (maiúsculas e minúsculas contam) e se declarou com let ou const antes de usar.',
+    /^(?:Console|CONSOLE|consol|cosole|consle) is not defined$/,
+    () => ({
+      mensagem: 'O JavaScript não reconheceu esse nome.',
+      dica: 'Se quer mostrar uma mensagem, escreva console.log com todas as letras minúsculas.',
+      exemplo: { codigo: 'console.log("Oi!");', explicacao: 'console e log são escritos com letras minúsculas.' },
     }),
   ],
   [
-    /^Cannot access '(\w+)' before initialization$/,
+    /^console\.(?:lgo|Log|LOG|logg|lg) is not a function$/,
+    () => ({
+      mensagem: 'Esse comando não existe no console.',
+      dica: 'Confira a ordem das letras: o comando para mostrar uma mensagem é console.log.',
+      exemplo: { codigo: 'console.log("Oi!");', explicacao: 'Depois do ponto vem log, nessa ordem.' },
+    }),
+  ],
+  [
+    /^(.+?) is not defined$/,
+    (m) => ({
+      mensagem: `Não existe nada chamado “${m[1]}”.`,
+      dica: 'Confira se escreveu o nome igual ao que declarou (maiúsculas e minúsculas contam) e se declarou com let ou const antes de usar.',
+      exemplo: {
+        codigo: 'const nome = "Ana";\nconsole.log(nome);',
+        explicacao: 'A variável é criada antes de ser usada. Para mostrar apenas um texto, coloque-o entre aspas.',
+      },
+    }),
+  ],
+  [
+    /^Cannot access '(.+)' before initialization$/,
     (m) => ({
       mensagem: `Você usou “${m[1]}” antes de criá-la.`,
       dica: 'Declare a variável com let ou const em uma linha acima do primeiro uso.',
+      exemplo: {
+        codigo: 'const pontos = 10;\nconsole.log(pontos);',
+        explicacao: 'Primeiro crie a variável; depois leia seu valor.',
+      },
     }),
   ],
   [
@@ -34,6 +59,10 @@ const REGRAS_DE_EXECUCAO: Regra[] = [
     () => ({
       mensagem: 'Você tentou mudar o valor de uma const.',
       dica: 'Use let no lugar de const quando o valor precisa mudar depois.',
+      exemplo: {
+        codigo: 'let pontos = 0;\npontos = pontos + 1;',
+        explicacao: 'let permite substituir o valor guardado na variável.',
+      },
     }),
   ],
   [
@@ -48,7 +77,11 @@ const REGRAS_DE_EXECUCAO: Regra[] = [
     /^Cannot read propert(?:y|ies) of (undefined|null) \(reading '(then|catch|finally)'\)$/,
     (m) => ({
       mensagem: `Você usou .${m[2]} em algo que não é uma promessa (veio ${m[1]}).`,
-      dica: 'A função que você chamou precisa devolver a promessa com return.',
+      dica: 'Confira de onde veio esse valor. Se veio de uma função, confira se ela usa return para devolver uma promessa. Só então use then, catch ou finally.',
+      exemplo: {
+        codigo: 'function buscar() {\n  return Promise.resolve("Pronto");\n}\nbuscar().then(console.log);',
+        explicacao: 'return entrega a promessa para quem chamou a função.',
+      },
     }),
   ],
   [
@@ -56,6 +89,11 @@ const REGRAS_DE_EXECUCAO: Regra[] = [
     (m) => ({
       mensagem: `Você tentou ler “${m[2]}” de algo que é ${m[1]}.`,
       dica: 'Antes do ponto precisa existir um valor. Confira se a variável foi preenchida e se o nome está certo.',
+      exemplo: {
+        codigo: 'const pessoa = { nome: "Ana" };\nconsole.log(pessoa.nome);',
+        explicacao:
+          'undefined significa que não há um valor definido; null representa uma ausência explícita. Confira o objeto ou o índice da lista antes de acessar a propriedade.',
+      },
     }),
   ],
   [
@@ -87,18 +125,44 @@ const REGRAS_DE_EXECUCAO: Regra[] = [
 
 const REGRAS_DE_SINTAXE: Regra[] = [
   [
+    /^Unexpected character '[“”‘’]'$/,
+    () => ({
+      mensagem: 'Estas aspas curvas não servem para abrir ou fechar textos em JavaScript.',
+      dica: 'Troque as aspas curvas por aspas retas, como " ou \'. No celular, você também pode usar o botão de aspas do editor.',
+      exemplo: { codigo: 'console.log("Oi!");', explicacao: 'Abra e feche o texto com o mesmo tipo de aspas retas.' },
+    }),
+  ],
+  [
     /^Unterminated string constant$/,
     () => ({
       mensagem: 'Faltou fechar as aspas deste texto.',
       dica: 'Todo texto abre e fecha com o mesmo tipo de aspas.',
+      exemplo: {
+        codigo: 'console.log("Oi!");',
+        explicacao: 'As duas aspas delimitam o texto; o parêntese fecha o comando.',
+      },
     }),
   ],
-  [/^Unterminated template$/, () => ({ mensagem: 'Faltou fechar a crase (`) deste texto.' })],
   [
-    /^Identifier '(\w+)' has already been declared$/,
+    /^Unterminated template$/,
+    () => ({
+      mensagem: 'Faltou fechar a crase (`) deste texto.',
+      dica: 'Uma mensagem aberta com crase também precisa terminar com crase.',
+      exemplo: {
+        codigo: 'const nome = "Ana";\nconsole.log(`Oi, ${nome}!`);',
+        explicacao: 'As crases delimitam o texto, e ${...} insere um valor nele.',
+      },
+    }),
+  ],
+  [
+    /^Identifier '(.+)' has already been declared$/,
     (m) => ({
       mensagem: `“${m[1]}” já foi declarada antes.`,
-      dica: 'Use outro nome, ou tire o let/const da segunda vez para só mudar o valor.',
+      dica: 'Use outro nome para a segunda variável. Se quer apenas atualizar a primeira, declare-a com let uma vez e depois atribua o novo valor sem repetir let.',
+      exemplo: {
+        codigo: 'let pontos = 1;\npontos = 2;',
+        explicacao: 'O nome é declarado uma única vez. Nas outras linhas, apenas atualizamos o valor.',
+      },
     }),
   ],
   [
@@ -108,7 +172,17 @@ const REGRAS_DE_SINTAXE: Regra[] = [
       dica: 'Se for parte de um texto, ele precisa estar entre aspas.',
     }),
   ],
-  [/^'return' outside of function$/, () => ({ mensagem: 'O return só funciona dentro de uma função.' })],
+  [
+    /^'return' outside of function$/,
+    () => ({
+      mensagem: 'O return só funciona dentro de uma função.',
+      dica: 'Para mostrar um valor fora de uma função, use console.log. Para devolver um resultado, escreva o return dentro da função.',
+      exemplo: {
+        codigo: 'function dobro(numero) {\n  return numero * 2;\n}\nconsole.log(dobro(3));',
+        explicacao: 'return devolve o resultado da função; console.log mostra esse resultado.',
+      },
+    }),
+  ],
   [
     /^Assigning to rvalue$/,
     () => ({
@@ -151,6 +225,7 @@ export function traduzirErroDeExecucao(erro: ErroBruto): ErroExecucao {
     nome: erro.nome,
     mensagem: traducao?.mensagem ?? erro.mensagem,
     ...(traducao?.dica && { dica: traducao.dica }),
+    ...(traducao?.exemplo && { exemplo: traducao.exemplo }),
     ...(erro.linha !== undefined && { linha: erro.linha }),
     ...(erro.coluna !== undefined && { coluna: erro.coluna }),
   };
@@ -167,6 +242,7 @@ export function traduzirErroDeSintaxe(
   posicao: { linha: number; coluna: number },
   noFim: boolean,
   depoisDeAwait = false,
+  delimitador?: { abre: string; fecha: string; linha: number; antesDoPontoEVirgula?: boolean },
 ): ErroExecucao {
   const limpa = mensagem.replace(/\s*\(\d+:\d+\)$/, '');
   // `await` dentro de uma função que não é async: o acorn só reclama do que vem depois dele.
@@ -176,20 +252,30 @@ export function traduzirErroDeSintaxe(
         dica: 'Escreva async antes de function (ou antes dos parênteses de uma função seta) para poder usar await dentro dela.',
       }
     : aplicar(REGRAS_DE_SINTAXE, limpa);
-  const semTraducao: Traducao = noFim
+  const semTraducao: Traducao = delimitador
     ? {
-        mensagem: 'O código termina antes da hora: falta fechar algo.',
-        dica: 'Confira se todo parêntese, chave e colchete que abriu foi fechado.',
+        mensagem: noFim
+          ? `O código termina antes da hora: falta fechar “${delimitador.fecha}”.`
+          : delimitador.antesDoPontoEVirgula
+            ? `Pode faltar fechar “${delimitador.fecha}” antes deste ponto e vírgula.`
+            : `Este fechamento não combina com “${delimitador.abre}”.`,
+        dica: `Confira o “${delimitador.abre}” aberto na linha ${delimitador.linha}. Ele deve ser fechado com “${delimitador.fecha}”.`,
       }
-    : {
-        mensagem: 'Tem um símbolo fora do lugar aqui.',
-        dica: 'Olhe esta linha e a anterior: pode faltar uma vírgula, um parêntese ou aspas.',
-      };
+    : noFim
+      ? {
+          mensagem: 'O código termina antes da hora: falta fechar algo.',
+          dica: 'Confira se todo parêntese, chave e colchete que abriu foi fechado.',
+        }
+      : {
+          mensagem: 'Tem um símbolo fora do lugar aqui.',
+          dica: 'Olhe esta linha e a anterior: pode faltar uma vírgula, um parêntese ou aspas.',
+        };
   const final = traducao ?? semTraducao;
   return {
     nome: 'SyntaxError',
     mensagem: final.mensagem,
     ...(final.dica && { dica: final.dica }),
+    ...(final.exemplo && { exemplo: final.exemplo }),
     linha: posicao.linha,
     coluna: posicao.coluna + 1,
   };
