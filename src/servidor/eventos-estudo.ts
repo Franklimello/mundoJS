@@ -1,6 +1,7 @@
 import type { Pool } from 'pg';
 import { buscarLicao } from '@/conteudo';
 import type { EventoEstudo } from '@/estudo/tipos';
+import { CANAIS_DE_ENTRADA } from '@/estudo/origem';
 
 const TIPOS = new Set([
   'visita',
@@ -22,6 +23,14 @@ export function eventoValido(valor: unknown): valor is EventoEstudo {
   )
     return false;
   if (e.tipo === 'exercicio_conferido' ? typeof e.passou !== 'boolean' : e.passou !== undefined) return false;
+  if (e.pagina !== undefined || e.canal !== undefined) {
+    if (
+      e.tipo !== 'visita' ||
+      !['inicio', 'comecar'].includes(e.pagina as string) ||
+      !CANAIS_DE_ENTRADA.includes(e.canal as (typeof CANAIS_DE_ENTRADA)[number])
+    )
+      return false;
+  }
   if (e.tipo === 'visita') return e.posicao === undefined;
   if (!e.posicao) return e.tipo === 'ajuda_pedida' || e.tipo === 'ajuda_recebida' || e.tipo === 'codigo_rodado';
   const p = e.posicao as Record<string, unknown>;
@@ -37,8 +46,8 @@ export function eventoValido(valor: unknown): valor is EventoEstudo {
 export async function salvarEvento(db: Pool, visitante: string, evento: EventoEstudo) {
   await db.query("DELETE FROM estudo_eventos WHERE criado_em < now() - interval '90 days'");
   await db.query(
-    `INSERT INTO estudo_eventos (id, visitante, tipo, trilha, licao, indice, passou)
-     SELECT $1, $2, $3, $4, $5, $6, $7
+    `INSERT INTO estudo_eventos (id, visitante, tipo, trilha, licao, indice, passou, pagina, canal)
+     SELECT $1, $2, $3, $4, $5, $6, $7, $8, $9
      WHERE (SELECT count(*) FROM estudo_eventos WHERE visitante = $2 AND criado_em > now() - interval '1 hour') < 500
      ON CONFLICT (id) DO NOTHING`,
     [
@@ -49,6 +58,8 @@ export async function salvarEvento(db: Pool, visitante: string, evento: EventoEs
       evento.posicao?.licao ?? null,
       evento.posicao?.indice ?? null,
       evento.passou ?? null,
+      evento.tipo === 'visita' ? (evento.pagina ?? null) : null,
+      evento.tipo === 'visita' ? (evento.canal ?? null) : null,
     ],
   );
 }

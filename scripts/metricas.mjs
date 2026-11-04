@@ -1,9 +1,14 @@
 import nextEnv from '@next/env';
 import pg from 'pg';
+import { readFile } from 'node:fs/promises';
 
 nextEnv.loadEnvConfig(process.cwd());
 if (!process.env.DATABASE_URL) throw new Error('Configure DATABASE_URL em .env.local.');
-const dias = Number(process.argv[2] || 30);
+const argumentos = process.argv.slice(2);
+const emJson = argumentos.includes('--json');
+const periodos = argumentos.filter((arg) => arg !== '--json');
+if (periodos.length > 1) throw new Error('Use pnpm metricas [dias] [--json].');
+const dias = Number(periodos[0] || 30);
 if (!Number.isInteger(dias) || dias < 1 || dias > 90) throw new Error('Escolha um período entre 1 e 90 dias.');
 const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
 try {
@@ -11,7 +16,7 @@ try {
   const resumo = await client.query(
     `
     WITH periodo AS (SELECT * FROM estudo_eventos WHERE criado_em >= now() - $1 * interval '1 day'),
-    visitantes AS (SELECT visitante, count(DISTINCT (criado_em AT TIME ZONE 'UTC')::date) AS dias FROM periodo GROUP BY visitante)
+    visitantes AS (SELECT visitante, count(DISTINCT (criado_em AT TIME ZONE 'America/Sao_Paulo')::date) AS dias FROM periodo GROUP BY visitante)
     SELECT
       (SELECT count(*) FROM visitantes) AS visitantes,
       (SELECT count(*) FROM visitantes WHERE dias > 1) AS voltaram_em_outro_dia,
@@ -45,11 +50,30 @@ try {
     LIMIT 20`,
     [dias],
   );
-  console.log(`MundoJS — últimos ${dias} dias (datas em UTC)`);
-  console.table(resumo.rows);
-  console.log('Exercícios para investigar: ausência de acerto no período não prova abandono.');
-  console.table(exercicios.rows);
-  console.log('Eventos do navegador são sinais de uso, não prova de domínio. Não incluem código nem conversas.');
+  const entrada = await client.query(await readFile(new URL('./metricas-entrada.sql', import.meta.url), 'utf8'), [
+    dias,
+    new Date(),
+  ]);
+  if (emJson) {
+    console.log(
+      JSON.stringify(
+        { dias, fuso: 'America/Sao_Paulo', resumo: resumo.rows[0], entrada: entrada.rows, exercicios: exercicios.rows },
+        null,
+        2,
+      ),
+    );
+  } else {
+    console.log(`MundoJS — últimos ${dias} dias (datas em São Paulo)`);
+    console.table(resumo.rows);
+    console.log('Da primeira entrada acompanhada à primeira atividade — por origem:');
+    console.table(entrada.rows);
+    console.log(
+      'Retorno: praticar em outro dia, em até 7 dias após o acerto. Só entram no cálculo os concluintes que já tiveram 7 dias completos.',
+    );
+    console.log('Exercícios para investigar: ausência de acerto no período não prova abandono.');
+    console.table(exercicios.rows);
+    console.log('Eventos do navegador são sinais de uso, não prova de domínio. Não incluem código nem conversas.');
+  }
 } finally {
   await client.end();
 }

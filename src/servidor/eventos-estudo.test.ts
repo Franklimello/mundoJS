@@ -8,6 +8,15 @@ const posicao = { trilha: 'javascript-do-zero', licao: 'ola-mundo', indice: 0 };
 describe('validação dos eventos', () => {
   it('aceita apenas tipos, exercícios e resultados válidos', () => {
     expect(eventoValido({ id: randomUUID(), tipo: 'visita' })).toBe(true);
+    expect(eventoValido({ id: randomUUID(), tipo: 'visita', pagina: 'comecar', canal: 'youtube' })).toBe(true);
+    expect(eventoValido({ id: randomUUID(), tipo: 'visita', pagina: 'comecar' })).toBe(false);
+    expect(eventoValido({ id: randomUUID(), tipo: 'visita', pagina: '/conta?email=privado', canal: 'youtube' })).toBe(
+      false,
+    );
+    expect(eventoValido({ id: randomUUID(), tipo: 'visita', pagina: 'inicio', canal: 'nome@exemplo.com' })).toBe(false);
+    expect(
+      eventoValido({ id: randomUUID(), tipo: 'exercicio_aberto', posicao, pagina: 'inicio', canal: 'youtube' }),
+    ).toBe(false);
     expect(eventoValido({ id: randomUUID(), tipo: 'exercicio_aberto', posicao })).toBe(true);
     expect(eventoValido({ id: randomUUID(), tipo: 'exercicio_conferido', posicao, passou: false })).toBe(true);
     expect(eventoValido({ id: randomUUID(), tipo: 'exercicio_conferido', posicao })).toBe(false);
@@ -26,6 +35,8 @@ describe.skipIf(!url)('eventos no Postgres real', () => {
   const aluno = `teste-${randomBytes(16).toString('hex')}`;
   beforeAll(async () => {
     await db.query(await readFile('db/migrations/003_eventos_estudo.sql', 'utf8'));
+    await db.query(await readFile('db/migrations/009_origem_entradas.sql', 'utf8'));
+    await db.query(await readFile('db/migrations/009_origem_entradas.sql', 'utf8'));
   });
   afterAll(async () => {
     await db.query('DELETE FROM estudo_eventos WHERE visitante = $1', [aluno]);
@@ -44,5 +55,17 @@ describe.skipIf(!url)('eventos no Postgres real', () => {
       passou: null,
     });
     expect(JSON.stringify(dados.rows)).not.toContain('NÃO GUARDAR');
+  });
+  it('registra somente a categoria da origem e a página conhecida', async () => {
+    const id = randomUUID();
+    await salvarEvento(db, aluno, {
+      id,
+      tipo: 'visita',
+      pagina: 'comecar',
+      canal: 'youtube',
+      ...{ url: 'NÃO GUARDAR' },
+    });
+    const dados = await db.query('SELECT pagina, canal FROM estudo_eventos WHERE id = $1', [id]);
+    expect(dados.rows[0]).toEqual({ pagina: 'comecar', canal: 'youtube' });
   });
 });
