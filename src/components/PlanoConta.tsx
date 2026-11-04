@@ -77,7 +77,7 @@ export function PlanoConta({ oferta = false }: { oferta?: boolean }) {
           {estado && (
             <p>
               {estado.uso.plano === 'pro'
-                ? 'Todas as trilhas e os 4 projetos estão liberados.'
+                ? 'Todas as trilhas e os projetos estão liberados.'
                 : 'Seu plano inclui JavaScript do zero e o rascunho livre. As outras trilhas e os projetos fazem parte do Pro.'}
             </p>
           )}

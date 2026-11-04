@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Conteudo } from '@/components/Conteudo';
+import { Texto } from '@/components/Texto';
 import { ProjetoInterativo } from '@/components/ProjetoInterativo';
 import { buscarProjeto, catalogoProjetos } from '@/projetos/catalogo';
 import { temProAtual } from '@/servidor/acesso-conteudo';
@@ -39,6 +40,12 @@ export default async function Projeto({ params }: Parametros) {
         Construa as funções no mesmo editor. O rascunho é salvo separadamente das lições. Use Rodar para experimentar e
         Conferir para testar o conjunto.
       </p>
+      {projeto.documentoInicial && (
+        <p className="projeto-orientacao">
+          Complete as quatro funções no início do código. O HTML, o CSS e a ligação com a tela já estão preparados.
+          Depois de Rodar, mude as quantidades e o desconto na prévia para experimentar.
+        </p>
+      )}
       <nav className="projeto-atalhos" aria-label="Atalhos do projeto">
         <a className="botao botao-leve" href="#etapas-do-projeto">
           Ver etapas
@@ -60,11 +67,45 @@ export default async function Projeto({ params }: Parametros) {
                 {indice + 1}. {etapa.titulo}
               </summary>
               <Conteudo blocos={etapa.enunciado} />
+              <details className="dica">
+                <summary>Ajuda nesta etapa</summary>
+                {etapa.dicas.map((dica, i) => (
+                  <p key={i}>
+                    <Texto>{dica}</Texto>
+                  </p>
+                ))}
+              </details>
               <Link href={`/trilhas/${projeto.trilha}/desafio-final`}>Rever o desafio na lição</Link>
             </details>
           ))}
         </section>
-        <ProjetoInterativo trilha={projeto.trilha} codigoInicial={projeto.codigoInicial} testes={projeto.testes} />
+        <ProjetoInterativo
+          trilha={projeto.trilha}
+          codigoInicial={projeto.codigoInicial}
+          testes={projeto.testes}
+          documentoInicial={projeto.documentoInicial}
+          enunciado={
+            <div className="projeto-enunciado">
+              <h2>Seu plano de construção</h2>
+              {projeto.etapas.map((etapa, indice) => (
+                <section key={indice}>
+                  <h3>
+                    {indice + 1}. {etapa.titulo}
+                  </h3>
+                  <Conteudo blocos={etapa.enunciado} />
+                  <details className="dica">
+                    <summary>Ajuda nesta etapa</summary>
+                    {etapa.dicas.map((dica, i) => (
+                      <p key={i}>
+                        <Texto>{dica}</Texto>
+                      </p>
+                    ))}
+                  </details>
+                </section>
+              ))}
+            </div>
+          }
+        />
       </div>
     </div>
   );

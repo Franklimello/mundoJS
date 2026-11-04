@@ -1,5 +1,6 @@
 import type { Trilha } from '../../tipos';
 import { date } from './date';
+import { desafioCompras } from './desafio-final';
 import { json } from './json';
 import { mathArredondamentos } from './math-arredondamentos';
 import { mathSorteios } from './math-sorteios';
@@ -13,5 +14,6 @@ export const ferramentasDoJavascript: Trilha = {
   modulos: [
     { titulo: 'Matemática com Math', licoes: [mathArredondamentos, mathValores, mathSorteios] },
     { titulo: 'Dados e datas', licoes: [json, date] },
+    { titulo: 'Desafio final', licoes: [desafioCompras] },
   ],
 };

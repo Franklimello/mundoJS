@@ -1,7 +1,21 @@
 import { buscarLicao } from '@/conteudo';
 import { parse } from 'acorn';
+import { dadosCalculadora, demonstracaoCalculadora, documentoCalculadora } from './calculadora';
 
 export const catalogoProjetos = [
+  {
+    trilha: 'ferramentas-do-javascript',
+    titulo: 'Minha calculadora de compras',
+    resumo: 'Construa em quatro etapas uma compra com quantidades, desconto, valores em reais e resumo JSON.',
+    resultados: [
+      'Calcular subtotal e desconto trabalhando com centavos.',
+      'Formatar valores em reais com Intl.NumberFormat.',
+      'Ver suas funções atualizarem uma tela de compras e gerarem um resumo JSON.',
+    ],
+    demonstracao: demonstracaoCalculadora,
+    dadosIniciais: dadosCalculadora,
+    documentoInicial: documentoCalculadora,
+  },
   {
     trilha: 'javascript-do-zero',
     titulo: 'Minha caixa de ferramentas de lógica',
@@ -80,6 +94,7 @@ export function buscarProjeto(slug: string) {
   return {
     ...meta,
     nomeTrilha: origem.trilha.titulo,
+    documentoInicial: 'documentoInicial' in meta ? meta.documentoInicial : undefined,
     etapas: origem.licao.exercicios,
     introducao: origem.licao.conteudo,
     codigoInicial: `${meta.dadosIniciais}\n\n${codigoInicial}\n\n${meta.demonstracao}\n`,
