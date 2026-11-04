@@ -9,7 +9,8 @@ Lista retomada da avaliação do produto e atualizada conforme as entregas.
 - [x] Oferecer projetos com etapas e correção automática, incluindo a calculadora de compras.
 - [x] Investigar acessos fora dos limites de arrays: fotografia dos índices, explicação, pergunta de reflexão e pista opcional, preservando a tentativa do aluno.
 - [x] Ampliar o investigador para propriedades ausentes de objetos, por ponto ou colchetes, diferenciando ausência de valores `undefined` existentes e oferecendo fotografia, reflexão e pista.
-- [ ] Prototipar execução passo a passo para um subconjunto explícito de JavaScript, com variáveis, iterações e saída. Validar a compreensão com alunos antes de ampliar a linguagem suportada.
+- [x] Disponibilizar revisão passo a passo de um subconjunto explícito de JavaScript, com estados reais da execução, variáveis, condições, iterações e saída incremental, sem alterar a conclusão de exercícios.
+- [ ] Validar a compreensão do passo a passo com alunos antes de ampliar a linguagem suportada.
 - [ ] Construir um mapa de aprendizagem com evidências de tentativas e revisão posterior. Separar conclusão de aula de domínio, evitando percentuais de competência sem critério validado.
 - [ ] Criar desafio diário e sequência de prática; avaliar retorno e conclusão antes de acrescentar competição.
 - [ ] Oferecer revisão de código após o acerto, com sugestões justificadas e opcionais.

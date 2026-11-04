@@ -126,6 +126,16 @@ Não interpreta todo `undefined` como erro: em arrays, só explica índices inte
 
 A observação acontece no mesmo iframe isolado da execução, sem uma segunda avaliação das expressões. São exibidos até três acessos distintos no total, com as primeiras oito posições do array ou propriedades próprias do objeto e textos limitados. Objetos aninhados e acessores não são percorridos para montar a tabela. A fotografia fica na memória da página, sem gravação nas métricas ou no progresso. Ao enviar uma pergunta ao tutor, uma observação de cada tipo pode acompanhar o diagnóstico e o código atual já compartilhados com o Gemini. As observações não reprovam testes nem alteram conclusões.
 
+## Execução passo a passo
+
+O botão **Passo a passo**, nos editores JavaScript sem prévia web, executa o código no mesmo iframe isolado e registra os estados reais. **Anterior**, **Próximo passo** e **Reiniciar revisão** percorrem esse histórico sem executar novamente. O painel mostra a linha, variáveis visíveis e mudanças nos valores resumidos, condições verdadeiras/falsas, voltas iniciadas dos laços e somente a saída do console disponível até o passo selecionado. Também permite voltar à linha no editor e incentiva prever o próximo estado.
+
+Esta versão registra comandos e limites de escopo; não pausa um programa vivo nem detalha cada subexpressão. Acompanha declarações `let`/`const` com nomes simples, cálculos e comparações, textos/templates, arrays, objetos com propriedades simples, leitura de propriedades, `if`/`else`, `for`, `for...of`, `while`, `break`/`continue` sem rótulos e `console.log`. Atualizações no cabeçalho de `for` aparecem na próxima condição ou volta. Laços aninhados mantêm seus contadores, e variáveis locais deixam a tabela ao sair do escopo.
+
+Funções, outras chamadas/métodos, escritas em propriedades, desestruturação, `var`, DOM, recursos assíncronos e demais construções ficam disponíveis em **Rodar/Conferir**. O modo recusa esses códigos antes de executá-los e oferece **Rodar normalmente**. Há limites de 20 mil caracteres, 3 mil nós de análise, profundidade 40 e 16 nomes de variáveis. O registro interrompe a execução ao chegar a 160 estados e informa que o programa pode não ter terminado. Os valores são resumidos em até 300 caracteres, com strings e coleções limitadas e profundidade de apresentação de dois níveis; o console mantém os limites gerais do executor.
+
+O histórico fica só na memória da página, não é salvo no Postgres e não é enviado ao tutor. Passo a passo não executa os testes, não conclui exercícios nem contabiliza conferências erradas. Uma execução suportada registra apenas o evento habitual de prática, sem estados ou código. Alterar o código sinaliza que o registro anterior está desatualizado; o retorno à linha só fica disponível para o código correspondente. A compreensão pedagógica ainda deve ser avaliada com alunos reais antes de ampliar o subconjunto.
+
 ## Como o código do aluno roda
 
 O código do aluno **nunca roda na página do MundoJS**. Cada execução cria um `iframe` novo (`src/engine/sandbox.ts`):

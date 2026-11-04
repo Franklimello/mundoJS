@@ -1,4 +1,5 @@
 import { analisar } from './analisar';
+import { prepararPassos } from './passos';
 import { traduzirErroDeExecucao } from './mensagens';
 import type {
   PedidoBruto,
@@ -51,6 +52,7 @@ export function finalizar(bruto: ResultadoBruto): ResultadoExecucao {
     duracaoMs: bruto.duracaoMs,
     ...(bruto.investigacoes?.length && { investigacoes: bruto.investigacoes }),
     ...(bruto.investigacoesObjetos?.length && { investigacoesObjetos: bruto.investigacoesObjetos }),
+    ...(bruto.passoAPasso && { passoAPasso: bruto.passoAPasso }),
   };
 }
 
@@ -69,14 +71,36 @@ export async function rodar(
     limiteDeVoltas?: number;
     limiteDoTesteMs?: number;
     orcamentoDosTestesMs?: number;
+    passoAPasso?: boolean;
   } = {},
 ): Promise<ResultadoExecucao> {
-  const analise = analisar(codigo);
+  let codigoExecutavel = codigo;
+  let observadorPassos: string | undefined;
+  if (opcoes.passoAPasso) {
+    const preparacao = prepararPassos(codigo);
+    if (preparacao.ok) {
+      codigoExecutavel = preparacao.codigo;
+      observadorPassos = preparacao.observador;
+    } else if (!preparacao.sintaxe) {
+      return {
+        saida: [],
+        erro: null,
+        testes: [],
+        duracaoMs: 0,
+        passoAPasso: {
+          passos: [],
+          limiteAtingido: false,
+          indisponivel: { mensagem: preparacao.mensagem, linha: preparacao.linha },
+        },
+      };
+    }
+  }
+  const analise = analisar(codigoExecutavel);
   if (!analise.ok) {
     return {
       saida: [],
       erro: analise.erro,
-      testes: testes.map((teste) => ({
+      testes: (opcoes.passoAPasso ? [] : testes).map((teste) => ({
         descricao: teste.descricao,
         passou: false,
         mensagem: 'Seu código tem um erro de escrita. Corrija-o e confira de novo.',
@@ -90,7 +114,8 @@ export async function rodar(
     codigoOriginal: codigo,
     nomes: analise.nomes,
     ...(analise.investigador && { investigador: analise.investigador }),
-    testes,
+    ...(observadorPassos && { observadorPassos }),
+    testes: opcoes.passoAPasso ? [] : testes,
     esperaMaximaMs: opcoes.esperaMaximaMs ?? ESPERA_MAXIMA_MS,
     limiteDeVoltas: opcoes.limiteDeVoltas ?? LIMITE_DE_VOLTAS,
     ...(opcoes.limiteDoTesteMs !== undefined && { limiteDoTesteMs: opcoes.limiteDoTesteMs }),
