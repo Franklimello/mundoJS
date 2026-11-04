@@ -86,6 +86,25 @@ export function NarracaoExercicio({ texto }: { texto: string }) {
             </button>
           </>
         )}
+      </div>
+      {(ativo || estado === 'concluido') && (
+        <p className="narracao-status" role="status">
+          {estado === 'falando'
+            ? 'Lendo o exercício em português.'
+            : estado === 'pausado'
+              ? 'Narração pausada.'
+              : estado === 'concluido'
+                ? 'Narração concluída. Agora é sua vez de tentar.'
+                : 'Ouça o enunciado e orientações para começar. A voz depende do seu dispositivo.'}
+        </p>
+      )}
+      {erro && (
+        <p className="narracao-erro" role="alert">
+          {erro}
+        </p>
+      )}
+      <details className="narracao-opcoes">
+        <summary>Opções do áudio</summary>
         <label className="narracao-velocidade" htmlFor={idVelocidade}>
           Velocidade
           <select
@@ -100,24 +119,11 @@ export function NarracaoExercicio({ texto }: { texto: string }) {
             <option value="1.5">1,5×</option>
           </select>
         </label>
-      </div>
-      <p className="narracao-status" role="status">
-        {estado === 'falando'
-          ? 'Lendo o exercício em português.'
-          : estado === 'pausado'
-            ? 'Narração pausada.'
-            : estado === 'concluido'
-              ? 'Narração concluída. Agora é sua vez de tentar.'
-              : 'Ouça o enunciado e orientações para começar. A voz depende do seu dispositivo.'}
-      </p>
-      {erro && (
-        <p className="narracao-erro" role="alert">
-          {erro}
-        </p>
-      )}
-      <details className="narracao-texto">
-        <summary>Texto da narração</summary>
-        <p>{texto}</p>
+        <p>A voz depende do seu dispositivo. Ouça o enunciado e as orientações para começar.</p>
+        <details className="narracao-texto">
+          <summary>Texto da narração</summary>
+          <p>{texto}</p>
+        </details>
       </details>
     </div>
   );

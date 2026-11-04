@@ -1,7 +1,14 @@
 'use client';
 
-import { type Ref, useEffect, useImperativeHandle, useRef } from 'react';
-import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
+import { type Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+  completionKeymap,
+  hasNextSnippetField,
+  nextSnippetField,
+} from '@codemirror/autocomplete';
 import {
   cursorCharLeft,
   cursorCharRight,
@@ -18,7 +25,7 @@ import {
 } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { bracketMatching, HighlightStyle, indentOnInput, indentUnit, syntaxHighlighting } from '@codemirror/language';
-import { EditorState, StateEffect, StateField } from '@codemirror/state';
+import { Annotation, EditorSelection, EditorState, StateEffect, StateField } from '@codemirror/state';
 import {
   Decoration,
   type DecorationSet,
@@ -31,6 +38,8 @@ import {
 } from '@codemirror/view';
 import { tags as t } from '@lezer/highlight';
 import { inserirAtalho } from '@/editor/inserir-atalho';
+import type { ControlesEditor } from '@/editor/controles';
+import { aplicarModelo, MODELOS_CODIGO } from '@/editor/modelos';
 
 const SIMBOLOS = [
   { texto: '{ }', nome: 'Inserir chaves', abre: '{', fecha: '}' },
@@ -86,6 +95,7 @@ const ACOES_MOVEIS = [
  */
 
 const definirLinhaComErro = StateEffect.define<number | null>();
+const textoAtualizadoDeFora = Annotation.define<boolean>();
 
 /** Marca a linha do erro. Qualquer edição apaga a marca: ela já pode não valer mais. */
 const campoDaLinhaComErro = StateField.define<DecorationSet>({
@@ -170,7 +180,7 @@ const cores = HighlightStyle.define([
 ]);
 
 export interface EditorCodigoProps {
-  controleRef?: Ref<{ focar: () => void }>;
+  controleRef?: Ref<ControlesEditor>;
   valor: string;
   onChange: (valor: string) => void;
   onRodar: () => void;
@@ -198,7 +208,33 @@ export default function EditorCodigo({
   const raiz = useRef<HTMLDivElement>(null);
   const barra = useRef<HTMLDivElement>(null);
   const visao = useRef<EditorView | null>(null);
-  useImperativeHandle(controleRef, () => ({ focar: () => visao.current?.focus() }), []);
+  const [modelos, setModelos] = useState(false);
+  const [temCampos, setTemCampos] = useState(false);
+  useImperativeHandle(
+    controleRef,
+    () => ({
+      focar: () => visao.current?.focus(),
+      irParaLinha: (numero) => {
+        const view = visao.current;
+        if (!view || !Number.isInteger(numero) || numero < 1 || numero > view.state.doc.lines) return;
+        const linha = view.state.doc.line(numero);
+        view.dispatch({
+          selection: EditorSelection.cursor(linha.from),
+          effects: EditorView.scrollIntoView(linha.from, { y: 'center' }),
+        });
+        view.focus();
+      },
+      inserirDados: (texto) => {
+        const view = visao.current;
+        if (!view || view.state.doc.toString().includes(texto.trim())) return;
+        view.dispatch(
+          inserirAtalho(view.state.update({ selection: EditorSelection.cursor(0) }).state, texto.trim() + '\n\n'),
+        );
+        view.focus();
+      },
+    }),
+    [],
+  );
   // As funções mais recentes, sem recriar o editor a cada letra digitada.
   const acoes = useRef({ onChange, onRodar, onConferir });
   useEffect(() => {
@@ -253,6 +289,7 @@ export default function EditorCodigo({
           javascript(),
           syntaxHighlighting(cores),
           EditorState.tabSize.of(2),
+          EditorState.allowMultipleSelections.of(true),
           indentUnit.of('  '),
           EditorView.lineWrapping,
           EditorView.scrollMargins.of(() => ({ top: barra.current?.offsetHeight ?? 0 })),
@@ -266,7 +303,9 @@ export default function EditorCodigo({
           campoDaLinhaComErro,
           tema,
           EditorView.updateListener.of((atualizacao) => {
-            if (atualizacao.docChanged) acoes.current.onChange(atualizacao.state.doc.toString());
+            setTemCampos(hasNextSnippetField(atualizacao.state));
+            if (atualizacao.docChanged && !atualizacao.transactions.every((tr) => tr.annotation(textoAtualizadoDeFora)))
+              acoes.current.onChange(atualizacao.state.doc.toString());
           }),
         ],
       }),
@@ -286,7 +325,11 @@ export default function EditorCodigo({
     const view = visao.current;
     if (!view) return;
     const atual = view.state.doc.toString();
-    if (atual !== valor) view.dispatch({ changes: { from: 0, to: atual.length, insert: valor } });
+    if (atual !== valor)
+      view.dispatch({
+        changes: { from: 0, to: atual.length, insert: valor },
+        annotations: textoAtualizadoDeFora.of(true),
+      });
   }, [valor]);
 
   useEffect(() => {
@@ -303,23 +346,71 @@ export default function EditorCodigo({
   return (
     <div className="editor-com-atalhos" style={{ ['--pautas-minimas' as string]: pautasMinimas }}>
       <div ref={barra} className="editor-atalhos" role="group" aria-label="Atalhos de código para celular">
-        <p className="editor-atalhos-ajuda">Atalhos de código · deslize as linhas para ver mais</p>
-        <div className="editor-atalhos-linha" role="group" aria-label="Símbolos de JavaScript">
-          {SIMBOLOS.map(({ texto, nome, abre, fecha }) => (
-            <button
-              key={texto}
-              type="button"
-              aria-label={nome}
-              title={nome}
-              onPointerDown={(evento) => evento.preventDefault()}
-              onClick={() => executarAtalho((view) => view.dispatch(inserirAtalho(view.state, abre, fecha)))}
-            >
-              {texto}
-            </button>
-          ))}
+        <p className="editor-atalhos-ajuda">
+          {modelos
+            ? 'Escolha uma estrutura para preencher.'
+            : temCampos
+              ? 'Edite o texto selecionado e use Próximo campo.'
+              : 'Atalhos de código · deslize as linhas para ver mais'}
+        </p>
+        <div
+          className="editor-atalhos-linha"
+          role="group"
+          aria-label={modelos ? 'Modelos de JavaScript' : 'Símbolos de JavaScript'}
+        >
+          {modelos
+            ? MODELOS_CODIGO.map((modelo) => (
+                <button
+                  key={modelo.nome}
+                  type="button"
+                  aria-label={`Inserir modelo de ${modelo.nome}`}
+                  onPointerDown={(evento) => evento.preventDefault()}
+                  onClick={() =>
+                    executarAtalho((view) => {
+                      aplicarModelo(view, modelo.codigo);
+                      setModelos(false);
+                    })
+                  }
+                >
+                  {modelo.nome}
+                </button>
+              ))
+            : SIMBOLOS.map(({ texto, nome, abre, fecha }) => (
+                <button
+                  key={texto}
+                  type="button"
+                  aria-label={nome}
+                  title={nome}
+                  onPointerDown={(evento) => evento.preventDefault()}
+                  onClick={() => executarAtalho((view) => view.dispatch(inserirAtalho(view.state, abre, fecha)))}
+                >
+                  {texto}
+                </button>
+              ))}
         </div>
         <div className="editor-atalhos-acoes" role="group" aria-label="Edição e execução">
           <div className="editor-atalhos-linha">
+            <button
+              type="button"
+              aria-pressed={modelos}
+              onPointerDown={(evento) => evento.preventDefault()}
+              onClick={() => setModelos(!modelos)}
+            >
+              {modelos ? 'Símbolos' : 'Modelos'}
+            </button>
+            {temCampos && (
+              <button
+                type="button"
+                onPointerDown={(evento) => evento.preventDefault()}
+                onClick={() =>
+                  executarAtalho((view) => {
+                    nextSnippetField(view);
+                  })
+                }
+              >
+                Próximo campo
+              </button>
+            )}
             {ACOES_MOVEIS.map(({ texto, nome, comando }) => (
               <button
                 key={nome}

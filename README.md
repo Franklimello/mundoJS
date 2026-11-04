@@ -38,6 +38,8 @@ No primeiro acesso, os dados antigos do localStorage são importados; as chaves 
 
 Sem conta, o cookie identifica o visitante neste navegador; limpar esse cookie cria outra identidade. Com uma conta, o progresso e os rascunhos ficam vinculados ao usuário autenticado e podem ser recuperados em outro dispositivo. O progresso é mesclado sem apagar exercícios de outras abas e atualizado ao voltar à janela. Falhas de rede aparecem com uma opção para tentar novamente.
 
+O rascunho livre preserva as chaves antigas. Cada um dos 16 desafios tem uma chave própria, registrada na validação do servidor. Trocar de desafio ou modo aguarda a gravação da tentativa atual; uma falha mantém a atividade aberta para tentar novamente. O editor mostra os estados de carregamento, alterações pendentes, salvamento e confirmação do servidor. **Inserir dados do desafio** acrescenta os exemplos sem substituir a tentativa; os modelos de código podem ser desfeitos e têm campos preenchíveis. Erros da execução atual permitem voltar à linha indicada. Um resultado antigo é identificado quando o código muda.
+
 ## Conta opcional e recuperação de acesso
 
 Use **Entrar** no cabeçalho ou **Salvar meu progresso** depois de acertar um exercício. O cadastro pede e-mail e senha de pelo menos 12 caracteres. É preciso confirmar o e-mail antes de entrar. O estudo continua disponível sem cadastro.
@@ -68,7 +70,7 @@ A medição funciona sem um serviço externo, é enviada em segundo plano e não
 
 ## Narração dos exercícios
 
-Cada exercício oferece **Ouvir exercício**, com pausa, retomada, repetição, parada e velocidade ajustável. A narração só começa após um clique e termina ao trocar de exercício ou sair da página. O texto falado pode ser consultado em **Texto da narração**.
+Cada exercício oferece **Ouvir exercício**, com pausa, retomada, repetição, parada e velocidade ajustável. A narração só começa após um clique e termina ao trocar de exercício ou sair da página. Velocidade e **Texto da narração** ficam recolhidos em **Opções do áudio** para ocupar menos espaço.
 
 A primeira versão usa a [síntese de voz do navegador](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis), sem chamadas a uma API de áudio do MundoJS. Prefere uma voz brasileira; disponibilidade, qualidade e uso de serviço local ou remoto dependem do navegador e do dispositivo. Quando não há voz em português ou o motor não responde, a interface explica o problema e o enunciado permanece disponível.
 

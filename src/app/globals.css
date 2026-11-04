@@ -1089,6 +1089,46 @@ pre {
   gap: 0.4rem;
 }
 
+.folha-ferramentas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid var(--cor-traco);
+  flex: 0 0 auto;
+}
+
+.folha-salvamento {
+  color: var(--lapis);
+  font-size: 0.875rem;
+}
+
+.folha-resultado-antigo {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--cor-traco);
+  background: var(--marca-texto);
+  font-size: 0.95rem;
+}
+
+.folha-salvamento[data-estado='salvo'] {
+  color: var(--verde);
+}
+
+.folha-salvamento[data-estado='erro'] {
+  color: var(--vermelha);
+}
+
+.folha-ferramentas .botao {
+  min-height: 44px;
+  font-size: 0.875rem;
+}
+
+.folha-foco .folha-ferramentas button:disabled {
+  display: none;
+}
+
 .folha-confirma {
   display: inline-flex;
   align-items: center;
@@ -1921,6 +1961,23 @@ pre {
   gap: 0.5rem;
 }
 
+.narracao-opcoes {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.narracao-opcoes > summary {
+  min-height: 44px;
+  padding-block: 0.5rem;
+  cursor: pointer;
+  color: var(--tinta);
+}
+
+.narracao-opcoes > p,
+.narracao-opcoes .narracao-velocidade {
+  margin-top: 0.75rem;
+}
+
 .narracao-controles .botao {
   display: inline-flex;
   align-items: center;
@@ -2179,6 +2236,11 @@ pre {
 }
 
 @media (max-width: 42rem) {
+  .narracao {
+    padding: 0.5rem;
+    margin-block: 0.75rem;
+  }
+
   .folha {
     --fonte-editor: 0.875rem;
   }
