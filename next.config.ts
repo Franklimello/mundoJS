@@ -20,6 +20,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/documentacao/oop',
+        destination: '/documentacao/classes',
+        permanent: true,
+      },
+      {
+        source: '/documentacao/poo',
+        destination: '/documentacao/classes',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
