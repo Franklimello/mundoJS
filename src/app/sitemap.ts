@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/projetos',
     '/planos',
     '/rascunho',
+    '/codelab',
     '/documentacao',
     ...topicos.map((topico) => `/documentacao/${topico.slug}`),
     ...trilhas.map((trilha) => `/trilhas/${trilha.slug}`),

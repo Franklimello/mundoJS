@@ -4,12 +4,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { FiBookOpen, FiCode, FiCreditCard, FiDatabase, FiFileText, FiFolder, FiMenu, FiX } from 'react-icons/fi';
+import {
+  FiBookOpen,
+  FiCode,
+  FiCreditCard,
+  FiDatabase,
+  FiFileText,
+  FiFolder,
+  FiMenu,
+  FiTerminal,
+  FiX,
+} from 'react-icons/fi';
 import { ContaNavegacao } from './ContaNavegacao';
 
 const LINKS = [
   { href: '/trilhas', texto: 'Trilhas', icone: FiBookOpen },
   { href: '/projetos', texto: 'Projetos', icone: FiFolder },
+  { href: '/codelab', texto: 'CodeLab', icone: FiTerminal },
   { href: '/rascunho', texto: 'Rascunho', icone: FiCode },
   { href: '/sql', texto: 'SQL', icone: FiDatabase },
   { href: '/documentacao', texto: 'Documentação', icone: FiFileText },
