@@ -39,12 +39,14 @@ describe('dados recebidos pela API', () => {
     expect(rascunhoValido('doc/lacos/for-classico', 'for (let i = 0; i < 5; i++) {}')).toBe(true);
     expect(rascunhoValido('doc/regex/test', 'const ok = /\\d/.test(t);')).toBe(true);
     expect(rascunhoValido('doc/classes/class-e-constructor', 'class A {}')).toBe(true);
+    expect(rascunhoValido('doc/sql/select', "const q = 'SELECT * FROM t;';")).toBe(true);
     expect(rascunhoValido('doc/strings/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/arrays/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/objetos/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/lacos/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/regex/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/classes/inexistente', 'x')).toBe(false);
+    expect(rascunhoValido('doc/sql/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('rascunho-web', '{"mundojsWeb":1,"html":"<p>Teste</p>","css":"","javascript":""}')).toBe(
       true,
     );
