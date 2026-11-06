@@ -24,7 +24,9 @@ export default function Documentacao() {
             ⚡
           </span>
           <div>
-            <strong>Console SQL Interativo</strong>
+            <strong>
+              Console SQL Interativo <span className="plano-etiqueta doc-banner-pro-tag">MundoJS Pro</span>
+            </strong>
             <p>
               Pratique consultas reais em um banco SQLite em memória via WebAssembly, com 6 tabelas relacionais
               populadas e dados de exemplo.
@@ -40,7 +42,10 @@ export default function Documentacao() {
         {topicos.map((topico) => (
           <li key={topico.slug}>
             <Link href={`/documentacao/${topico.slug}`} className="doc-topico">
-              <h2>{topico.titulo}</h2>
+              <div className="doc-topico-topo">
+                <h2>{topico.titulo}</h2>
+                {topico.pro && <span className="plano-etiqueta">Pro</span>}
+              </div>
               <p>{topico.resumo}</p>
               <span className="doc-topico-contagem">{contarMetodos(topico)} métodos</span>
             </Link>

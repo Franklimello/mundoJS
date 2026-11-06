@@ -1,15 +1,29 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ConteudoPro } from '@/components/ConteudoPro';
 import { PlaygroundSql } from '@/components/PlaygroundSql';
+import { temProAtual } from '@/servidor/acesso-conteudo';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Console SQL Interativo · SQLite WebAssembly · MundoJS',
   alternates: { canonical: '/sql' },
   description:
     'Execute consultas SQL de verdade diretamente no navegador com SQLite via WebAssembly. Banco de dados relacional com 6 tabelas populadas, JOINs, agregações e suporte a DML.',
+  robots: { index: false, follow: true },
 };
 
-export default function PaginaSql() {
+export default async function PaginaSql() {
+  if (!(await temProAtual())) {
+    return (
+      <ConteudoPro
+        titulo="Console SQL Interativo (SQLite Real)"
+        descricao="Execute consultas SQL reais contra um banco SQLite em memória via WebAssembly com 6 tabelas relacionais completas no Pro."
+      />
+    );
+  }
+
   return (
     <div className="pagina secao">
       <p className="migalhas">

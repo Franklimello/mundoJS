@@ -4,6 +4,7 @@ import type { TopicoDoc } from '../tipos';
 export const sql: TopicoDoc = {
   slug: 'sql',
   titulo: 'Linguagem SQL e Banco de Dados',
+  pro: true,
   resumo:
     'Guia completo de SQL: consultas com SELECT e WHERE, ordenação, paginação, agrupamento com GROUP BY, relacionamentos com JOINs e comandos de manipulação INSERT, UPDATE e DELETE.',
   introducao: [

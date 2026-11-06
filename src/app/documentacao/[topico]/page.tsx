@@ -8,9 +8,12 @@ import { TreinoMetodo } from '@/components/TreinoMetodo';
 import { buscarTopico, topicos } from '@/documentacao';
 import type { MetodoDoc } from '@/documentacao/tipos';
 
+import { ConteudoPro } from '@/components/ConteudoPro';
+import { temProAtual } from '@/servidor/acesso-conteudo';
+
 type Parametros = { params: Promise<{ topico: string }> };
 
-export const dynamicParams = false;
+export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   return topicos.map((topico) => ({ topico: topico.slug }));
@@ -23,6 +26,7 @@ export async function generateMetadata({ params }: Parametros): Promise<Metadata
         title: `${topico.titulo} · Documentação`,
         description: topico.resumo,
         alternates: { canonical: `/documentacao/${topico.slug}` },
+        ...(topico.pro && { robots: { index: false, follow: true } }),
       }
     : {};
 }
@@ -35,6 +39,14 @@ function textoDeBusca(metodo: MetodoDoc, secao: string): string {
 export default async function TopicoDaDocumentacao({ params }: Parametros) {
   const topico = buscarTopico((await params).topico);
   if (!topico) notFound();
+  if (topico.pro && !(await temProAtual())) {
+    return (
+      <ConteudoPro
+        titulo={topico.titulo}
+        descricao="Estude o módulo completo de SQL com teoria aprofundada, 25 comandos essenciais, sintaxes, exemplos executáveis e treinos práticos no Pro."
+      />
+    );
+  }
   const idConteudo = `doc-${topico.slug}`;
 
   return (
