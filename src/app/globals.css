@@ -3015,3 +3015,794 @@ pre {
 .doc-treino-folha {
   margin-top: 1rem;
 }
+
+/* ------------------------------------------------------------- banner sql doc */
+
+.doc-sql-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 12px;
+  background: var(--papel);
+  box-shadow: 4px 4px 0 var(--cor-sombra-folha);
+}
+
+.doc-sql-banner-conteudo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.doc-sql-banner-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: 10px;
+  background: var(--marca-texto);
+  font-size: 1.4rem;
+}
+
+.doc-sql-banner-conteudo strong {
+  display: block;
+  color: var(--tinta-forte);
+  font-size: 1.125rem;
+  margin-bottom: 0.2rem;
+}
+
+.doc-sql-banner-conteudo p {
+  color: var(--lapis);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 48rem) {
+  .doc-sql-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ----------------------------------------------------------- console / playground sql */
+
+.sql-pagina-conteudo {
+  margin-top: 1.75rem;
+}
+
+.sql-playground {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sql-toast-aviso {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--verde) 10%, var(--papel));
+  color: var(--verde);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.sql-status-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--cor-traco);
+}
+
+.sql-motor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 20px;
+  background: var(--fundo-suave);
+  color: var(--tinta-forte);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sql-motor-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sql-tag-carregando,
+.sql-tag-executando {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--lapis);
+  font-weight: 500;
+}
+
+.sql-tag-sucesso {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--verde) 12%, transparent);
+  color: var(--verde);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sql-tag-erro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--vermelha) 12%, transparent);
+  color: var(--vermelha);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sql-layout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 68rem) {
+  .sql-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sql-coluna-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.sql-card-editor,
+.sql-card-resultados,
+.sql-card-esquema {
+  border: 1px solid var(--cor-traco);
+  border-radius: 12px;
+  background: var(--papel);
+  box-shadow: 4px 4px 0 var(--cor-sombra-folha);
+}
+
+.sql-editor-cabecalho,
+.sql-resultados-cabecalho,
+.sql-esquema-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--cor-traco);
+  background: var(--fundo-suave);
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+}
+
+.sql-editor-titulo,
+.sql-resultados-titulo,
+.sql-esquema-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: var(--tinta-forte);
+  font-size: 1rem;
+}
+
+.sql-editor-atalho-dica {
+  font-size: 0.82rem;
+  color: var(--lapis);
+}
+
+.sql-editor-atalho-dica kbd {
+  display: inline-block;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 4px;
+  background: var(--papel);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8em;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.sql-barra-atalhos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--papel);
+  border-bottom: 1px solid var(--cor-traco);
+}
+
+.sql-botao-atalho {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 6px;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--fonte-codigo);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sql-botao-atalho:hover {
+  background: var(--marca-texto);
+  border-color: var(--tinta);
+}
+
+.sql-editor-corpo {
+  position: relative;
+  border-bottom: 1px solid var(--cor-traco);
+}
+
+.editor-sql-container {
+  min-height: calc(var(--pauta) * 6);
+  max-height: 480px;
+  overflow: auto;
+}
+
+.sql-editor-acoes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--papel);
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+}
+
+.sql-botao-executar {
+  background: var(--tinta);
+  color: white;
+  border-color: var(--tinta);
+}
+
+.sql-botao-executar:hover:not(:disabled) {
+  background: var(--tinta-forte);
+}
+
+.sql-botao-restaurar {
+  margin-left: auto;
+  color: var(--ferrugem);
+}
+
+@media (max-width: 48rem) {
+  .sql-botao-restaurar {
+    margin-left: 0;
+  }
+}
+
+.sql-duracao-tempo {
+  font-size: 0.88rem;
+  color: var(--lapis);
+}
+
+.sql-duracao-tempo strong {
+  color: var(--grafite);
+}
+
+.sql-resultados-corpo {
+  padding: 1rem;
+  min-height: 180px;
+}
+
+.sql-estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--lapis);
+  font-size: 0.98rem;
+}
+
+.sql-carregador-pulso {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--cor-traco);
+  border-top-color: var(--tinta);
+  border-radius: 50%;
+  animation: sql-girar 0.8s linear infinite;
+}
+
+@keyframes sql-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sql-caixa-erro {
+  padding: 1.1rem;
+  border: 1px solid var(--vermelha);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--vermelha) 6%, var(--papel));
+  color: var(--vermelha);
+}
+
+.sql-erro-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.sql-erro-mensagem {
+  margin: 0 0 0.6rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--vermelha) 10%, var(--papel));
+  color: var(--vermelha);
+  font-family: var(--fonte-codigo);
+  font-size: 0.92rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sql-erro-dica {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--grafite);
+}
+
+.sql-caixa-mensagem-dml {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--verde) 8%, var(--papel));
+}
+
+.sql-icone-sucesso-dml {
+  color: var(--verde);
+  flex: none;
+  margin-top: 0.2rem;
+}
+
+.sql-mensagem-dml-texto {
+  font-weight: 700;
+  color: var(--verde);
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.sql-mensagem-dml-subtexto {
+  color: var(--grafite);
+  font-size: 0.92rem;
+}
+
+.sql-tabela-resultado-bloco + .sql-tabela-resultado-bloco {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--cor-traco);
+}
+
+.sql-tabela-resultado-contador {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tinta);
+  margin-bottom: 0.5rem;
+}
+
+.sql-tabela-envoltoria {
+  overflow-x: auto;
+  border: 1px solid var(--cor-traco);
+  border-radius: 8px;
+  background: var(--papel);
+  max-height: 440px;
+}
+
+.sql-tabela-dados {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  font-family: var(--fonte-codigo);
+}
+
+.sql-tabela-dados thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0.65rem 0.85rem;
+  background: var(--fundo-suave);
+  color: var(--tinta-forte);
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 2px solid var(--cor-traco);
+  white-space: nowrap;
+}
+
+.sql-th-linha-num,
+.sql-td-linha-num {
+  width: 40px;
+  text-align: center !important;
+  color: var(--lapis);
+  background: color-mix(in srgb, var(--fundo-suave) 50%, var(--papel));
+  font-size: 0.82rem;
+  user-select: none;
+  border-right: 1px solid var(--cor-traco);
+}
+
+.sql-tabela-dados tbody td {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--cor-pauta);
+  white-space: nowrap;
+}
+
+.sql-tabela-dados tbody tr:hover {
+  background: color-mix(in srgb, var(--marca-texto) 30%, transparent);
+}
+
+.sql-valor-nulo {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--lapis) 15%, transparent);
+  color: var(--lapis);
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.sql-valor-numero {
+  color: var(--ferrugem);
+  font-variant-numeric: tabular-nums;
+}
+
+.sql-tabela-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--lapis);
+}
+
+/* ----------------------------------------------------------- painel lateral esquema */
+
+.sql-card-esquema {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.sql-esquema-sub {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--lapis);
+  font-weight: normal;
+}
+
+.sql-esquema-intro {
+  padding: 0.75rem 1rem 0.5rem;
+  font-size: 0.88rem;
+  color: var(--lapis);
+}
+
+.sql-lista-tabelas {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sql-item-tabela {
+  border: 1px solid var(--cor-traco);
+  border-radius: 8px;
+  background: var(--papel);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.sql-item-tabela.aberta {
+  border-color: var(--tinta);
+}
+
+.sql-item-tabela-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.65rem;
+  background: var(--papel);
+}
+
+.sql-botao-toggle-tabela {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--grafite);
+}
+
+.sql-nome-tabela {
+  font-family: var(--fonte-codigo);
+  font-weight: 700;
+  color: var(--tinta-forte);
+  font-size: 0.95rem;
+}
+
+.sql-contagem-linhas {
+  font-size: 0.78rem;
+  color: var(--lapis);
+  background: var(--fundo-suave);
+  padding: 0.1rem 0.4rem;
+  border-radius: 12px;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+
+.sql-botao-consultar-rapido {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 4px;
+  background: var(--fundo-suave);
+  color: var(--tinta);
+  font-family: var(--fonte-codigo);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sql-botao-consultar-rapido:hover {
+  background: var(--marca-texto);
+  border-color: var(--tinta);
+}
+
+.sql-tabela-colunas-detalhe {
+  padding: 0.4rem 0.75rem 0.65rem;
+  background: var(--fundo-suave);
+  border-top: 1px dashed var(--cor-traco);
+}
+
+.sql-lista-colunas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sql-item-coluna {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-family: var(--fonte-codigo);
+}
+
+.sql-coluna-nome {
+  color: var(--grafite);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sql-tag-pk {
+  background: var(--marca-texto);
+  color: var(--tinta-forte);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.05rem 0.25rem;
+  border-radius: 3px;
+}
+
+.sql-coluna-tipo {
+  color: var(--lapis);
+  font-size: 0.78rem;
+}
+
+.sql-card-dica-didatica {
+  margin: 0.75rem;
+  padding: 0.85rem;
+  border: 1px dashed var(--cor-traco);
+  border-radius: 8px;
+  background: var(--papel);
+  font-size: 0.85rem;
+  color: var(--lapis);
+  line-height: 1.45;
+}
+
+.sql-dica-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--tinta);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.sql-card-dica-didatica p + p {
+  margin-top: 0.4rem;
+}
+
+/* ------------------------------------------------------------- seção exemplos */
+
+.sql-secao-exemplos {
+  margin-top: 0.5rem;
+}
+
+.sql-exemplos-cabecalho {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sql-exemplos-cabecalho h2 {
+  font-size: 1.4rem;
+  color: var(--tinta-forte);
+  margin-bottom: 0.25rem;
+}
+
+.sql-exemplos-cabecalho p {
+  font-size: 0.95rem;
+  color: var(--lapis);
+}
+
+.sql-filtros-categoria {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.sql-filtro-botao {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 20px;
+  background: var(--papel);
+  color: var(--grafite);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sql-filtro-botao:hover {
+  background: var(--marca-texto);
+}
+
+.sql-filtro-botao.ativo {
+  background: var(--tinta);
+  border-color: var(--tinta);
+  color: white;
+}
+
+.sql-grade-exemplos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.sql-cartao-exemplo {
+  border: 1px solid var(--cor-traco);
+  border-radius: 10px;
+  background: var(--papel);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 2px 2px 0 var(--cor-sombra-folha);
+  transition: transform 0.15s ease;
+}
+
+.sql-cartao-exemplo:hover {
+  border-color: var(--tinta);
+}
+
+.sql-cartao-exemplo-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sql-badge-categoria {
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sql-cat-básico {
+  background: color-mix(in srgb, var(--tinta) 12%, transparent);
+  color: var(--tinta);
+}
+
+.sql-cat-join {
+  background: color-mix(in srgb, var(--verde) 15%, transparent);
+  color: var(--verde);
+}
+
+.sql-cat-agrupamento {
+  background: color-mix(in srgb, var(--ferrugem) 15%, transparent);
+  color: var(--ferrugem);
+}
+
+.sql-cat-dml {
+  background: color-mix(in srgb, #8938bf 15%, transparent);
+  color: #8938bf;
+}
+
+.sql-botao-copiar {
+  background: transparent;
+  border: none;
+  color: var(--lapis);
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.sql-botao-copiar:hover {
+  background: var(--fundo-suave);
+  color: var(--grafite);
+}
+
+.sql-cartao-exemplo h3 {
+  font-size: 1.05rem;
+  color: var(--tinta-forte);
+  line-height: 1.25;
+}
+
+.sql-cartao-exemplo p {
+  font-size: 0.88rem;
+  color: var(--lapis);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.sql-exemplo-snippet {
+  margin: 0.35rem 0 0.5rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--fundo-suave);
+  border: 1px solid var(--cor-pauta);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-family: var(--fonte-codigo);
+  white-space: pre-wrap;
+  max-height: 90px;
+  overflow: hidden;
+  color: var(--grafite);
+}
+
+.sql-botao-carregar-exemplo {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.4rem;
+  min-height: 2.2rem;
+}

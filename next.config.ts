@@ -32,6 +32,21 @@ const nextConfig: NextConfig = {
         destination: '/documentacao/classes',
         permanent: true,
       },
+      {
+        source: '/playground/sql',
+        destination: '/sql',
+        permanent: true,
+      },
+      {
+        source: '/playground-sql',
+        destination: '/sql',
+        permanent: true,
+      },
+      {
+        source: '/console/sql',
+        destination: '/sql',
+        permanent: true,
+      },
     ];
   },
 };

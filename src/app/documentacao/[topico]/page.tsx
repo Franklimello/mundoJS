@@ -51,6 +51,26 @@ export default async function TopicoDaDocumentacao({ params }: Parametros) {
         ))}
       </div>
 
+      {topico.slug === 'sql' && (
+        <div className="doc-sql-banner">
+          <div className="doc-sql-banner-conteudo">
+            <span className="doc-sql-banner-icone" aria-hidden="true">
+              ⚡
+            </span>
+            <div>
+              <strong>Console SQL Interativo disponível!</strong>
+              <p>
+                Execute consultas reais contra um banco SQLite em memória via WebAssembly, com 6 tabelas populadas e
+                resultados em tempo real.
+              </p>
+            </div>
+          </div>
+          <Link href="/sql" className="botao botao-primario">
+            Abrir Console SQL →
+          </Link>
+        </div>
+      )}
+
       <div className="doc-layout">
         <nav className="doc-indice" aria-label={`Métodos de ${topico.titulo}`} data-indice-de={idConteudo}>
           <FiltroDocumentacao alvo={idConteudo} />
@@ -132,7 +152,15 @@ export default async function TopicoDaDocumentacao({ params }: Parametros) {
             </section>
           ))}
           <p className="doc-rodape">
-            Quer testar? Copie um exemplo e rode no <Link href="/rascunho">Rascunho</Link>.
+            {topico.slug === 'sql' ? (
+              <>
+                Quer rodar consultas de verdade? Experimente o <Link href="/sql">Console SQL Interativo</Link>.
+              </>
+            ) : (
+              <>
+                Quer testar? Copie um exemplo e rode no <Link href="/rascunho">Rascunho</Link>.
+              </>
+            )}
           </p>
         </div>
       </div>
