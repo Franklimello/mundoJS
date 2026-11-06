@@ -33,6 +33,8 @@ describe('dados recebidos pela API', () => {
   });
   it('limita código em bytes e permite apagar rascunhos existentes', () => {
     expect(rascunhoValido('rascunho-livre', 'console.log(1)')).toBe(true);
+    expect(rascunhoValido('doc/strings/trim', 'const limpa = busca.trim();')).toBe(true);
+    expect(rascunhoValido('doc/strings/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('rascunho-web', '{"mundojsWeb":1,"html":"<p>Teste</p>","css":"","javascript":""}')).toBe(
       true,
     );

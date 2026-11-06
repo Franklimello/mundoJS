@@ -2687,3 +2687,331 @@ pre {
     --fonte-editor: 0.8125rem;
   }
 }
+
+/* ------------------------------------------------------------ documentação */
+
+.doc-topicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-topico {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1.25rem 1.25rem 1.1rem;
+  border: 1px solid var(--cor-traco);
+  border-left: 4px solid var(--tinta);
+  background: var(--papel);
+  color: var(--grafite);
+  text-decoration: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.doc-topico:hover {
+  box-shadow: 0 6px 18px var(--cor-sombra-folha);
+}
+
+.doc-topico h2 {
+  color: var(--tinta-forte);
+  font-size: 1.35rem;
+}
+
+.doc-topico p {
+  font-size: 1rem;
+}
+
+.doc-topico-contagem {
+  margin-top: auto;
+  color: var(--lapis);
+  font-size: 0.9rem;
+}
+
+.doc-introducao > * + * {
+  margin-top: 0.6rem;
+}
+
+.doc-layout {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 2.5rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+.doc-indice {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.doc-indice-grupo {
+  margin-top: 1rem;
+}
+
+.doc-indice-titulo {
+  color: var(--lapis);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.doc-indice ul {
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-indice li a {
+  display: block;
+  padding: 0.15rem 0.5rem;
+  border-left: 2px solid var(--cor-traco);
+  text-decoration: none;
+}
+
+.doc-indice li a:hover {
+  border-left-color: var(--tinta);
+  background: var(--fundo-suave);
+}
+
+.doc-indice li a code,
+.doc-ancora code {
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+
+.doc-filtro {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.doc-filtro svg {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.6rem;
+  color: var(--lapis);
+}
+
+.doc-filtro input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem 0.4rem 2.1rem;
+  border: 1px solid var(--cor-traco);
+  border-radius: 4px;
+  background: white;
+  color: var(--grafite);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.doc-filtro-resultado {
+  min-height: 1.2em;
+  color: var(--lapis);
+  font-size: 0.85rem;
+}
+
+.doc-secao + .doc-secao {
+  margin-top: 3rem;
+}
+
+.doc-secao h2 {
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--grafite);
+  color: var(--tinta-forte);
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+}
+
+.doc-secao-descricao {
+  margin-top: 0.6rem;
+  color: var(--lapis);
+  font-size: 1rem;
+}
+
+.doc-metodo {
+  margin-top: 1.75rem;
+  scroll-margin-top: 1rem;
+}
+
+.doc-metodo > * + * {
+  margin-top: 0.9rem;
+}
+
+.doc-metodo h3 {
+  font-size: 1.3rem;
+}
+
+.doc-ancora {
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.doc-ancora:hover {
+  text-decoration: underline;
+}
+
+.doc-metodo:target h3 {
+  background: var(--marca-texto);
+}
+
+.doc-ficha {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.doc-ficha > div {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.doc-ficha dt {
+  color: var(--lapis);
+  font-size: 0.9rem;
+}
+
+.doc-ficha dd {
+  margin: 0;
+}
+
+.doc-sintaxe {
+  margin: 0;
+  overflow-x: auto;
+  color: var(--tinta);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.doc-rodape {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--cor-traco);
+  color: var(--lapis);
+  font-size: 1rem;
+}
+
+@media (max-width: 56rem) {
+  .doc-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .doc-indice {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .doc-indice-grupo {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- treino doc */
+
+.doc-treino-acoes {
+  margin-top: 1rem;
+}
+
+.doc-treino-gatilho {
+  gap: 0.5rem;
+}
+
+.doc-treino {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--cor-traco);
+  border-left: 4px solid var(--verde);
+  border-radius: 6px;
+  background: var(--fundo-suave);
+}
+
+.doc-treino-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.doc-treino-titulo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.doc-treino-selo {
+  color: var(--verde);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.doc-treino-titulo {
+  color: var(--tinta-forte);
+  font-size: 1.15rem;
+}
+
+.doc-treino-titulo code {
+  background: none;
+  padding: 0;
+}
+
+.doc-treino-fechar {
+  gap: 0.35rem;
+  min-height: 2.2rem;
+  font-size: 0.85rem;
+}
+
+.doc-treino-enunciado {
+  margin-top: 0.9rem;
+  font-size: 1.05rem;
+}
+
+.doc-treino-enunciado > * + * {
+  margin-top: 0.4rem;
+}
+
+.doc-treino-dicas {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px dashed var(--cor-traco);
+  border-radius: 4px;
+  background: var(--papel);
+  font-size: 0.95rem;
+}
+
+.doc-treino-dicas summary {
+  color: var(--tinta);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doc-treino-dicas ul {
+  margin: 0.5rem 0 0.25rem;
+  padding-left: 1.25rem;
+}
+
+.doc-treino-dicas li + li {
+  margin-top: 0.3rem;
+}
+
+.doc-treino-folha {
+  margin-top: 1rem;
+}

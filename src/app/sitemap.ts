@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { todasAsLicoes, trilhas } from '@/conteudo';
 import { trilhaGratuita } from '@/conta/planos';
+import { topicos } from '@/documentacao';
 import { URL_DO_SITE } from '@/seo/site';
 
 /** Somente páginas públicas: atividades Pro, contas e links compartilhados ficam fora. */
@@ -12,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/projetos',
     '/planos',
     '/rascunho',
+    '/documentacao',
+    ...topicos.map((topico) => `/documentacao/${topico.slug}`),
     ...trilhas.map((trilha) => `/trilhas/${trilha.slug}`),
     ...trilhas
       .filter((trilha) => trilhaGratuita(trilha.slug))
