@@ -35,8 +35,10 @@ describe('dados recebidos pela API', () => {
     expect(rascunhoValido('rascunho-livre', 'console.log(1)')).toBe(true);
     expect(rascunhoValido('doc/strings/trim', 'const limpa = busca.trim();')).toBe(true);
     expect(rascunhoValido('doc/arrays/map', 'const d = lista.map(x => x * 2);')).toBe(true);
+    expect(rascunhoValido('doc/objetos/keys', 'const k = Object.keys(o);')).toBe(true);
     expect(rascunhoValido('doc/strings/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('doc/arrays/inexistente', 'x')).toBe(false);
+    expect(rascunhoValido('doc/objetos/inexistente', 'x')).toBe(false);
     expect(rascunhoValido('rascunho-web', '{"mundojsWeb":1,"html":"<p>Teste</p>","css":"","javascript":""}')).toBe(
       true,
     );

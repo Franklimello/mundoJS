@@ -1,9 +1,10 @@
 import { arrays } from './topicos/arrays';
+import { objetos } from './topicos/objetos';
 import { strings } from './topicos/strings';
 import type { TopicoDoc } from './tipos';
 
 /** Na ordem em que aparecem no site. Para documentar um tópico novo, acrescente aqui. */
-export const topicos: TopicoDoc[] = [strings, arrays];
+export const topicos: TopicoDoc[] = [strings, arrays, objetos];
 
 export function buscarTopico(slug: string): TopicoDoc | undefined {
   return topicos.find((topico) => topico.slug === slug);
