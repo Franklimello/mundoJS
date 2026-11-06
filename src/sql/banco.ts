@@ -206,8 +206,10 @@ let promessaInicializacao: Promise<Database> | null = null;
 async function obterLocalDoWasm(): Promise<(arquivo: string) => string> {
   if (typeof window === 'undefined') {
     const path = await import('path');
-    const caminhoWasm = path.resolve('./public/sql-wasm.wasm');
-    return () => caminhoWasm;
+    return (arquivo: string) => {
+      const nome = arquivo || 'sql-wasm-browser.wasm';
+      return path.resolve('./public', nome);
+    };
   }
   return (arquivo: string) => `/${arquivo}`;
 }
