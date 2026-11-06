@@ -70,15 +70,15 @@ export default async function TopicoDaDocumentacao({ params }: Parametros) {
               ⚡
             </span>
             <div>
-              <strong>Console SQL Interativo disponível!</strong>
+              <strong>Console SQL Interativo e Desafios Práticos disponíveis!</strong>
               <p>
-                Execute consultas reais contra um banco SQLite em memória via WebAssembly, com 6 tabelas populadas e
-                resultados em tempo real.
+                Pratique consultas reais em um banco SQLite em memória via WebAssembly: resolva desafios com validação
+                automática, teste JOINs, agregações e DML em 6 tabelas populadas.
               </p>
             </div>
           </div>
           <Link href="/sql" className="botao botao-primario">
-            Abrir Console SQL →
+            Resolver Desafios de SQL →
           </Link>
         </div>
       )}

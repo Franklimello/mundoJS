@@ -16,7 +16,7 @@ beforeEach(() => {
 
 describe('página do console SQL interativo (/sql)', () => {
   it('contém metadados adequados para SEO e canonical', () => {
-    expect(metadata.title).toContain('Console SQL Interativo');
+    expect(metadata.title).toContain('Console SQL e Desafios Práticos');
     expect(metadata.alternates).toEqual({ canonical: '/sql' });
   });
 
@@ -25,7 +25,7 @@ describe('página do console SQL interativo (/sql)', () => {
     expect(elemento.type).toBe(ConteudoPro);
     const html = renderToStaticMarkup(elemento);
     expect(html).toContain('Incluído no MundoJS Pro');
-    expect(html).toContain('Console SQL Interativo');
+    expect(html).toContain('Console SQL e Desafios Práticos');
     expect(html).not.toContain('data-testid="playground-sql"');
   });
 
@@ -34,7 +34,7 @@ describe('página do console SQL interativo (/sql)', () => {
     const elemento = await PaginaSql();
     expect(elemento.type).not.toBe(ConteudoPro);
     const html = renderToStaticMarkup(elemento);
-    expect(html).toContain('Console SQL Interativo');
+    expect(html).toContain('Console SQL e Desafios Práticos');
     expect(html).toContain('Documentação');
     expect(html).toContain('/documentacao/sql');
     expect(html).toContain('SQLite');

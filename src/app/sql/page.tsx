@@ -7,10 +7,10 @@ import { temProAtual } from '@/servidor/acesso-conteudo';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Console SQL Interativo · SQLite WebAssembly · MundoJS',
+  title: 'Console SQL e Desafios Práticos · SQLite WebAssembly · MundoJS',
   alternates: { canonical: '/sql' },
   description:
-    'Execute consultas SQL de verdade diretamente no navegador com SQLite via WebAssembly. Banco de dados relacional com 6 tabelas populadas, JOINs, agregações e suporte a DML.',
+    'Resolva desafios práticos de SQL e execute consultas de verdade diretamente no navegador com SQLite via WebAssembly. Banco de dados relacional com 6 tabelas populadas e validação automática.',
   robots: { index: false, follow: true },
 };
 
@@ -18,8 +18,8 @@ export default async function PaginaSql() {
   if (!(await temProAtual())) {
     return (
       <ConteudoPro
-        titulo="Console SQL Interativo (SQLite Real)"
-        descricao="Execute consultas SQL reais contra um banco SQLite em memória via WebAssembly com 6 tabelas relacionais completas no Pro."
+        titulo="Console SQL e Desafios Práticos (SQLite Real)"
+        descricao="Resolva desafios práticos de SQL com validação automática e execute consultas reais contra um banco SQLite em memória via WebAssembly no Pro."
       />
     );
   }
@@ -33,14 +33,15 @@ export default async function PaginaSql() {
         <span aria-hidden="true"> · </span>
         <Link href="/documentacao/sql">SQL</Link>
         <span aria-hidden="true"> · </span>
-        <span>Console Interativo</span>
+        <span>Console e Desafios</span>
       </p>
 
-      <h1 className="titulo-de-pagina">Console SQL Interativo</h1>
+      <h1 className="titulo-de-pagina">Console SQL e Desafios Práticos</h1>
       <p className="secao-apoio">
-        Execute consultas SQL de verdade contra um banco <strong>SQLite em memória via WebAssembly</strong>. Explore 6
-        tabelas relacionais com dados reais, teste cláusulas <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code>,{' '}
-        <code>GROUP BY</code> e até comandos <code>INSERT</code> ou <code>UPDATE</code> diretamente no navegador.
+        Resolva desafios práticos de negócios com validação instantânea ou execute consultas livres contra um banco{' '}
+        <strong>SQLite em memória via WebAssembly</strong>. Explore 6 tabelas relacionais com dados reais, teste
+        cláusulas <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code>, <code>GROUP BY</code> e comandos de
+        modificação diretamente no navegador.
       </p>
 
       <div className="sql-pagina-conteudo">

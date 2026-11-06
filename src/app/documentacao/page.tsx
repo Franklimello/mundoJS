@@ -25,11 +25,11 @@ export default function Documentacao() {
           </span>
           <div>
             <strong>
-              Console SQL Interativo <span className="plano-etiqueta doc-banner-pro-tag">MundoJS Pro</span>
+              Console SQL e Desafios Práticos <span className="plano-etiqueta doc-banner-pro-tag">MundoJS Pro</span>
             </strong>
             <p>
-              Pratique consultas reais em um banco SQLite em memória via WebAssembly, com 6 tabelas relacionais
-              populadas e dados de exemplo.
+              Pratique consultas e resolva desafios reais em um banco SQLite em memória via WebAssembly, com 6 tabelas
+              relacionais e validação automática.
             </p>
           </div>
         </div>

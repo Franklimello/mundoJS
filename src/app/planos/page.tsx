@@ -59,7 +59,9 @@ export default function Planos() {
             </li>
             <li>{catalogoProjetos.length} projetos práticos para construir e compartilhar</li>
             <li>
-              <strong>Módulo completo de SQL e Console Interativo com SQLite real via WebAssembly</strong>
+              <strong>
+                Módulo completo de SQL, Desafios Práticos e Console Interativo com SQLite real via WebAssembly
+              </strong>
             </li>
             <li>
               <strong>{PLANO_PRO.perguntas} perguntas ao tutor por ciclo mensal</strong>
