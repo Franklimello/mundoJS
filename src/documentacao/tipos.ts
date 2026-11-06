@@ -65,4 +65,6 @@ export interface TopicoDoc {
   /** Parágrafos de abertura. Aceitam a mesma formatação do resumo. */
   introducao: string[];
   secoes: SecaoDoc[];
+  /** Indica se o tópico é restrito a assinantes do plano Pro. */
+  pro?: boolean;
 }

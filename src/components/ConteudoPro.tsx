@@ -5,11 +5,15 @@ export function ConteudoPro({
   titulo,
   projeto = false,
   trilha,
+  descricao,
 }: {
   titulo: string;
   projeto?: boolean;
   trilha?: string;
+  descricao?: string;
 }) {
+  const textoApoio = descricao ?? (projeto ? 'Construa este projeto com o Pro.' : 'Continue nesta trilha com o Pro.');
+
   return (
     <section className="pagina secao conteudo-pro" aria-labelledby="conteudo-pro-titulo">
       <p className="plano-etiqueta">Incluído no MundoJS Pro</p>
@@ -17,8 +21,8 @@ export function ConteudoPro({
         {titulo}
       </h1>
       <p className="secao-apoio">
-        {projeto ? 'Construa este projeto com o Pro.' : 'Continue nesta trilha com o Pro.'} Por R$ 9,99/mês, você libera
-        todas as trilhas, os projetos e 100 perguntas ao tutor por ciclo.
+        {textoApoio} Por R$ 9,99/mês, você libera todas as trilhas, os projetos práticos, o módulo e console de SQL com
+        SQLite real e 100 perguntas ao tutor por ciclo.
       </p>
       <div className="conta-acoes">
         <Link href="/planos" className="botao botao-principal">

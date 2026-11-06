@@ -2717,6 +2717,19 @@ pre {
   box-shadow: 0 6px 18px var(--cor-sombra-folha);
 }
 
+.doc-topico-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.doc-banner-pro-tag {
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  vertical-align: middle;
+}
+
 .doc-topico h2 {
   color: var(--tinta-forte);
   font-size: 1.35rem;
