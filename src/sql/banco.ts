@@ -223,6 +223,40 @@ export async function criarOuRestaurarBanco(): Promise<Database> {
   return banco;
 }
 
+/** Executa uma consulta em uma instância temporária e isolada com o esquema inicial */
+export async function executarSqlEmBancoNovo(codigoSql: string): Promise<ResultadoExecucaoSql> {
+  const locateFile = await obterLocalDoWasm();
+  const SQL = await initSqlJs({ locateFile });
+  const banco = new SQL.Database();
+  banco.run(ESQUEMA_INICIAL_SQL);
+  const inicio = performance.now();
+  try {
+    const resultados = banco.exec(codigoSql);
+    const duracaoMs = Math.round((performance.now() - inicio) * 100) / 100;
+    const tabelas: TabelaResultado[] = resultados.map((item) => ({
+      colunas: item.columns,
+      linhas: item.values,
+    }));
+    const linhasAfetadas = banco.getRowsModified();
+    return {
+      sucesso: true,
+      tabelas,
+      linhasAfetadas,
+      duracaoMs,
+    };
+  } catch (erro) {
+    const duracaoMs = Math.round((performance.now() - inicio) * 100) / 100;
+    return {
+      sucesso: false,
+      tabelas: [],
+      duracaoMs,
+      erro: erro instanceof Error ? erro.message : String(erro),
+    };
+  } finally {
+    banco.close();
+  }
+}
+
 export async function obterBanco(): Promise<Database> {
   if (instanciaBanco) return instanciaBanco;
   if (!promessaInicializacao) {

@@ -3819,3 +3819,461 @@ pre {
   padding: 0.4rem;
   min-height: 2.2rem;
 }
+
+/* ----------------------------------------------------------- desafios práticos de SQL */
+
+.sql-seletor-modo-topo {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.sql-botao-modo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.15rem;
+  background: var(--papel);
+  border: 1px solid var(--cor-traco);
+  border-radius: 10px;
+  color: var(--grafite);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 1px 1px 0 var(--cor-sombra-folha);
+}
+
+.sql-botao-modo:hover {
+  border-color: var(--tinta);
+  background: var(--fundo-suave);
+}
+
+.sql-botao-modo.ativo {
+  background: var(--tinta);
+  border-color: var(--tinta);
+  color: white;
+  box-shadow: 2px 2px 0 var(--cor-sombra-folha);
+}
+
+.sql-badge-progresso {
+  background: var(--verde);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
+.sql-botao-modo.ativo .sql-badge-progresso {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sql-badge-contador-exemplos {
+  background: var(--fundo-suave);
+  color: var(--lapis);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.sql-botao-modo.ativo .sql-badge-contador-exemplos {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.sql-card-desafio-ativo {
+  background: var(--papel);
+  border: 1px solid var(--cor-traco);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 2px 3px 0 var(--cor-sombra-folha);
+}
+
+.sql-desafio-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.sql-desafio-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sql-badge-dificuldade {
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sql-dif-iniciante {
+  background: color-mix(in srgb, var(--verde) 15%, transparent);
+  color: var(--verde);
+}
+
+.sql-dif-intermediário {
+  background: color-mix(in srgb, var(--ferrugem) 15%, transparent);
+  color: var(--ferrugem);
+}
+
+.sql-dif-avançado {
+  background: color-mix(in srgb, #9c27b0 15%, transparent);
+  color: #9c27b0;
+}
+
+.sql-cat-avançado {
+  background: color-mix(in srgb, #9c27b0 15%, transparent);
+  color: #9c27b0;
+}
+
+.sql-badge-concluido {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--verde);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 12px;
+}
+
+.sql-desafio-indice-contador {
+  font-size: 0.8rem;
+  color: var(--lapis);
+  font-weight: 600;
+}
+
+.sql-desafio-navegacao {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.sql-botao-nav-desafio {
+  background: var(--fundo-suave);
+  border: 1px solid var(--cor-traco);
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--grafite);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sql-botao-nav-desafio:hover:not(:disabled) {
+  background: var(--marca-texto);
+  border-color: var(--tinta);
+}
+
+.sql-botao-nav-desafio:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sql-desafio-titulo {
+  font-size: 1.35rem;
+  color: var(--tinta-forte);
+  margin-bottom: 0.5rem;
+}
+
+.sql-desafio-enunciado {
+  font-size: 1rem;
+  color: var(--grafite);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.sql-desafio-metadados {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--fundo-suave);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--cor-pauta);
+  font-size: 0.88rem;
+  margin-bottom: 0.85rem;
+}
+
+.sql-desafio-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sql-desafio-meta-item strong {
+  color: var(--tinta-forte);
+}
+
+.sql-desafio-tabelas-chips {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.sql-chip-tabela {
+  background: var(--papel);
+  border: 1px solid var(--cor-traco);
+  border-radius: 4px;
+  padding: 0.1rem 0.45rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--tinta);
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.sql-chip-tabela:hover {
+  background: var(--marca-texto);
+  border-color: var(--tinta);
+}
+
+.sql-desafio-dicas-sanfona {
+  border: 1px dashed var(--cor-traco);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  background: var(--papel);
+  margin-bottom: 0.85rem;
+}
+
+.sql-desafio-dicas-sanfona summary {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.sql-desafio-lista-dicas {
+  margin: 0.65rem 0 0.25rem 1.25rem;
+  padding: 0;
+  font-size: 0.88rem;
+  color: var(--grafite);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sql-desafio-acoes-apoio {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--cor-pauta);
+}
+
+.sql-botao-link-desafio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: none;
+  color: var(--lapis);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+  text-decoration: underline;
+}
+
+.sql-botao-link-desafio:hover {
+  color: var(--tinta-forte);
+}
+
+.sql-desafio-caixa-solucao {
+  margin-top: 0.85rem;
+  padding: 0.75rem 0.95rem;
+  background: var(--fundo-suave);
+  border: 1px solid var(--cor-traco);
+  border-radius: 8px;
+}
+
+.sql-solucao-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--tinta-forte);
+}
+
+.sql-solucao-codigo {
+  margin: 0;
+  padding: 0.65rem;
+  background: var(--papel);
+  border: 1px solid var(--cor-pauta);
+  border-radius: 6px;
+  font-family: var(--fonte-codigo);
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  color: var(--tinta-forte);
+}
+
+.sql-botao-validar-desafio {
+  background: var(--verde) !important;
+  border-color: var(--verde) !important;
+  color: white !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+}
+
+.sql-botao-validar-desafio:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.sql-banner-validacao {
+  display: flex;
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+  box-shadow: 2px 2px 0 var(--cor-sombra-folha);
+}
+
+.sql-banner-validacao.sucesso {
+  background: color-mix(in srgb, var(--verde) 12%, var(--papel));
+  border: 2px solid var(--verde);
+}
+
+.sql-banner-validacao.sucesso .sql-validacao-icone {
+  color: var(--verde);
+}
+
+.sql-banner-validacao.sucesso h3 {
+  color: var(--verde);
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.sql-banner-validacao.falha {
+  background: color-mix(in srgb, var(--ferrugem) 10%, var(--papel));
+  border: 2px solid var(--ferrugem);
+}
+
+.sql-banner-validacao.falha .sql-validacao-icone {
+  color: var(--ferrugem);
+}
+
+.sql-banner-validacao.falha h3 {
+  color: var(--ferrugem);
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.sql-validacao-mensagem {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tinta-forte);
+  margin-bottom: 0.25rem;
+}
+
+.sql-validacao-detalhe {
+  font-size: 0.88rem;
+  color: var(--grafite);
+  line-height: 1.45;
+}
+
+.sql-botao-proximo-desafio {
+  margin-top: 0.75rem;
+  display: inline-block;
+}
+
+.sql-secao-catalogo-desafios {
+  margin-top: 0.5rem;
+}
+
+.sql-grade-desafios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.sql-cartao-desafio-catalogo {
+  border: 1px solid var(--cor-traco);
+  border-radius: 10px;
+  background: var(--papel);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 2px 2px 0 var(--cor-sombra-folha);
+  transition: all 0.15s ease;
+}
+
+.sql-cartao-desafio-catalogo:hover {
+  border-color: var(--tinta);
+}
+
+.sql-cartao-desafio-catalogo.ativo {
+  border-color: var(--tinta);
+  background: color-mix(in srgb, var(--tinta) 4%, var(--papel));
+  box-shadow: 0 0 0 2px var(--tinta);
+}
+
+.sql-cartao-desafio-catalogo.resolvido {
+  border-color: color-mix(in srgb, var(--verde) 60%, var(--cor-traco));
+}
+
+.sql-tags-agrupadas {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.sql-badge-resolvido-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--verde);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.sql-cartao-desafio-catalogo h3 {
+  font-size: 1.05rem;
+  color: var(--tinta-forte);
+  line-height: 1.25;
+}
+
+.sql-cartao-desafio-catalogo p {
+  font-size: 0.88rem;
+  color: var(--lapis);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.sql-cartao-desafio-rodape {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--cor-pauta);
+}
+
+.sql-desafio-tabelas-resumo {
+  font-size: 0.78rem;
+  color: var(--lapis);
+}
+
+.sql-desafio-tabelas-resumo code {
+  color: var(--tinta);
+  font-weight: 600;
+}

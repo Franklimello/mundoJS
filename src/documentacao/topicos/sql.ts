@@ -10,6 +10,7 @@ export const sql: TopicoDoc = {
   introducao: [
     'O **SQL (Structured Query Language)** é a linguagem universal padrão para interagir com bancos de dados relacionais (como PostgreSQL, MySQL, SQLite e MariaDB). Com ele, você realiza consultas, insere registros, atualiza informações e modela estruturas de tabelas.',
     'No desenvolvimento web moderno em JavaScript, TypeScript e Node.js, compreender os fundamentos de SQL é indispensável para construir APIs eficientes, realizar buscas performáticas e manipular dados de forma segura sem depender cegamente de ORMs ou abstrações.',
+    'Para consolidar a prática, este módulo conta com o **Console SQL Interativo e Desafios Práticos**: execute consultas reais em um banco SQLite em WebAssembly com 6 tabelas populadas e resolva desafios práticos com validação automática de resultados.',
   ],
   secoes: [
     {
